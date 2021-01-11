@@ -33,6 +33,8 @@ namespace ChameraVote.Utility
 
         private const string addNewVotingTemplate = "command:addNewVoting:{0}:{1}:{2}";
 
+        private const string removeVotingTemplate = "command:removeVoting:{0}:{1}:{2}";
+
         private const int timeout = 5000;
 
         public VoteClient(string serverAddress)
@@ -356,6 +358,33 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(registerCommandTemplate, username, password, token);
+            data = System.Text.Encoding.ASCII.GetBytes(message);
+            stream.Write(data, 0, data.Length);
+
+            data = new Byte[256];
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+
+            if (responseData.Split(':')[0] == incorrectResponseCode)
+            {
+                MessageBox.Show(responseData.Split(':')[1]);
+                return null;
+            }
+
+            return responseData.Split(':')[1];
+        }
+
+        public string RemoveVoting(string username, string token, string votingId)
+        {
+            TcpClient tcpClient = new TcpClient(this.serverAddress, port);
+            tcpClient.ReceiveTimeout = timeout;
+
+            NetworkStream stream = tcpClient.GetStream();
+
+            Byte[] data = new Byte[256];
+            String responseData = String.Empty;
+
+            string message = string.Format(removeVotingTemplate, username, token, votingId);
             data = System.Text.Encoding.ASCII.GetBytes(message);
             stream.Write(data, 0, data.Length);
 

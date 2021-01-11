@@ -41,7 +41,7 @@ class VotingServer:
         exampleVoting.mutuallyExclusive = True
         exampleVoting.voteClients=["User1","User2"]
         exampleVoting.voteResults=["yes","no"]
-        self.votingContainer.AddVoting(exampleVoting)
+        self.votingContainer.votings.append(exampleVoting)
         exampleVoting1 = Voting(self.userDatabase)
         exampleVoting1.GenerateNewId()
         exampleVoting1.voteOptions = ["yes","no","abstain"]
@@ -50,7 +50,7 @@ class VotingServer:
         exampleVoting1.mutuallyExclusive = True
         exampleVoting1.voteClients=["User1","User2"]
         exampleVoting1.voteResults=["yes","no"]
-        self.votingContainer.AddVoting(exampleVoting1)
+        self.votingContainer.votings.append(exampleVoting1)
 
     def Run(self):
         while True:
@@ -288,8 +288,15 @@ class VotingServer:
                 voting = Voting(self.userDatabase)
                 voting.Decode(msg)
                 voting.GenerateNewId()
-                self.votingContainer.AddVoting(voting)
-                #print(len(self.votingContainer.votings))
+                result = self.votingContainer.AddVoting(voting,username,token)
                 return VotingServer.Response(voting.id,None)
+
+            if commandName == "removeVoting":
+                username = messageArray[2]
+                token = messageArray[3]
+                id = int(messageArray[4])
+                result = self.votingContainer.RemoveVoting(id,username,token)
+                if result.value==None:
+                    return VotingContainer.Response(result.value,result.errorCode)
 
         return VotingServer.Response(VotingServer.Messages.nothingToReturn,None)

@@ -43,6 +43,7 @@ namespace ChameraVote.Views
             var result = voteClient.GetUserVotingsBrief(this.UserViewModel.Username,this.UserViewModel.Token,string.Empty);
             if(result==null)
             {
+                this.UserVotingsViewModel.BriefModels = new Collection<VotingBriefViewModel>();
                 return;
             }
             Collection<VotingBriefViewModel> collection = new Collection<VotingBriefViewModel>();
@@ -69,6 +70,17 @@ namespace ChameraVote.Views
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void DeleteItem_Click(object sender, RoutedEventArgs e)
+        {
+           if(sender is MenuItem)
+           {
+                VotingBriefViewModel viewModel = ((MenuItem)sender).DataContext as VotingBriefViewModel;
+                VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
+                voteClient.RemoveVoting(this.UserViewModel.Username, this.UserViewModel.Token, viewModel.Id);
+                this.GetUserVotings();
+           }
         }
     }
 }
