@@ -6,7 +6,31 @@
         xmlns:local="clr-namespace:ChameraVote.Views"
         mc:Ignorable="d"
         Title="UserVotingsWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\DataTemplates\VotingBriefDataTemplate.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" x:Name="newVotingButton" Content="Add new voting" Click="newVotingButton_Click"></Button>
+        <ListView Grid.Row="1" x:Name="votingsList" VerticalAlignment="Stretch" Margin="0 20 0 20" MouseDoubleClick="votingsList_MouseDoubleClick" ItemsSource="{Binding Path=BriefModels,Mode=TwoWay}" ItemTemplate="{StaticResource VotingBriefDataTemplate}">
+            <ListView.Resources>
+                <ContextMenu x:Key="ItemContextMenu">
+                    <MenuItem Header="Results" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="Delete"></MenuItem>
+                </ContextMenu>
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
 </Window>

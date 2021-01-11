@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ChameraVote.Models
 {
-    public class UserModel
+    public class VotingBriefModel
     {
-        public string username = string.Empty;
+        public string title;
 
-        public string token = string.Empty;
+        public string id;
     }
 }

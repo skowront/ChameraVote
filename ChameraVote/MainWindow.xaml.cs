@@ -71,7 +71,13 @@ namespace ChameraVote
 
         public void PopupUserVotings()
         {
-            UserVotingsWindow window = new UserVotingsWindow();
+            UserVotingsWindow window = new UserVotingsWindow(this.userViewModel,this.configurationViewModel);
+            window.ShowDialog();
+        }
+
+        public void PopupRegistration()
+        {
+            RegistrationWindow window = new RegistrationWindow(this.configurationViewModel);
             window.ShowDialog();
         }
 
@@ -102,7 +108,7 @@ namespace ChameraVote
 
         private void registerButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.PopupRegistration();
         }
     }
 }

@@ -37,7 +37,7 @@ class VotingServer:
         exampleVoting.allowUnregisteredUsers=True
         exampleVoting.voteOptions = ["yes","no","abstain"]
         exampleVoting.voteTitle = "Test voting"
-        exampleVoting.owner = "Default owner"
+        exampleVoting.owner = "ts"
         exampleVoting.mutuallyExclusive = True
         exampleVoting.voteClients=["User1","User2"]
         exampleVoting.voteResults=["yes","no"]
@@ -46,7 +46,7 @@ class VotingServer:
         exampleVoting1.GenerateNewId()
         exampleVoting1.voteOptions = ["yes","no","abstain"]
         exampleVoting1.voteTitle = "Test voting"
-        exampleVoting1.owner = "Default owner"
+        exampleVoting1.owner = "ts"
         exampleVoting1.mutuallyExclusive = True
         exampleVoting1.voteClients=["User1","User2"]
         exampleVoting1.voteResults=["yes","no"]
@@ -252,15 +252,44 @@ class VotingServer:
                 username = messageArray[2]
                 token = messageArray[3]
                 password = messageArray[4]
-                votingId = messageArray[5]
                 result = self.votingContainer.GetUserVotings(username,token)
                 if result.value ==None:
                     return VotingServer.Response(None,result.errorCode)
                 response = ""
-                for item in result:
+                for item in result.value:
                     brief = item.GetEncodedVotingBrief(username,token,password)
-                    response += brief+":"
+                    if brief.value == None:
+                        return VotingServer.Response(None,brief.errorCode)
+                    response += brief.value+":"
                 response = response[:-1]
                 return VotingServer.Response(response,None)
+
+            if commandName == "register":
+                username = messageArray[2]
+                token = messageArray[3]
+                password = messageArray[4]
+                return self.userDatabase.RegisterUser(username,password,token)
+
+            if commandName == "addNewVoting":
+                username = messageArray[2]
+                token = messageArray[3]
+                msg = message
+                i=0
+                dots = 0
+                while i<len(msg):
+                    if msg[i]==':':
+                        dots+=1
+                        if(dots==4):
+                            i += 1
+                            break
+                    i+=1
+                msg = msg[i:]
+                print(msg)
+                voting = Voting(self.userDatabase)
+                voting.Decode(msg)
+                voting.GenerateNewId()
+                self.votingContainer.AddVoting(voting)
+                #print(len(self.votingContainer.votings))
+                return VotingServer.Response(voting.id,None)
 
         return VotingServer.Response(VotingServer.Messages.nothingToReturn,None)

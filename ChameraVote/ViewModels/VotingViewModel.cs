@@ -15,7 +15,7 @@ namespace ChameraVote.ViewModels
 
         public VotingModel VotingModel
         {
-            get { return this.votingModel; }
+            get { this.votingModel.votingOptionsRaw = new Collection<string>(this.votingOptionsRaw); return this.votingModel; }
             set { this.votingModel = value; this.OnPropertyChanged(); }
         }
 
@@ -28,6 +28,7 @@ namespace ChameraVote.ViewModels
         public string Owner
         {
             get { return this.votingModel.owner; }
+            set { this.votingModel.owner = value; this.OnPropertyChanged(); }
         }
 
         public string VotingTitle
@@ -45,15 +46,18 @@ namespace ChameraVote.ViewModels
         public bool Anonymous
         {
             get { return this.votingModel.anonymous; }
+            set { this.votingModel.anonymous = value; this.OnPropertyChanged(); }
         }
 
         public bool MutuallyExclusive
         {
             get { return this.votingModel.mutuallyExclusive; }
+            set { this.votingModel.mutuallyExclusive = value; this.OnPropertyChanged(); }
         }
         public bool AllowUnregisteredUsers
         {
             get { return this.votingModel.allowUnregisteredUsers; }
+            set { this.votingModel.allowUnregisteredUsers = value; this.OnPropertyChanged(); }
         }
 
         public string Password
@@ -62,9 +66,18 @@ namespace ChameraVote.ViewModels
             set { this.votingModel.password = value;this.OnPropertyChanged(); }
         }
 
-        public Collection<string> VotingOptionsRaw
+        private ObservableCollection<string> votingOptionsRaw = null;
+
+        public ObservableCollection<string> VotingOptionsRaw
         {
-            get { return this.votingModel.votingOptionsRaw; }
+            get 
+            {
+                if (this.votingOptionsRaw==null)
+                {
+                    this.votingOptionsRaw = new ObservableCollection<string>(this.votingModel.votingOptionsRaw);
+                }
+                return this.votingOptionsRaw; 
+            }
             set 
             { 
                 this.votingModel.votingOptionsRaw = value;
@@ -79,6 +92,7 @@ namespace ChameraVote.ViewModels
                     newOptions.Add(newOption);
                 }
                 this.VoteOptionViewModels = newOptions;
+                this.votingOptionsRaw = new ObservableCollection<string>(this.votingModel.votingOptionsRaw);
                 this.OnPropertyChanged(); 
             }
         }

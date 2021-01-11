@@ -40,9 +40,6 @@ class VotingContainer:
         self.votings.clear()
 
     def GetUserVotings(self,username,token):
-        result = self.userDatabase.ValidateUserToken(username,token)
-        if result == False:
-            return VotingContainer.Response(None,VotingContainer.Messages.accountNotValid)
         collection:[Voting] = []
         for voting in self.votings:
             if voting.owner == username:

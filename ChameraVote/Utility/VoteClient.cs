@@ -23,9 +23,15 @@ namespace ChameraVote.Utility
 
         private const string commandTemplate = "command:{0}:{1}:{2}:{3}:{4}";
         
+        private const string getUserVotingsTemplate = "command:getUserVotings:{0}:{1}:{2}";
+        
         private const string loginCommandTemplate = "command:login:{0}:{1}";
+        
+        private const string registerCommandTemplate = "command:register:{0}:{1}:{2}";
 
         private const string castVoteTemplate = "command:castVote:{0}:{1}:{2}:{3}";
+
+        private const string addNewVotingTemplate = "command:addNewVoting:{0}:{1}:{2}";
 
         private const int timeout = 5000;
 
@@ -151,6 +157,42 @@ namespace ChameraVote.Utility
             }
 
             return this.VotingModelFromString(noCode);
+        }
+
+        public Collection<VotingBriefModel> GetUserVotingsBrief(string username, string token, string password)
+        {
+            TcpClient tcpClient = new TcpClient(this.serverAddress, port);
+            tcpClient.ReceiveTimeout = timeout;
+
+            NetworkStream stream = tcpClient.GetStream();
+
+            Byte[] data = new Byte[256];
+            String responseData = String.Empty;
+
+            string message = string.Format(getUserVotingsTemplate, username, token, password);
+            data = System.Text.Encoding.ASCII.GetBytes(message);
+            stream.Write(data, 0, data.Length);
+
+            data = new Byte[256];
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+
+            if (responseData.Split(':')[0] == incorrectResponseCode)
+            {
+                MessageBox.Show(responseData.Split(':')[1]);
+                return null;
+            }
+
+            Collection<VotingBriefModel> collection = new Collection<VotingBriefModel>();
+
+            var array = responseData.Split(':');
+            for(int i=1;i<array.Length;i+=2)
+            {
+                var item = new VotingBriefModel() { id = array[i], title=array[i+1] };
+                collection.Add(item);
+            }
+
+            return collection;
         }
 
         public string GetTitle(string votingId, string username, string token, string password)
@@ -301,6 +343,80 @@ namespace ChameraVote.Utility
             }
 
             return responseData.Split(':')[1];
+        }
+
+        public string Register(string username, string password,string token)
+        {
+            TcpClient tcpClient = new TcpClient(this.serverAddress, port);
+            tcpClient.ReceiveTimeout = timeout;
+
+            NetworkStream stream = tcpClient.GetStream();
+
+            Byte[] data = new Byte[256];
+            String responseData = String.Empty;
+
+            string message = string.Format(registerCommandTemplate, username, password, token);
+            data = System.Text.Encoding.ASCII.GetBytes(message);
+            stream.Write(data, 0, data.Length);
+
+            data = new Byte[256];
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+
+            if (responseData.Split(':')[0] == incorrectResponseCode)
+            {
+                MessageBox.Show(responseData.Split(':')[1]);
+                return null;
+            }
+
+            return responseData.Split(':')[1];
+        }
+
+        public string AddNewVoting(string username, string token, VotingModel votingModel)
+        {
+            TcpClient tcpClient = new TcpClient(this.serverAddress, port);
+            tcpClient.ReceiveTimeout = timeout;
+
+            NetworkStream stream = tcpClient.GetStream();
+
+            Byte[] data = new Byte[256];
+            String responseData = String.Empty;
+
+            string message = string.Format(addNewVotingTemplate, username, token, this.EncodeNew(votingModel));
+            data = System.Text.Encoding.ASCII.GetBytes(message);
+            stream.Write(data, 0, data.Length);
+
+            data = new Byte[256];
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+
+            if (responseData.Split(':')[0] == incorrectResponseCode)
+            {
+                MessageBox.Show(responseData.Split(':')[1]);
+                return null;
+            }
+
+            return responseData.Split(':')[1];
+        }
+
+        public string EncodeNew(VotingModel votingModel)
+        {
+            string value = string.Empty;
+            value += votingModel.owner + ":";
+            value += votingModel.votingTitle + ":";
+            value += votingModel.password + ":";
+            value += votingModel.anonymous + ":";
+            value += votingModel.mutuallyExclusive + ":";
+            value += votingModel.allowUnregisteredUsers + ":";
+            value += votingModel.votingOptionsRaw.Count.ToString() + ":";
+            foreach (var item in votingModel.votingOptionsRaw)
+            {
+                value += item + ':';
+            }
+            value += "0::";
+            value += "0:";
+
+            return value;
         }
 
         public string RemoveLast(string text, string character)

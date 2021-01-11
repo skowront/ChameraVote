@@ -34,6 +34,92 @@ class Voting:
         self.id = Voting.topId
         Voting.topId += 1
 
+    def str2bool(self,v):
+        return v.lower() in ("yes", "true", "t", "1")
+
+    def Decode(self,encoded):
+        msg = encoded
+        i = 0
+        
+        while msg[i]!=":":
+            i += 1
+        self.owner = msg[0:i]
+        msg = msg[i+1:]
+
+        i = 0
+        while msg[i]!=":":
+            i += 1
+        self.voteTitle = msg[0:i]
+        msg = msg[i+1:]
+
+        i = 0
+        while msg[i]!=":":
+            i += 1
+        self.password = msg[0:i]
+        msg = msg[i+1:]
+
+        i = 0
+        while msg[i]!=":":
+            i += 1
+        self.anonymous = self.str2bool(msg[0:i])
+        msg = msg[i+1:]
+
+        i = 0
+        while msg[i]!=":":
+            i += 1
+        self.mutuallyExclusive = self.str2bool(msg[0:i])
+        msg = msg[i+1:]
+
+        i = 0
+        while msg[i]!=":":
+            i += 1
+        self.allowUnregisteredUsers = self.str2bool(msg[0:i])
+        msg = msg[i+1:]
+        i = 0
+        while msg[i]!=":":
+            i += 1
+        count = int(msg[0:i])
+        msg = msg[i+1:]
+        for j in range (0,count):
+            i =0
+            while msg[i]!=":":
+                i += 1
+                if(i>len(msg)):
+                    break
+            self.voteOptions.append(msg[0:i])
+            msg = msg[i+1:]
+        if (count==0):
+            msg = msg[1:]
+        i = 0
+        while msg[i]!=":":
+            i += 1
+        count = int(msg[0:i])
+        msg = msg[i+1:]
+        for j in range (0,count):
+            i =0
+            while msg[i]!=":":
+                i += 1
+                if(i>len(msg)):
+                    break
+            self.voteResults.append(msg[0:i])
+            msg = msg[i+1:]
+        if (count==0):
+            msg = msg[1:]
+        i = 0
+        while msg[i]!=":":
+            i += 1
+        count = int(msg[0:i])
+        msg = msg[i+1:]
+        for j in range (0,count):
+            i =0
+            while msg[i]!=":":
+                i += 1
+                if(i>len(msg)):
+                    break
+            self.voteResults.append(msg[0:i])
+            msg = msg[i+1:]
+        return self
+
     def ValidateAccess(self,username,token,password):
         if (username == None or username == "") and self.allowUnregisteredUsers:
             if self.password!=password:

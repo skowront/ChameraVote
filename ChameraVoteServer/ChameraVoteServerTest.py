@@ -1,7 +1,19 @@
+
+
+
+print("Voting tests:")
+from UserDatabase import UserDatabase
+from Voting import Voting
+userDatabase = UserDatabase()
+userDatabase.Load()
+voting = Voting(userDatabase)
+voting.Decode("ts:Voting title::False:False:False:0::0::0:")
+
+exit()
+
 from VotingServer import VotingServer
 
 votingServer = VotingServer(16402,True)
-
 print("Http tests:")
 tests:[VotingServer.Response] = []
 

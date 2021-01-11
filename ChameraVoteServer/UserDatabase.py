@@ -44,6 +44,7 @@ class UserDatabase:
         user.UserPassword = password
         user.Token = self.GenerateToken()
         self.users.append(user)
+        self.Store()
         return UserDatabase.Response(user.Token,None)
         
     def Authenticate(self,username,password):
