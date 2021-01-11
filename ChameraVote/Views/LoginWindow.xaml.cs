@@ -23,6 +23,8 @@ namespace ChameraVote.Views
     {
         public LoginViewModel LoginViewModel = new LoginViewModel();
 
+        public ConfigurationViewModel ConfigurationViewModel = new ConfigurationViewModel();
+
         public EventHandler OnLoginSuccess = null;
 
         public LoginWindow()
@@ -31,16 +33,25 @@ namespace ChameraVote.Views
             this.DataContext = LoginViewModel;
         }
 
+        public LoginWindow(ConfigurationViewModel configurationViewModel)
+        {
+            InitializeComponent();
+            this.ConfigurationViewModel = configurationViewModel;
+            this.DataContext = LoginViewModel;
+        }
+
         private void Login_Click(object sender, RoutedEventArgs e)
         {
-            VoteClient voteClient = new VoteClient(this.LoginViewModel.ServerAddress);
+            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
             var token = voteClient.Login(this.LoginViewModel.Username, this.userPasswordTextBox.Password);
             if(token == null)
             {
+                this.LoginViewModel.Status = "Login failed.";
                 return;
             }
             else
             {
+                this.LoginViewModel.Status = "Login successful.";
                 this.LoginViewModel.Token = token;  
                 this.OnLoginSuccess?.Invoke(sender,e);
             }

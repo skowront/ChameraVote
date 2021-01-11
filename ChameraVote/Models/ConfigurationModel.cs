@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace ChameraVote.Models
 {
-    class LoginModel
+    public class ConfigurationModel
     {
-        public string username;
-
-        public string userPassword;
-
-        public string token;
-
-        public string status;
+        public string serverAddress = "localhost";
     }
 }

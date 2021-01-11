@@ -15,15 +15,15 @@ namespace ChameraVote.Utility
         private string serverAddress = "localhost";
         //private string ServerAddress = "46.41.151.157";
 
-        private const string defaultPassword = "0";
-
         private const int port = 16402;
 
         private const string incorrectResponseCode = "NOK";
         
         private const string correctResponseCode = "OK";
 
-        private const string commandTemplate = "command:{0}:{1}:{2}";
+        private const string commandTemplate = "command:{0}:{1}:{2}:{3}:{4}";
+        
+        private const string loginCommandTemplate = "command:login:{0}:{1}";
 
         private const string castVoteTemplate = "command:castVote:{0}:{1}:{2}:{3}";
 
@@ -112,7 +112,7 @@ namespace ChameraVote.Utility
             return model;
         }
 
-        public VotingModel GetVotingModel(string votingId, string password = defaultPassword)
+        public VotingModel GetVotingModel(string votingId,string username,string token, string password)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -122,7 +122,7 @@ namespace ChameraVote.Utility
             Byte[] data = new Byte[256];
             String responseData = String.Empty;
 
-            string message = string.Format(commandTemplate, "getVotingById", password, votingId);
+            string message = string.Format(commandTemplate, "getVotingById",username,token, password, votingId);
             data = System.Text.Encoding.ASCII.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
@@ -153,7 +153,7 @@ namespace ChameraVote.Utility
             return this.VotingModelFromString(noCode);
         }
 
-        public string GetTitle(string votingId, string password = defaultPassword)
+        public string GetTitle(string votingId, string username, string token, string password)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -163,7 +163,7 @@ namespace ChameraVote.Utility
             Byte[] data = new Byte[256];
             String responseData = String.Empty;
 
-            string message = string.Format(commandTemplate, "getTitle", password, votingId);
+            string message = string.Format(commandTemplate, "getTitle", username, token, password, votingId);
             data = System.Text.Encoding.ASCII.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
@@ -180,7 +180,7 @@ namespace ChameraVote.Utility
             return responseData.Split(':')[1];
         }
 
-        public bool? GetAnonymous(string votingId, string password = defaultPassword)
+        public bool? GetAnonymous(string votingId, string username, string token, string password)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -190,7 +190,7 @@ namespace ChameraVote.Utility
             Byte[] data = new Byte[256];
             String responseData = String.Empty;
 
-            string message = string.Format(commandTemplate, "getAnonymous", password, votingId);
+            string message = string.Format(commandTemplate, "getAnonymous", username, token, password, votingId);
             data = System.Text.Encoding.ASCII.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
@@ -211,7 +211,7 @@ namespace ChameraVote.Utility
             return false;
         }
 
-        public IEnumerable<string> GetOptions(string votingId, string password = defaultPassword)
+        public IEnumerable<string> GetOptions(string votingId, string username, string token, string password)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -221,7 +221,7 @@ namespace ChameraVote.Utility
             Byte[] data = new Byte[256];
             String responseData = String.Empty;
 
-            string message = string.Format(commandTemplate, "getOptions", password, votingId);
+            string message = string.Format(commandTemplate, "getOptions", username, token, password, votingId);
             data = System.Text.Encoding.ASCII.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
@@ -245,7 +245,7 @@ namespace ChameraVote.Utility
             return collection;
         }
 
-        public void SendVote(string votingId, Collection<string> selectedOptions, string username,string token, string password = defaultPassword)
+        public void SendVote(string votingId, Collection<string> selectedOptions, string username,string token, string password)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -286,7 +286,7 @@ namespace ChameraVote.Utility
             Byte[] data = new Byte[256];
             String responseData = String.Empty;
 
-            string message = string.Format(commandTemplate, "login", username,password);
+            string message = string.Format(loginCommandTemplate, username,password);
             data = System.Text.Encoding.ASCII.GetBytes(message);
             stream.Write(data, 0, data.Length);
 

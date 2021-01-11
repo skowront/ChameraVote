@@ -7,14 +7,17 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
             <TextBlock Text="Login:"></TextBlock>
             <TextBox x:Name="loginTextBox" Text="{Binding Path=Username}"></TextBox>
             <TextBlock Text="Password:"></TextBlock>
             <PasswordBox x:Name="userPasswordTextBox"></PasswordBox>
-            <TextBlock Text="ServerAddress:"></TextBlock>
-            <TextBox x:Name="serverAddressTextBox" Text="{Binding Path=ServerAddress}"></TextBox>
             <Button x:Name="Login" Height="50" Width="100" Content="Login" Click="Login_Click"></Button>
         </StackPanel>
+        <TextBlock Grid.Row="1" x:Name="statusTextBox" Text="{Binding Path=Status}"></TextBlock>
     </Grid>
 </Window>

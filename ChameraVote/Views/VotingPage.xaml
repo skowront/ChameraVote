@@ -21,17 +21,20 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <TextBlock x:Name="usernameTextBox" Text="{Binding Path=Username,StringFormat='Logged in as: {0}'}"></TextBlock>
+            <StackPanel>
+                <TextBlock x:Name="serverAddressTextBox" Text="{Binding Path=ServerAddress,StringFormat='Server address:{0}'}"></TextBlock>
+            </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Voting ID" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
                 <TextBox Text="{Binding Path=VotingId, Mode=TwoWay}" MinWidth="100" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
             </StackPanel>
-            <Button x:Name="refreshButton" Content="Refresh" Click="refreshButton_Click" HorizontalAlignment="Left" MinWidth="150" MinHeight="30" Margin="0 5 0 0 "></Button>
-            <StackPanel>
-                <TextBox x:Name="serverAddressTextBox" Text="{Binding Path=ServerAddress}"></TextBox>
-                <Button x:Name="applyServerAddress" Content="Apply address" Click="applyServerAddress_Click"></Button>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Password" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
+                <TextBox Text="{Binding Path=Password, Mode=TwoWay}" MinWidth="100" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
             </StackPanel>
+            <Button x:Name="refreshButton" Content="Refresh" Click="refreshButton_Click" HorizontalAlignment="Left" MinWidth="150" MinHeight="30" Margin="0 5 0 0 "></Button>
         </StackPanel>
-        <StackPanel Grid.Column="1">
+        <StackPanel x:Name="votingMainStackPanel" Grid.Column="1" Visibility="Hidden">
             <TextBlock Text="{Binding Path=VotingTitle, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"></TextBlock>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Anonymous"></TextBlock>

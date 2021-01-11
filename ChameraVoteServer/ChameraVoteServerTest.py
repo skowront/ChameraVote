@@ -5,12 +5,12 @@ votingServer = VotingServer(16402,True)
 print("Http tests:")
 tests:[VotingServer.Response] = []
 
-test = votingServer.HandleClientRequest("command:getTitle:0:0"); tests.append(test)
-test = votingServer.HandleClientRequest("command:getOptions:0:0"); tests.append(test)
-test = votingServer.HandleClientRequest("command:getAnonymous:0:0"); tests.append(test)
-test = votingServer.HandleClientRequest("command:getClients:0:0"); tests.append(test)
-test = votingServer.HandleClientRequest("command:getResults:0:0"); tests.append(test)
-test = votingServer.HandleClientRequest("command:getVotingById:0:0"); tests.append(test)
+test = votingServer.HandleClientRequest("command:getTitle::0"); tests.append(test)
+test = votingServer.HandleClientRequest("command:getOptions::0"); tests.append(test)
+test = votingServer.HandleClientRequest("command:getAnonymous::0"); tests.append(test)
+test = votingServer.HandleClientRequest("command:getClients::0"); tests.append(test)
+test = votingServer.HandleClientRequest("command:getResults::0"); tests.append(test)
+test = votingServer.HandleClientRequest("command:getVotingById::0"); tests.append(test)
 
 for i in range(0,len(tests)):
     test = tests[i]

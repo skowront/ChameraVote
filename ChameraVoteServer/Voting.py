@@ -2,13 +2,15 @@ import random
 
 class Voting:
     topId=0
-    defaultPassword="0"
+    defaultPassword=""
 
     class Messages:
         wrongPassword = "Wrong password!"
         alreadyVoted = "Already voted!"
         onlyOneOptionCanBeChosen = "Only one option may be chosen."
-        accountNotValid = "Account is not validated. Try to log in once again."
+        accountNotValid = "Account is not valid. Try to log in once again."
+        passwordRequired = "Password is required to enter this vote."
+        onlyLoggedInUsers = "You must be logged in to enter this vote."
 
     class Response:
         def __init__(self,value="",errorCode=""):
@@ -32,9 +34,25 @@ class Voting:
         self.id = Voting.topId
         Voting.topId += 1
 
-    def GetEncodedVoting(self,password):
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
+    def ValidateAccess(self,username,token,password):
+        if (username == None or username == "") and self.allowUnregisteredUsers:
+            if self.password!=password:
+                return Voting.Response(None,Voting.Messages.wrongPassword)
+        elif (username == None or username == ""):
+            return Voting.Response(None,Voting.Messages.onlyLoggedInUsers)
+        if self.userDatabase.ValidateUserToken(username,token)==False:
+            if self.password!=password:
+                return Voting.Response(None,Voting.Messages.wrongPassword)
+        else:
+            if self.password!=password:
+                if username!=self.owner:
+                    return Voting.Response(None,Voting.Messages.passwordRequired)
+        return Voting.Response(True,None)
+
+    def GetEncodedVoting(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
         stringified = str(self.id) +":"+ self.owner +":"+ self.voteTitle +":"+ str(self.anonymous) +":"+ str(self.mutuallyExclusive)
         stringified += ":"+str(self.allowUnregisteredUsers) 
         stringified += ":"+str(len(self.voteOptions))+":"
@@ -50,53 +68,68 @@ class Voting:
         print(stringified)
         return Voting.Response(stringified,None)
 
-    def GetEncodedId(self,password):
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
+    def GetEncodedVotingBrief(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
+        stringified = str(self.id) +":"+ self.voteTitle
+        return Voting.Response(stringified,None)
+
+    def GetEncodedId(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
         return Voting.Response(self.id,None)
     
-    def GetEncodedOwner(self,password):
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
+    def GetEncodedOwner(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
         return Voting.Response(self.owner,None)
 
-    def GetEncodedVoteTitle(self,password):
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
+    def GetEncodedVoteTitle(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
         return Voting.Response(self.voteTitle,None)
 
-    def GetEncodedVoteAnonymous(self,password):
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
+    def GetEncodedVoteAnonymous(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
         return Voting.Response(self.anonymous,None)
 
     
-    def GetEncodedVoteMutuallyExclusive(self,password):
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
+    def GetEncodedVoteMutuallyExclusive(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
         return Voting.Response(self.mutuallyExclusive,None)
 
-    def GetEncodedVoteOptions(self,password):
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
+    def GetEncodedVoteOptions(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
         ret = ""
         for option in self.voteOptions:
             ret += option + ":"
         ret = ret [:-1]
         return Voting.Response(ret,None)
 
-    def GetEncodedVoteResults(self,password):
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
+    def GetEncodedVoteResults(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
         ret = ""
         for option in self.voteResults:
             ret += option + ":"
         ret = ret [:-1]
         return Voting.Response(ret,None)
 
-    def GetEncodedVoteClients(self,password):
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
+    def GetEncodedVoteClients(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
         ret = ""
         for option in self.voteClients:
             ret += option + ":"
@@ -110,11 +143,11 @@ class Voting:
         return False
 
     def CastVotes(self,voteClient,voteResults:[],password,token):
-        if self.userDatabase.ValidateUserToken(voteClient,token)==False and self.allowUnregisteredUsers == False:
-            return Voting.Response(None,Voting.Messages.accountNotValid)
-        if self.password!=password:
-            return Voting.Response(None,Voting.Messages.wrongPassword)
-        if self.DidAlreadyVote(voteClient):
+        username = voteClient
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
+        if self.DidAlreadyVote(voteClient) and self.allowUnregisteredUsers==False:
             return Voting.Response(None,Voting.Messages.alreadyVoted)                
         if self.mutuallyExclusive and len(voteResults)>1:
             return Voting.Response(None,Voting.Messages.onlyOneOptionCanBeChosen)  

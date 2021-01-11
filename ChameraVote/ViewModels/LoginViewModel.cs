@@ -29,10 +29,10 @@ namespace ChameraVote.ViewModels
             set { this.loginModel.token = value; this.OnPropertyChanged(); }
         }
 
-        public string ServerAddress
+        public string Status
         {
-            get { return this.loginModel.serverAddress; }
-            set { this.loginModel.serverAddress = value; this.OnPropertyChanged(); }
+            get { return this.loginModel.status; }
+            set { this.loginModel.status = value; this.OnPropertyChanged(); }
         }
     }
 }

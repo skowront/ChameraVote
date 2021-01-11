@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ChameraVote.Views;
+using ChameraVote.ViewModels;
+using System.Runtime.CompilerServices;
+using System.ComponentModel;
 
 namespace ChameraVote
 {
@@ -21,11 +24,20 @@ namespace ChameraVote
     /// </summary>
     public partial class MainWindow : Window
     {
+        private UserViewModel userViewModel = new UserViewModel();
+
+        private ConfigurationViewModel configurationViewModel = new ConfigurationViewModel();
+
+        public UserViewModel UserViewModel
+        {
+            get { return this.userViewModel; }
+            set { this.userViewModel = value; this.OnPropertyChanged(new DependencyPropertyChangedEventArgs()); }
+        }
+
+
         public MainWindow()
         {
             InitializeComponent();
-            this.votingPage.IsEnabled = false;
-            PopupLogin();
         }
 
         public void PopupLogin()
@@ -33,22 +45,64 @@ namespace ChameraVote
             LoginWindow window = new LoginWindow();
             window.OnLoginSuccess += (o, e) =>
             {
-                this.votingPage.UserViewModel.Username = window.LoginViewModel.Username;
-                this.votingPage.UserViewModel.Token = window.LoginViewModel.Token;
-                this.votingPage.IsEnabled = true; window.Close();
+                this.UserViewModel.Username = window.LoginViewModel.Username;
+                this.UserViewModel.Token = window.LoginViewModel.Token;
+                this.IsEnabled = true;
             };
-            window.Show();
-            window.BringIntoView();
-            window.Topmost = true;
-            window.StateChanged += Window_StateChanged;
+            window.ShowDialog();
+        }
+        public void PopupVote()
+        {
+            VotingWindow window = new VotingWindow();
+            window.votingPage.UserViewModel = this.UserViewModel;
+            
+            window.ShowDialog();
         }
 
-        private void Window_StateChanged(object sender, EventArgs e)
+        public void PopupConfiguration()
         {
-            if(sender is LoginWindow)
+            ConfigurationWindow window = new ConfigurationWindow();
+            window.OnConfigurationChanged += (o, e) =>
             {
-                ((LoginWindow)sender).Topmost = false;
-            }
+                this.configurationViewModel = window.configurationViewModel;
+            };
+            window.ShowDialog();
+        }
+
+        public void PopupUserVotings()
+        {
+            UserVotingsWindow window = new UserVotingsWindow();
+            window.ShowDialog();
+        }
+
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+        {
+            base.OnPropertyChanged(e);
+        }
+
+        private void loginButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.PopupLogin();
+        }
+
+        private void voteButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.PopupVote();
+        }
+
+        private void settingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.PopupConfiguration();
+        }
+
+        private void myVotingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.PopupUserVotings();
+        }
+
+        private void registerButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
