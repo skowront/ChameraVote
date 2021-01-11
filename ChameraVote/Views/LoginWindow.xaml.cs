@@ -41,6 +41,7 @@ namespace ChameraVote.Views
             }
             else
             {
+                this.LoginViewModel.Token = token;  
                 this.OnLoginSuccess?.Invoke(sender,e);
             }
         }

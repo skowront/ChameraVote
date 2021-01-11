@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Net.Sockets;
 using ChameraVote.ViewModels;
 using ChameraVote.Utility;
 using System.Collections.ObjectModel;
@@ -26,10 +14,13 @@ namespace ChameraVote.Views
     {
         public VotingViewModel VotingViewModel = new VotingViewModel();
 
+        public UserViewModel UserViewModel = new UserViewModel();
+
         public VotingPage()
         {
             InitializeComponent();
             this.DataContext = this.VotingViewModel;
+            this.usernameTextBox.DataContext = this.UserViewModel;
         }
 
         private void refreshButton_Click(object sender, RoutedEventArgs e)
@@ -61,7 +52,7 @@ namespace ChameraVote.Views
                     voteOptionsSelected.Add(item.OptionValue);
                 }
             }
-            voteClient.SendVote(this.VotingViewModel.VotingId,voteOptionsSelected,this.VotingViewModel.Username);
+            voteClient.SendVote(this.VotingViewModel.VotingId,voteOptionsSelected,this.UserViewModel.Username,this.UserViewModel.Token);
         }
     }
 }

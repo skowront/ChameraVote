@@ -5,5 +5,5 @@ class Logger:
         f = open("log.txt", "a")
         now = datetime.now()
         timestamp = datetime.timestamp(now)
-        f.write(str(timestamp)+": "+message+'\n')
+        f.write(str(datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S'))+": "+message+'\n')
         f.close()

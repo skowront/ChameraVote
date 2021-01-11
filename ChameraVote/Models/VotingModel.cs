@@ -21,11 +21,9 @@ namespace ChameraVote.Models
 
         public bool mutuallyExclusive = false;
 
+        public bool allowUnregisteredUsers = false;
+
         public string password = "";
-
-        public string username = "User";
-
-        public string token = "";
 
         public Collection<string> votingOptionsRaw = new Collection<string>();
 

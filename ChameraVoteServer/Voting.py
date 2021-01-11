@@ -8,6 +8,7 @@ class Voting:
         wrongPassword = "Wrong password!"
         alreadyVoted = "Already voted!"
         onlyOneOptionCanBeChosen = "Only one option may be chosen."
+        accountNotValid = "Account is not validated. Try to log in once again."
 
     class Response:
         def __init__(self,value="",errorCode=""):
@@ -15,15 +16,17 @@ class Voting:
             self.errorCode = errorCode
             self.value = value
 
-    def __init__(self):
+    def __init__(self,userDatabase):
         self.owner = ""
         self.voteTitle = "Vote Title"
         self.password = Voting.defaultPassword
         self.anonymous = False
         self.mutuallyExclusive = False
+        self.allowUnregisteredUsers = False
         self.voteOptions:[str] = []
         self.voteResults:[str] = []
         self.voteClients:[str] = []
+        self.userDatabase = userDatabase
 
     def GenerateNewId(self):
         self.id = Voting.topId
@@ -33,6 +36,7 @@ class Voting:
         if self.password!=password:
             return Voting.Response(None,Voting.Messages.wrongPassword)
         stringified = str(self.id) +":"+ self.owner +":"+ self.voteTitle +":"+ str(self.anonymous) +":"+ str(self.mutuallyExclusive)
+        stringified += ":"+str(self.allowUnregisteredUsers) 
         stringified += ":"+str(len(self.voteOptions))+":"
         for item in self.voteOptions:
             stringified += item+":"
@@ -105,12 +109,13 @@ class Voting:
                 return True
         return False
 
-    def AddVotes(self,voteClient,voteResults:[],password):
+    def CastVotes(self,voteClient,voteResults:[],password,token):
+        if self.userDatabase.ValidateUserToken(voteClient,token)==False and self.allowUnregisteredUsers == False:
+            return Voting.Response(None,Voting.Messages.accountNotValid)
         if self.password!=password:
             return Voting.Response(None,Voting.Messages.wrongPassword)
         if self.DidAlreadyVote(voteClient):
-            return Voting.Response(None,Voting.Messages.alreadyVoted)
-        print(len(voteResults))  
+            return Voting.Response(None,Voting.Messages.alreadyVoted)                
         if self.mutuallyExclusive and len(voteResults)>1:
             return Voting.Response(None,Voting.Messages.onlyOneOptionCanBeChosen)  
         for result in voteResults:
@@ -120,5 +125,3 @@ class Voting:
             random.shuffle(self.voteResults)
             random.shuffle(self.voteClients)
         return Voting.Response(None,None)
-
-    

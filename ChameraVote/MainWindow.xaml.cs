@@ -33,8 +33,8 @@ namespace ChameraVote
             LoginWindow window = new LoginWindow();
             window.OnLoginSuccess += (o, e) =>
             {
-                this.votingPage.VotingViewModel.Username = window.LoginViewModel.Username;
-                this.votingPage.VotingViewModel.Token = window.LoginViewModel.Token;
+                this.votingPage.UserViewModel.Username = window.LoginViewModel.Username;
+                this.votingPage.UserViewModel.Token = window.LoginViewModel.Token;
                 this.votingPage.IsEnabled = true; window.Close();
             };
             window.Show();

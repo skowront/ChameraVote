@@ -51,18 +51,11 @@ namespace ChameraVote.ViewModels
         {
             get { return this.votingModel.mutuallyExclusive; }
         }
-
-        public string Username
+        public bool AllowUnregisteredUsers
         {
-            get { return this.votingModel.username; }
-            set { this.votingModel.username = value; this.OnPropertyChanged(); }
+            get { return this.votingModel.allowUnregisteredUsers; }
         }
 
-        public string Token
-        {
-            get { return this.votingModel.token; }
-            set { this.votingModel.token = value; this.OnPropertyChanged(); }
-        }
 
         public Collection<string> VotingOptionsRaw
         {

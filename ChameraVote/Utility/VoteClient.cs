@@ -66,6 +66,11 @@ namespace ChameraVote.Utility
             i = 0;
 
             while (str[i] != ':') { i++; }
+            model.allowUnregisteredUsers = bool.Parse(str.Substring(0, i));
+            str = str.Remove(0, i + 1);
+            i = 0;
+
+            while (str[i] != ':') { i++; }
             var optionsCount = int.Parse(str.Substring(0, i));
             str = str.Remove(0, i + 1);
             i = 0;
@@ -240,7 +245,7 @@ namespace ChameraVote.Utility
             return collection;
         }
 
-        public void SendVote(string votingId, Collection<string> selectedOptions, string username, string password = defaultPassword)
+        public void SendVote(string votingId, Collection<string> selectedOptions, string username,string token, string password = defaultPassword)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -250,7 +255,7 @@ namespace ChameraVote.Utility
             Byte[] data = new Byte[256];
             String responseData = String.Empty;
 
-            string message = string.Format(castVoteTemplate, username, password, votingId, selectedOptions.Count.ToString());
+            string message = string.Format(castVoteTemplate, username, password, votingId, token);
             
             foreach(var item in selectedOptions)
             {

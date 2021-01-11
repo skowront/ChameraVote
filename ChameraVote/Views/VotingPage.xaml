@@ -20,6 +20,7 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel>
+            <TextBlock x:Name="usernameTextBox" Text="{Binding Path=Username,StringFormat='Logged in as: {0}'}"></TextBlock>
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Voting ID" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
                 <TextBox Text="{Binding Path=VotingId, Mode=TwoWay}" MinWidth="100" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
@@ -39,6 +40,10 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <TextBlock Text="Mutually exclusive"></TextBlock>
                 <CheckBox IsChecked="{Binding Path=MutuallyExclusive,Mode=OneWay}" IsEnabled="False"></CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Unregistered users allowed"></TextBlock>
+                <CheckBox IsChecked="{Binding Path=AllowUnregisteredUsers,Mode=OneWay}" IsEnabled="False"></CheckBox>
             </StackPanel>
             <ListView x:Name="voteOptionsList" HorizontalAlignment="Center" Margin="0 20 0 20" ItemsSource="{Binding Path=VoteOptionViewModels,Mode=TwoWay}" ItemTemplate="{StaticResource VoteOptionDataTemplate}"></ListView>
             <Button x:Name="sendVote" Content="Vote!" Click="sendVote_Click" Width="150" Height="50" HorizontalAlignment="Center"></Button>

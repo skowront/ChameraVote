@@ -56,8 +56,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\VoteOption.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\VoteOptionViewModel.cs" />
     <Compile Include="Utility\VoteClient.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

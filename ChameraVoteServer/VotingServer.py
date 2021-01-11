@@ -12,6 +12,7 @@ class VotingServer:
     class Messages:
         wrongRequest = "Wrong reqest!"
         nothingToReturn = "No return value!"
+        badRequest = "Request was invalid!"
 
     class Response:
         def __init__(self,value="",errorCode=""):
@@ -30,7 +31,7 @@ class VotingServer:
             self.CreateExampleVoting()
 
     def CreateExampleVoting(self):
-        exampleVoting = Voting()
+        exampleVoting = Voting(self.userDatabase)
         exampleVoting.GenerateNewId()
         exampleVoting.voteOptions = ["yes","no","abstain"]
         exampleVoting.voteTitle = "Test voting"
@@ -49,9 +50,13 @@ class VotingServer:
                 data = clientsocket.recv(1024)
                 dataDecoded = data.decode("utf-8")
                 print(dataDecoded)
-                response = self.HandleClientRequest(dataDecoded)
                 prefix = ""
                 suffix = ""
+                if (self.ValidateRequest(dataDecoded)==False):
+                    prefix ="NOK"               
+                    clientsocket.send(VotingServer.Messages.badRequest.encode())
+                    continue
+                response = self.HandleClientRequest(dataDecoded)
                 if response.errorCode==None:
                     prefix="OK"
                     suffix = str(response.value)
@@ -61,12 +66,20 @@ class VotingServer:
                 total = str(prefix+":"+suffix)
                 while len(total)>VotingServer.maxBufferSize:
                     msg = total[0:VotingServer.maxBufferSize-1]
-                    print(msg)
                     msg += '&'
                     clientsocket.send(msg.encode())
                     total = total[VotingServer.maxBufferSize-1:]
                 clientsocket.send(total.encode())
             clientsocket.close()
+
+    def ValidateRequest(self,message)->bool:
+        msg = message
+        for i in range(0,len(msg)):
+            if i+1>=len(msg):
+                break
+            if(msg[i]==':'and msg[i+1]==':'):
+                return False
+        return True
 
     def HandleClientRequest(self,message)->Response:
         messageArray = message.split(':')
@@ -190,6 +203,7 @@ class VotingServer:
                 username = messageArray[2]
                 password = messageArray[3]
                 votingId = messageArray[4]
+                token = messageArray[5]
                 i = 0
                 dots = 0
                 msg = message
@@ -200,11 +214,10 @@ class VotingServer:
                             i += 1
                             break
                     i+=1
-                print(msg[i:])
                 voting = self.votingContainer.GetVotingByIdStr(votingId)
                 if voting.value==None:
                     return VotingServer.Response(voting.value,voting.errorCode)
-                result = voting.value.AddVotes(username,msg[i:].split(':'),password)
+                result = voting.value.CastVotes(username,msg[i:].split(':'),password,token)
                 return VotingServer.Response(result.value,result.errorCode)
 
             if commandName == "login":
