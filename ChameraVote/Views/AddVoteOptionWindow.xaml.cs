@@ -33,6 +33,10 @@ namespace ChameraVote.Views
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
+            if(!voteOptionViewModel.PropertiesValid())
+            {
+                return;
+            }
             OnItemAdd?.Invoke(sender, e);
         }
     }

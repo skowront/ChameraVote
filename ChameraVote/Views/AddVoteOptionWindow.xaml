@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="AddVoteOptionWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Option description:"></TextBlock>
@@ -14,5 +18,6 @@
             </StackPanel>
             <Button x:Name="addButton" Content="Add" Click="addButton_Click"></Button>
         </StackPanel>
+        <TextBlock Grid.Row="1" Text="{Binding Path=Status,Mode=TwoWay}"></TextBlock>
     </Grid>
 </Window>

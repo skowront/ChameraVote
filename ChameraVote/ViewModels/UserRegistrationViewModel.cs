@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ChameraVote.Models;
+using ChameraVote.Utility;
 
 namespace ChameraVote.ViewModels
 {
-    public class UserRegistrationViewModel:BaseViewModel
+    public class UserRegistrationViewModel:BaseViewModel, IPropertyStringValid
     {
         private UserRegistrationModel userRegistrationModel = new UserRegistrationModel();
 
@@ -63,6 +64,17 @@ namespace ChameraVote.ViewModels
             public const string bad = "Weak";
             public const string medium = "Medium";
             public const string good = "Good";
+        }
+
+        public bool PropertiesValid()
+        {
+            bool val = true;
+            if (this.Username.Contains(':') || this.RegistrationToken.Contains(':'))
+            {
+                this.Status = "':' not allowed.";
+                val = false;
+            }
+            return val;
         }
     }
 }

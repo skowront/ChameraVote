@@ -62,6 +62,8 @@
     <Compile Include="Models\VoteOption.cs" />
     <Compile Include="Models\VotingBriefModel.cs" />
     <Compile Include="Models\VotingCardModel.cs" />
+    <Compile Include="Utility\IPropertyStringValid.cs" />
+    <Compile Include="Utility\VoteClientValidationRule.cs" />
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\UserRegistrationViewModel.cs" />

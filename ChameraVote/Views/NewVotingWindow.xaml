@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="NewVotingWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Title"></TextBlock>
@@ -32,5 +36,6 @@
             <Button x:Name="addItem" Content="Add new option" Click="addItem_Click"></Button>
             <Button x:Name="uploadButton" Content="Upload" Click="uploadButton_Click"></Button>
         </StackPanel>
+        <TextBlock Grid.Row="1" Text="{Binding Path=Status}"></TextBlock>
     </Grid>
 </Window>

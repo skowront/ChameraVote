@@ -5,10 +5,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ChameraVote.Models;
+using ChameraVote.Utility;
 
 namespace ChameraVote.ViewModels
 {
-    public class VoteOptionViewModel:BaseViewModel
+    public class VoteOptionViewModel:BaseViewModel,IPropertyStringValid
     {
         private VoteOption voteOption = new VoteOption();
 
@@ -22,6 +23,14 @@ namespace ChameraVote.ViewModels
         {
             get { return this.voteOption.optionChecked; }
             set { this.voteOption.optionChecked = value; this.OnPropertyChanged(); }
+        }
+
+        private string status = "";
+
+        public string Status
+        {
+            get { return this.status; }
+            set { this.status = value; this.OnPropertyChanged(); }
         }
 
         public EventHandler CheckedEventHandler = null;
@@ -41,6 +50,17 @@ namespace ChameraVote.ViewModels
                     this.CheckedEventHandler?.Invoke(this, new EventArgs());
                 }
             }
+        }
+
+        public bool PropertiesValid()
+        {
+            bool val = true;
+            if (this.OptionValue.Contains(':'))
+            {
+                this.Status = "':' not allowed.";
+                val = false;
+            }
+            return val;
         }
     }
 }

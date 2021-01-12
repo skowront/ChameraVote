@@ -6,10 +6,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ChameraVote.Models;
+using ChameraVote.Utility;
 
 namespace ChameraVote.ViewModels
 {
-    public class VotingViewModel:BaseViewModel
+    public class VotingViewModel:BaseViewModel,IPropertyStringValid
     {
         private VotingModel votingModel = new VotingModel();
 
@@ -76,6 +77,14 @@ namespace ChameraVote.ViewModels
         {
             get { return this.votingModel.votingResults; }
             set { this.votingModel.votingResults = value; this.OnPropertyChanged(); }
+        }
+
+        private string status = "";
+
+        public string Status
+        {
+            get { return this.status; }
+            set { this.status = value; this.OnPropertyChanged(); }
         }
 
         private ObservableCollection<string> votingOptionsRaw = null;
@@ -150,6 +159,16 @@ namespace ChameraVote.ViewModels
                 }
                 item.OptionChecked = false;
             }
+        }
+        public bool PropertiesValid()
+        {
+            bool val = true;
+            if (this.VotingId.Contains(':') || this.Password.Contains(':') || this.VotingTitle.Contains(':'))
+            {
+                this.Status = "':' not allowed.";
+                val = false;
+            }
+            return val;
         }
     }
 }

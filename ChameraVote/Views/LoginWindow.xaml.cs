@@ -42,7 +42,16 @@ namespace ChameraVote.Views
 
         private void Login_Click(object sender, RoutedEventArgs e)
         {
+            if (!this.LoginViewModel.PropertiesValid())
+            {
+                return;
+            }
             VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
+            if(this.userPasswordTextBox.Password.Contains(':'))
+            {
+                this.statusTextBox.Text = "':' not allowed in passsowrd";
+                return;
+            }
             var token = voteClient.Login(this.LoginViewModel.Username, this.userPasswordTextBox.Password);
             if(token == null)
             {

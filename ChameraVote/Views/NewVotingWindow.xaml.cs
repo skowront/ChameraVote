@@ -49,6 +49,10 @@ namespace ChameraVote.Views
 
         private void uploadButton_Click(object sender, RoutedEventArgs e)
         {
+            if(!this.votingViewModel.PropertiesValid())
+            {
+                return;
+            }
             VoteClient voteClient = new VoteClient(this.configurationViewModel.ServerAddress);
             voteClient.AddNewVoting(userViewModel.Username,userViewModel.Token,votingViewModel.VotingModel);
         }

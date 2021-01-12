@@ -19,6 +19,10 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
         <StackPanel>
             <TextBlock x:Name="usernameTextBox" Text="{Binding Path=Username,StringFormat='Logged in as: {0}'}"></TextBlock>
             <StackPanel>
@@ -51,5 +55,6 @@
             <ListView x:Name="voteOptionsList" HorizontalAlignment="Center" Margin="0 20 0 20" ItemsSource="{Binding Path=VoteOptionViewModels,Mode=TwoWay}" ItemTemplate="{StaticResource VoteOptionDataTemplate}"></ListView>
             <Button x:Name="sendVote" Content="Vote!" Click="sendVote_Click" Width="150" Height="50" HorizontalAlignment="Center"></Button>
         </StackPanel>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=Status}"></TextBlock>
     </Grid>
 </Page>

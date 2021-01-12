@@ -35,6 +35,10 @@ namespace ChameraVote.Views
 
         private void refreshButton_Click(object sender, RoutedEventArgs e)
         {
+            if(!this.VotingViewModel.PropertiesValid())
+            {
+                return;
+            }
             VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
             var model = voteClient.GetVotingModel(this.VotingViewModel.VotingId,this.UserViewModel.Username,this.UserViewModel.Token,this.VotingViewModel.Password);
             if (model == null)

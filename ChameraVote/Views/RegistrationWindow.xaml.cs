@@ -34,6 +34,15 @@ namespace ChameraVote.Views
 
         private void sendButton_Click(object sender, RoutedEventArgs e)
         {
+            if(!this.userRegistrationViewModel.PropertiesValid())
+            {
+                return;
+            }
+            if (this.passwordBox.Password.Contains(':'))
+            {
+                this.userRegistrationViewModel.Status = "':' not allowed";
+                return;
+            }
             if(this.userRegistrationViewModel.Username==string.Empty)
             {
                 this.userRegistrationViewModel.Status = "Enter username.";
