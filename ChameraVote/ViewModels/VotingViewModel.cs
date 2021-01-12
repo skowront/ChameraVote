@@ -66,6 +66,18 @@ namespace ChameraVote.ViewModels
             set { this.votingModel.password = value;this.OnPropertyChanged(); }
         }
 
+        public Collection<string> Voters
+        {
+            get { return this.votingModel.votingClients; }
+            set { this.votingModel.votingClients = value; this.OnPropertyChanged(); }
+        }
+
+        public Collection<string> Results
+        {
+            get { return this.votingModel.votingResults; }
+            set { this.votingModel.votingResults = value; this.OnPropertyChanged(); }
+        }
+
         private ObservableCollection<string> votingOptionsRaw = null;
 
         public ObservableCollection<string> VotingOptionsRaw
@@ -108,6 +120,11 @@ namespace ChameraVote.ViewModels
         public VotingViewModel()
         {
 
+        }
+
+        public VotingViewModel(VotingModel votingModel)
+        {
+            this.votingModel = votingModel;
         }
 
         protected override void OnPropertyChanged([CallerMemberName] string property = null)

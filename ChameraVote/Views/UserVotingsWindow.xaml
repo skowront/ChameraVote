@@ -22,7 +22,7 @@
         <ListView Grid.Row="1" x:Name="votingsList" VerticalAlignment="Stretch" Margin="0 20 0 20" MouseDoubleClick="votingsList_MouseDoubleClick" ItemsSource="{Binding Path=BriefModels,Mode=TwoWay}" ItemTemplate="{StaticResource VotingBriefDataTemplate}">
             <ListView.Resources>
                 <ContextMenu x:Key="ItemContextMenu">
-                    <MenuItem Header="Results" Click="MenuItem_Click"></MenuItem>
+                    <MenuItem Header="Results" Click="ResultsItem_Click"></MenuItem>
                     <MenuItem Header="Delete" Click="DeleteItem_Click"></MenuItem>
                 </ContextMenu>
             </ListView.Resources>

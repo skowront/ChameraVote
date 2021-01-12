@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:ChameraVote.DataTemplates"
+                    xmlns:viewModels="clr-namespace:ChameraVote.ViewModels">
+    <DataTemplate x:Key="VotingCardDataTemplate" DataType="{x:Type viewModels:VotingCardViewModel}">
+        <StackPanel Orientation="Vertical">
+            <Line Stroke="Green" StrokeThickness="1"  X1="300" Y1="0"></Line>
+            <TextBlock Text="{Binding Path=Username,StringFormat='Username: {0}'}"></TextBlock>
+            <ListBox ItemsSource="{Binding Path=Options}" BorderBrush="Transparent"></ListBox>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>

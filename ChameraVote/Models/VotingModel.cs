@@ -30,7 +30,5 @@ namespace ChameraVote.Models
         public Collection<string> votingResults = new Collection<string>();
 
         public Collection<string> votingClients = new Collection<string>();
-
-
     }
 }

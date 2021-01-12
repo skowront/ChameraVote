@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using ChameraVote.Views;
 using ChameraVote.ViewModels;
 using ChameraVote.Utility;
 
@@ -67,9 +68,20 @@ namespace ChameraVote.Views
             this.GetUserVotings();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void ResultsItem_Click(object sender, RoutedEventArgs e)
         {
-
+            if (sender is MenuItem)
+            {
+                VotingBriefViewModel viewModel = ((MenuItem)sender).DataContext as VotingBriefViewModel;
+                VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
+                var result = voteClient.GetVotingModel(viewModel.Id,this.UserViewModel.Username, this.UserViewModel.Token, string.Empty);
+                if ( result ==null )
+                {
+                    return;
+                }
+                VotingResultsWindow window = new VotingResultsWindow(new VotingViewModel(result));
+                window.ShowDialog();
+            }
         }
 
         private void DeleteItem_Click(object sender, RoutedEventArgs e)
