@@ -5,19 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
         mc:Ignorable="d"
-        Title="AddVoteOptionWindow" Height="450" Width="800">
+        Title="AddVoteOptionWindow" Height="450" Width="800"
+        Style="{DynamicResource ChameraWindowStyle}">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="9*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Option description:"></TextBlock>
-                <TextBox Text="{Binding Path=OptionValue,Mode=TwoWay}" Width="100"></TextBox>
-            </StackPanel>
-            <Button x:Name="addButton" Content="Add" Click="addButton_Click"></Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <local:CustomTitleBar x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Top" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></local:CustomTitleBar>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+            <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
+                    <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                        <TextBlock Text="Option description:" Width="200"></TextBlock>
+                    </Border>
+                    <TextBox Text="{Binding Path=OptionValue,Mode=TwoWay}" Width="auto"></TextBox>
+            </DockPanel>
+            <Button x:Name="addButton" Content="Add" Click="addButton_Click" Margin="0 30 0 0"></Button>
         </StackPanel>
-        <TextBlock Grid.Row="1" Text="{Binding Path=Status,Mode=TwoWay}"></TextBlock>
+        <TextBlock Grid.Row="2" Text="{Binding Path=Status,Mode=TwoWay}"></TextBlock>
     </Grid>
 </Window>

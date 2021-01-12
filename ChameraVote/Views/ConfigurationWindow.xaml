@@ -5,11 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
         mc:Ignorable="d"
-        Title="ConfigurationWindow" Height="450" Width="800">
+        Title="ConfigurationWindow" Height="450" Width="800"
+        Style="{DynamicResource ChameraWindowStyle}">
     <Grid>
-        <StackPanel>
-            <TextBox x:Name="serverAddressTextBox" Text="{Binding Path=ServerAddress,Mode=TwoWay}"></TextBox>
-            <Button x:Name="saveConfigurationButton" Content="Save configuration" Click="saveConfigurationButton_Click"></Button>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <local:CustomTitleBar x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></local:CustomTitleBar>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
+                <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                    <TextBlock  Text="Server address:" Width="150" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <TextBox x:Name="serverAddressTextBox" Text="{Binding Path=ServerAddress,Mode=TwoWay}"></TextBox>
+            </DockPanel>
+            <Button x:Name="saveConfigurationButton" Content="Save configuration" Click="saveConfigurationButton_Click" Margin="0 30 0 0" HorizontalAlignment="Center"></Button>
         </StackPanel>
     </Grid>
 </Window>

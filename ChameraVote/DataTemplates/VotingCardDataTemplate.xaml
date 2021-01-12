@@ -4,9 +4,9 @@
                     xmlns:viewModels="clr-namespace:ChameraVote.ViewModels">
     <DataTemplate x:Key="VotingCardDataTemplate" DataType="{x:Type viewModels:VotingCardViewModel}">
         <StackPanel Orientation="Vertical">
-            <Line Stroke="Green" StrokeThickness="1"  X1="300" Y1="0"></Line>
             <TextBlock Text="{Binding Path=Username,StringFormat='Username: {0}'}"></TextBlock>
-            <ListBox ItemsSource="{Binding Path=Options}" BorderBrush="Transparent"></ListBox>
+            <ListView ItemsSource="{Binding Path=Options}" BorderBrush="Transparent" ItemContainerStyle="{DynamicResource ChameraListViewNotSelectableItem}"></ListView>
+            <Line Stroke="Yellow" StrokeThickness="2"  X1="400" Y1="0"></Line>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

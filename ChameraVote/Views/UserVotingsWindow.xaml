@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
         mc:Ignorable="d"
-        Title="UserVotingsWindow" Height="450" Width="800">
+        Title="UserVotingsWindow" Height="450" Width="800"
+        Style="{DynamicResource ChameraWindowStyle}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,11 +16,13 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="9*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Button Grid.Row="1" x:Name="newVotingButton" Content="Add new voting" Click="newVotingButton_Click"></Button>
-        <ListView Grid.Row="0" x:Name="votingsList" VerticalAlignment="Stretch" Margin="0 20 0 20" MouseDoubleClick="votingsList_MouseDoubleClick" ItemsSource="{Binding Path=BriefModels,Mode=TwoWay}" ItemTemplate="{StaticResource VotingBriefDataTemplate}">
+        <local:CustomTitleBar x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Top" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></local:CustomTitleBar>
+        <Button Grid.Row="2" x:Name="newVotingButton" Content="Add new voting" Click="newVotingButton_Click"></Button>
+        <ListView Grid.Row="1" x:Name="votingsList" VerticalAlignment="Stretch" Margin="0 20 0 20" MouseDoubleClick="votingsList_MouseDoubleClick" ItemsSource="{Binding Path=BriefModels,Mode=TwoWay}" ItemTemplate="{StaticResource VotingBriefDataTemplate}">
             <ListView.Resources>
                 <ContextMenu x:Key="ItemContextMenu">
                     <MenuItem Header="Results" Click="ResultsItem_Click"></MenuItem>
@@ -27,7 +30,7 @@
                 </ContextMenu>
             </ListView.Resources>
             <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
+                <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ChameraListBoxItem}">
                     <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}"></Setter>
                 </Style>
             </ListView.ItemContainerStyle>

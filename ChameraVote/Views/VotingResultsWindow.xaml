@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
         mc:Ignorable="d"
-        Title="VotingResultsWindow" Height="450" Width="800">
+        Title="VotingResultsWindow" Height="450" Width="800"
+        Style="{DynamicResource ChameraWindowStyle}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,6 +16,7 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="9*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
@@ -22,15 +24,20 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-
-        <DockPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Width="auto">
+        <local:CustomTitleBar x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Top" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></local:CustomTitleBar>
+        <DockPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Stretch" Width="auto">
             <Button x:Name="printButton" Click="printButton_Click" Content="Print" Width="auto"></Button>
         </DockPanel>
-        <DockPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Width="auto">
+        <DockPanel Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Width="auto">
             <Button x:Name="sumResults" Click="sumResults_Click" Content="SumResults" Width="auto"></Button>
         </DockPanel>
-        <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
-            <ListBox ItemsSource="{Binding Path=Votes}" ItemTemplate="{StaticResource ResourceKey=VotingCardDataTemplate}"></ListBox>
+        <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <ListView ItemsSource="{Binding Path=Votes}" ItemTemplate="{StaticResource ResourceKey=VotingCardDataTemplate}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" BasedOn="{StaticResource ChameraListViewNotSelectableItem}">
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListView>
         </DockPanel>
     </Grid>
 </Window>

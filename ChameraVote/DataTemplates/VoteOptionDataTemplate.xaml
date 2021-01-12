@@ -3,9 +3,9 @@
                     xmlns:local="clr-namespace:ChameraVote.DataTemplates"
                     xmlns:viewModels="clr-namespace:ChameraVote.ViewModels">
     <DataTemplate x:Key="VoteOptionDataTemplate" DataType="{x:Type viewModels:VoteOptionViewModel}">
-        <StackPanel>
-            <TextBlock Text="{Binding Path=OptionValue, Mode=TwoWay}"></TextBlock>
-            <CheckBox IsChecked="{Binding Path=OptionChecked, Mode=TwoWay}"></CheckBox>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="{Binding Path=OptionValue, Mode=TwoWay}" Width="150" TextWrapping="Wrap"></TextBlock>
+            <CheckBox IsChecked="{Binding Path=OptionChecked, Mode=TwoWay}" Style="{DynamicResource ChameraCheckBoxStyle}"></CheckBox>
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

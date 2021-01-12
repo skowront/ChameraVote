@@ -116,6 +116,11 @@ namespace ChameraVote.Utility
 
             for (int j = 0; j < clientsCount; j++)
             {
+                if(i>=str.Length)
+                {
+                    model.votingClients.Add("");
+                    continue;
+                }
                 while (str[i] != ':') { i++; if (i >= str.Length) { break; } }
                 model.votingClients.Add(str.Substring(0, i));
                 str = str.Remove(0, Math.Min(i + 1, str.Length));

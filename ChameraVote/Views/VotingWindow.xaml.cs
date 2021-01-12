@@ -83,6 +83,10 @@ namespace ChameraVote.Views
         {
             VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
             Collection<string> voteOptionsSelected = new Collection<string>();
+            if(this.VotingViewModel.VoteOptionViewModels==null)
+            {
+                return;
+            }
             foreach (var item in this.VotingViewModel.VoteOptionViewModels)
             {
                 if (item.OptionChecked == true)

@@ -5,27 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
         mc:Ignorable="d"
-        Title="RegistrationWindow" Height="450" Width="800">
+        Title="RegistrationWindow" Height="450" Width="800"
+        Style="{DynamicResource ChameraWindowStyle}">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="9*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Username"></TextBlock>
-                <TextBox Text="{Binding Path=Username}" Width="100"></TextBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Password"></TextBlock>
-                <PasswordBox x:Name="passwordBox" Width="100"></PasswordBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Token"></TextBlock>
-                <TextBox Text="{Binding Path=RegistrationToken}" Width="100"></TextBox>
-            </StackPanel>
-            <Button x:Name="sendButton" Content="Register" Click="sendButton_Click" Height="50"></Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <local:CustomTitleBar x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"  VerticalAlignment="Top" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:RegistrationWindow}}}"></local:CustomTitleBar>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+            <DockPanel HorizontalAlignment="Stretch" Margin="0 20 0 0">
+                <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                    <TextBlock  Text="Username" Width="100" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <TextBox DockPanel.Dock="Right" Text="{Binding Path=Username}" Width="auto"></TextBox>
+            </DockPanel>
+            <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
+                <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                    <TextBlock  Text="Password" Width="100" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <PasswordBox x:Name="passwordBox" Width="auto"></PasswordBox>
+            </DockPanel>
+            <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
+                <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                    <TextBlock  Text="Token" Width="100" VerticalAlignment="Center"></TextBlock>
+                </Border>
+                <TextBox Text="{Binding Path=RegistrationToken}" Width="auto"></TextBox>
+            </DockPanel>
+            <Button x:Name="sendButton" Content="Register" Click="sendButton_Click" Height="50" Margin="0 30 0 0" MinWidth="150" Width="auto" HorizontalAlignment="Center"></Button>
         </StackPanel>
-        <TextBlock Grid.Row="1" Text="{Binding Path=Status,Mode=TwoWay}"></TextBlock>
+        <TextBlock Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{Binding Path=Status,Mode=TwoWay}"></TextBlock>
     </Grid>
 </Window>
