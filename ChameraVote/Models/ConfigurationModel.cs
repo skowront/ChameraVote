@@ -9,5 +9,7 @@ namespace ChameraVote.Models
     public class ConfigurationModel
     {
         public string serverAddress = "localhost";
+
+        public string applicationToken = "0123456789";
     }
 }

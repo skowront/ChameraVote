@@ -46,7 +46,7 @@ namespace ChameraVote.Views
             {
                 return;
             }
-            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
+            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
             if(this.userPasswordTextBox.Password.Contains(':'))
             {
                 this.statusTextBox.Text = "':' not allowed in passsowrd";

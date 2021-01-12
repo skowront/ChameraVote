@@ -34,7 +34,6 @@ namespace ChameraVote
             set { this.userViewModel = value; this.OnPropertyChanged(new DependencyPropertyChangedEventArgs()); }
         }
 
-
         public MainWindow()
         {
             InitializeComponent();

@@ -7,9 +7,10 @@ from Voting import Voting
 from VotingContainer import VotingContainer
 from UserDatabase import UserDatabase
 from Errors import Errors
+from Configuration import Configuration
 
 class VotingServer:
-    maxBufferSize = 256
+    maxBufferSize = 1024
 
     class Response:
         def __init__(self,value="",errorCode=""):
@@ -57,6 +58,9 @@ class VotingServer:
                 data = clientsocket.recv(1024)
                 dataDecoded = data.decode("utf-8")
                 print(dataDecoded)
+                if(dataDecoded[0:len(Configuration.ApplicationToken)]!=Configuration.ApplicationToken):
+                    clientsocket.send(Errors.applicationUnauthorized.encode())
+                dataDecoded = dataDecoded[len(Configuration.ApplicationToken):]
                 prefix = ""
                 suffix = ""
                 if (self.ValidateRequest(dataDecoded)==False):

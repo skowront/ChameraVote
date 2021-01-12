@@ -18,6 +18,12 @@ namespace ChameraVote.ViewModels
             set { this.configurationModel.serverAddress = value; this.OnPropertyChanged(); }
         }
 
+        public string ApplicationToken
+        {
+            get { return this.configurationModel.applicationToken; }
+            set { this.configurationModel.applicationToken = value; this.OnPropertyChanged(); }
+        }
+
         public EventHandler OnConfigurationChanged = null;
 
         protected override void OnPropertyChanged([CallerMemberName] string property = null)

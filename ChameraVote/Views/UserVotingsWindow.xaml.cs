@@ -40,7 +40,7 @@ namespace ChameraVote.Views
 
         public bool GetUserVotings()
         {
-            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
+            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
             var result = voteClient.GetUserVotingsBrief(this.UserViewModel.Username,this.UserViewModel.Token,string.Empty);
             if(result==null)
             {
@@ -74,7 +74,7 @@ namespace ChameraVote.Views
             if (sender is MenuItem)
             {
                 VotingBriefViewModel viewModel = ((MenuItem)sender).DataContext as VotingBriefViewModel;
-                VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
+                VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
                 var result = voteClient.GetVotingModel(viewModel.Id,this.UserViewModel.Username, this.UserViewModel.Token, string.Empty);
                 if ( result ==null )
                 {
@@ -90,7 +90,7 @@ namespace ChameraVote.Views
            if(sender is MenuItem)
            {
                 VotingBriefViewModel viewModel = ((MenuItem)sender).DataContext as VotingBriefViewModel;
-                VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
+                VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
                 voteClient.RemoveVoting(this.UserViewModel.Username, this.UserViewModel.Token, viewModel.Id);
                 this.GetUserVotings();
            }

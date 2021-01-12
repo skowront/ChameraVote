@@ -59,7 +59,7 @@ namespace ChameraVote.Views
                 return;
             }
             
-            VoteClient voteClient = new VoteClient(configurationViewModel.ServerAddress);
+            VoteClient voteClient = new VoteClient(configurationViewModel);
             var result = voteClient.Register(this.userRegistrationViewModel.Username, this.passwordBox.Password, this.userRegistrationViewModel.RegistrationToken);
             if(result==null)
             {

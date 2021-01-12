@@ -17,6 +17,7 @@ class Errors:
     onlyOneOptionCanBeChosen = "11"
     passwordRequired = "12"
     onlyLoggedInUsers = "13"
+    applicationUnauthorized = "14"
     def __init__(self):
         Errors.ErrorDatabase:[Error] = []
         Errors.ErrorDatabase.append(Error("1","No return value."))

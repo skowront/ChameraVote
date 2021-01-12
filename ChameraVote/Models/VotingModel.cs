@@ -15,7 +15,7 @@ namespace ChameraVote.Models
 
         public string votingId = "";
 
-        public string votingTitle = "Voting title";
+        public string votingTitle = "";
 
         public bool anonymous = false;
 

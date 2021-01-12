@@ -61,7 +61,7 @@ namespace ChameraVote.Views
             {
                 return;
             }
-            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
+            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
             var model = voteClient.GetVotingModel(this.VotingViewModel.VotingId, this.UserViewModel.Username, this.UserViewModel.Token, this.VotingViewModel.Password);
             if (model == null)
             {
@@ -81,7 +81,7 @@ namespace ChameraVote.Views
 
         private void sendVote_Click(object sender, RoutedEventArgs e)
         {
-            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
+            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
             Collection<string> voteOptionsSelected = new Collection<string>();
             foreach (var item in this.VotingViewModel.VoteOptionViewModels)
             {
