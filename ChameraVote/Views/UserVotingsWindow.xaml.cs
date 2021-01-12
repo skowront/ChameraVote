@@ -38,14 +38,14 @@ namespace ChameraVote.Views
             this.DataContext = this.UserVotingsViewModel;
         }
 
-        public void GetUserVotings()
+        public bool GetUserVotings()
         {
             VoteClient voteClient = new VoteClient(this.ConfigurationViewModel.ServerAddress);
             var result = voteClient.GetUserVotingsBrief(this.UserViewModel.Username,this.UserViewModel.Token,string.Empty);
             if(result==null)
             {
                 this.UserVotingsViewModel.BriefModels = new Collection<VotingBriefViewModel>();
-                return;
+                return false;
             }
             Collection<VotingBriefViewModel> collection = new Collection<VotingBriefViewModel>();
             foreach(var item in result)
@@ -54,6 +54,7 @@ namespace ChameraVote.Views
                 collection.Add(viewModel);
             }
             this.UserVotingsViewModel.BriefModels = collection;
+            return true;
         }
 
         private void votingsList_MouseDoubleClick(object sender, MouseButtonEventArgs e)

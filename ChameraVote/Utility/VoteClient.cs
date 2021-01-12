@@ -131,19 +131,19 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(commandTemplate, "getVotingById",username,token, password, votingId);
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             while(responseData[responseData.Length-1]=='&')
             {
                 responseData = this.RemoveLast(responseData, "&");
                 data = new Byte[256];
                 bytes = stream.Read(data, 0, data.Length);
-                responseData += System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                responseData += System.Text.Encoding.UTF8.GetString(data, 0, bytes);
             }
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
@@ -172,12 +172,12 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(getUserVotingsTemplate, username, token, password);
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
@@ -208,12 +208,12 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(commandTemplate, "getTitle", username, token, password, votingId);
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
@@ -235,12 +235,12 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(commandTemplate, "getAnonymous", username, token, password, votingId);
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
@@ -266,12 +266,12 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(commandTemplate, "getOptions", username, token, password, votingId);
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             if(responseData.Split(':')[0] == incorrectResponseCode)
             {
@@ -306,12 +306,12 @@ namespace ChameraVote.Utility
                 message += ":" + item;
             }
 
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
@@ -331,12 +331,12 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(loginCommandTemplate, username,password);
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
@@ -358,12 +358,12 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(registerCommandTemplate, username, password, token);
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
@@ -385,12 +385,12 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(removeVotingTemplate, username, token, votingId);
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
@@ -412,12 +412,12 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(addNewVotingTemplate, username, token, this.EncodeNew(votingModel));
-            data = System.Text.Encoding.ASCII.GetBytes(message);
+            data = System.Text.Encoding.UTF8.GetBytes(message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[256];
             Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {

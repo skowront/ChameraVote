@@ -1,13 +1,9 @@
 import string
 import random
 from User import User
+from Errors import Errors
 
 class UserDatabase:
-    class Reasons:
-        wrongPassword = "Incorrect Password!"
-        usernameNotFound = "Username not found!"
-        userAlreadyExists = "User already exists!"
-
     class AuthenticationResult:
         def __init__(self,reason,token):
             self.reason = reason
@@ -38,7 +34,7 @@ class UserDatabase:
     def RegisterUser(self,username,password,registrationToken=""):
         for user in self.users:
             if user.Username == username:
-                return UserDatabase.Response(None,UserDatabase.Reasons.userAlreadyExists)
+                return UserDatabase.Response(None,Errors.userAlreadyExists)
         user = User()
         user.Username = username
         user.UserPassword = password
@@ -53,8 +49,8 @@ class UserDatabase:
                 if user.UserPassword == password:
                     return UserDatabase.AuthenticationResult(None,user.Token)
                 else:
-                    return UserDatabase.AuthenticationResult(UserDatabase.Reasons.wrongPassword,None)
-        return UserDatabase.AuthenticationResult(UserDatabase.Reasons.usernameNotFound,None)
+                    return UserDatabase.AuthenticationResult(Errors.wrongPassword,None)
+        return UserDatabase.AuthenticationResult(Errors.usernameNotFound,None)
          
     def ValidateUserToken(self,username,token)->bool:
         for user in self.users:

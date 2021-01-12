@@ -8,12 +8,12 @@ namespace ChameraVote.Models
 {
     class LoginModel
     {
-        public string username;
+        public string username = string.Empty;
 
-        public string userPassword;
+        public string userPassword = string.Empty;
 
-        public string token;
+        public string token = string.Empty;
 
-        public string status;
+        public string status = string.Empty;
     }
 }

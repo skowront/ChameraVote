@@ -94,9 +94,6 @@
     <Compile Include="Views\UserVotingsWindow.xaml.cs">
       <DependentUpon>UserVotingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VotingPage.xaml.cs">
-      <DependentUpon>VotingPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\VotingViewModel.cs" />
     <Compile Include="Models\VotingModel.cs" />
     <Compile Include="Views\VotingResultsWindow.xaml.cs">
@@ -153,10 +150,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserVotingsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\VotingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -6,14 +6,10 @@ from Logger import Logger
 from Voting import Voting
 from VotingContainer import VotingContainer
 from UserDatabase import UserDatabase
+from Errors import Errors
 
 class VotingServer:
     maxBufferSize = 256
-    class Messages:
-        wrongRequest = "Wrong reqest!"
-        nothingToReturn = "No return value!"
-        badRequest = "Request was invalid!"
-
 
     class Response:
         def __init__(self,value="",errorCode=""):
@@ -65,7 +61,7 @@ class VotingServer:
                 suffix = ""
                 if (self.ValidateRequest(dataDecoded)==False):
                     prefix ="NOK"               
-                    clientsocket.send(VotingServer.Messages.badRequest.encode())
+                    clientsocket.send(Errors.wrongRequest.encode())
                     continue
                 response = self.HandleClientRequest(dataDecoded)
                 if response.errorCode==None:
@@ -99,14 +95,14 @@ class VotingServer:
         print(messageArray)
         returnValue = ""
         if len(messageArray)<=1:
-            return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+            return VotingServer.Response(None,Errors.wrongRequest)
         elif msgType == "command":
             if len(messageArray)<2:
-                return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                return VotingServer.Response(None,Errors.wrongRequest)
             commandName = messageArray[1]
             if commandName == "getVotingById":
                 if len(messageArray)<4:
-                    return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                    return VotingServer.Response(None,Errors.wrongRequest)
                 username = messageArray[2]
                 token = messageArray[3]
                 password = messageArray[4]
@@ -120,7 +116,7 @@ class VotingServer:
 
             if commandName == "getTitle":
                 if len(messageArray)<4:
-                    return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                    return VotingServer.Response(None,Errors.wrongRequest)
                 username = messageArray[2]
                 token = messageArray[3]
                 password = messageArray[4]
@@ -134,7 +130,7 @@ class VotingServer:
 
             if commandName == "getOptions":
                 if len(messageArray)<4:
-                    return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                    return VotingServer.Response(None,Errors.wrongRequest)
                 username = messageArray[2]
                 token = messageArray[3]
                 password = messageArray[4]
@@ -148,7 +144,7 @@ class VotingServer:
 
             if commandName == "getAnonymous":
                 if len(messageArray)<4:
-                    return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                    return VotingServer.Response(None,Errors.wrongRequest)
                 username = messageArray[2]
                 token = messageArray[3]
                 password = messageArray[4]
@@ -163,7 +159,7 @@ class VotingServer:
 
             if commandName == "getMutuallyExclusive":
                 if len(messageArray)<4:
-                    return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                    return VotingServer.Response(None,Errors.wrongRequest)
                 username = messageArray[2]
                 token = messageArray[3]
                 password = messageArray[4]
@@ -177,7 +173,7 @@ class VotingServer:
 
             if commandName == "getOwner":
                 if len(messageArray)<4:
-                    return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                    return VotingServer.Response(None,Errors.wrongRequest)
                 username = messageArray[2]
                 token = messageArray[3]
                 password = messageArray[4]
@@ -191,7 +187,7 @@ class VotingServer:
 
             if commandName == "getClients":
                 if len(messageArray)<4:
-                    return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                    return VotingServer.Response(None,Errors.wrongRequest)
                 username = messageArray[2]
                 token = messageArray[3]
                 password = messageArray[4]
@@ -205,7 +201,7 @@ class VotingServer:
 
             if commandName == "getResults":
                 if len(messageArray)<4:
-                    return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                    return VotingServer.Response(None,Errors.wrongRequest)
                 username = messageArray[2]
                 token = messageArray[3]
                 password = messageArray[4]
@@ -219,7 +215,7 @@ class VotingServer:
 
             if commandName == "castVote":
                 if len(messageArray)<4:
-                    return VotingServer.Response(None,VotingServer.Messages.wrongRequest)
+                    return VotingServer.Response(None,Errors.wrongRequest)
                 username = messageArray[2]
                 password = messageArray[3]
                 votingId = messageArray[4]
@@ -299,4 +295,4 @@ class VotingServer:
                 if result.value==None:
                     return VotingContainer.Response(result.value,result.errorCode)
 
-        return VotingServer.Response(VotingServer.Messages.nothingToReturn,None)
+        return VotingServer.Response(Errors.nothingToReturn,None)

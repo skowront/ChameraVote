@@ -8,8 +8,8 @@ namespace ChameraVote.Models
 {
     public class VotingBriefModel
     {
-        public string title;
+        public string title = string.Empty;
 
-        public string id;
+        public string id = string.Empty;
     }
 }

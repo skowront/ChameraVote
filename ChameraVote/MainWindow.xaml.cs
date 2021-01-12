@@ -53,9 +53,7 @@ namespace ChameraVote
         }
         public void PopupVote()
         {
-            VotingWindow window = new VotingWindow();
-            window.votingPage.UserViewModel = this.UserViewModel;
-            
+            VotingWindow window = new VotingWindow(this.UserViewModel,this.configurationViewModel);
             window.ShowDialog();
         }
 
@@ -71,6 +69,10 @@ namespace ChameraVote
 
         public void PopupUserVotings()
         {
+            if(this.UserViewModel.Username==string.Empty)
+            {
+                return;
+            }
             UserVotingsWindow window = new UserVotingsWindow(this.userViewModel,this.configurationViewModel);
             window.ShowDialog();
         }

@@ -7,5 +7,57 @@
         xmlns:views="clr-namespace:ChameraVote.Views"
         mc:Ignorable="d"
         Title="VotingWindow" Height="450" Width="800">
-    <views:VotingPage x:Name="votingPage"></views:VotingPage>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\DataTemplates\VoteOptionDataTemplate.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Username" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
+                <TextBox x:Name="usernameTextBox" Text="{Binding Path=Username}" MinWidth="100" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock x:Name="serverAddressTextBox" Text="{Binding Path=ServerAddress,StringFormat='Server address:{0}'}"></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Voting ID" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
+                <TextBox Text="{Binding Path=VotingId, Mode=TwoWay}" MinWidth="100" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Password" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
+                <TextBox Text="{Binding Path=Password, Mode=TwoWay}" MinWidth="100" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
+            </StackPanel>
+            <Button x:Name="refreshButton" Content="Refresh" Click="refreshButton_Click" HorizontalAlignment="Left" MinWidth="150" MinHeight="30" Margin="0 5 0 0 "></Button>
+        </StackPanel>
+        <StackPanel x:Name="votingMainStackPanel" Grid.Column="1" Visibility="Hidden">
+            <TextBlock Text="{Binding Path=VotingTitle, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"></TextBlock>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Anonymous"></TextBlock>
+                <CheckBox IsChecked="{Binding Path=Anonymous,Mode=OneWay}" IsEnabled="False"></CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Mutually exclusive"></TextBlock>
+                <CheckBox IsChecked="{Binding Path=MutuallyExclusive,Mode=OneWay}" IsEnabled="False"></CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="Unregistered users allowed"></TextBlock>
+                <CheckBox IsChecked="{Binding Path=AllowUnregisteredUsers,Mode=OneWay}" IsEnabled="False"></CheckBox>
+            </StackPanel>
+            <ListView x:Name="voteOptionsList" HorizontalAlignment="Center" Margin="0 20 0 20" ItemsSource="{Binding Path=VoteOptionViewModels,Mode=TwoWay}" ItemTemplate="{StaticResource VoteOptionDataTemplate}"></ListView>
+            <Button x:Name="sendVote" Content="Vote!" Click="sendVote_Click" Width="150" Height="50" HorizontalAlignment="Center"></Button>
+        </StackPanel>
+        <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=Status}"></TextBlock>
+    </Grid>
 </Window>

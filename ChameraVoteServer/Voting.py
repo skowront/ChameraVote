@@ -1,16 +1,9 @@
 import random
+from Errors import Errors
 
 class Voting:
     topId=0
     defaultPassword=""
-
-    class Messages:
-        wrongPassword = "Wrong password!"
-        alreadyVoted = "Already voted!"
-        onlyOneOptionCanBeChosen = "Only one option may be chosen."
-        accountNotValid = "Account is not valid. Try to log in once again."
-        passwordRequired = "Password is required to enter this vote."
-        onlyLoggedInUsers = "You must be logged in to enter this vote."
 
     class Response:
         def __init__(self,value="",errorCode=""):
@@ -123,16 +116,19 @@ class Voting:
     def ValidateAccess(self,username,token,password):
         if (username == None or username == "") and self.allowUnregisteredUsers:
             if self.password!=password:
-                return Voting.Response(None,Voting.Messages.wrongPassword)
+                return Voting.Response(None,Errors.wrongPassword)
         elif (username == None or username == ""):
-            return Voting.Response(None,Voting.Messages.onlyLoggedInUsers)
-        if self.userDatabase.ValidateUserToken(username,token)==False:
+            return Voting.Response(None,Errors.onlyLoggedInUsers)
+        if self.userDatabase.ValidateUserToken(username,token)==False and self.allowUnregisteredUsers:
             if self.password!=password:
-                return Voting.Response(None,Voting.Messages.wrongPassword)
+                return Voting.Response(None,Errors.wrongPassword)
         else:
             if self.password!=password:
                 if username!=self.owner:
-                    return Voting.Response(None,Voting.Messages.passwordRequired)
+                    return Voting.Response(None,Errors.passwordRequired)
+                if username == self.owner:
+                    if self.userDatabase.ValidateUserToken(username,token)==False:
+                        return Voting.Response(None,Errors.accountNotValid)
         return Voting.Response(True,None)
 
     def GetEncodedVoting(self,username,token,password):
@@ -234,9 +230,9 @@ class Voting:
         if result.value==None:
             return Voting.Response(None,result.errorCode)
         if self.DidAlreadyVote(voteClient) and self.allowUnregisteredUsers==False:
-            return Voting.Response(None,Voting.Messages.alreadyVoted)                
+            return Voting.Response(None,Errors.alreadyVoted)                
         if self.mutuallyExclusive and len(voteResults)>1:
-            return Voting.Response(None,Voting.Messages.onlyOneOptionCanBeChosen)  
+            return Voting.Response(None,Errors.onlyOneOptionCanBeChosen)  
         for result in voteResults:
             self.voteClients.append(voteClient)
             self.voteResults.append(result)
