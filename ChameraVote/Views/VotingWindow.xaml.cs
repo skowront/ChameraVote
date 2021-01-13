@@ -62,7 +62,8 @@ namespace ChameraVote.Views
                 return;
             }
             VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
-            var model = voteClient.GetVotingModel(this.VotingViewModel.VotingId, this.UserViewModel.Username, this.UserViewModel.Token, this.VotingViewModel.Password);
+            int ec = 0;
+            var model = voteClient.GetVotingModel(this.VotingViewModel.VotingId, this.UserViewModel.Username, this.UserViewModel.Token, this.VotingViewModel.Password, out ec);
             if (model == null)
             {
                 this.votingMainStackPanel.Visibility = Visibility.Hidden;
@@ -94,7 +95,16 @@ namespace ChameraVote.Views
                     voteOptionsSelected.Add(item.OptionValue);
                 }
             }
-            voteClient.SendVote(this.VotingViewModel.VotingId, voteOptionsSelected, this.UserViewModel.Username, this.UserViewModel.Token, this.VotingViewModel.Password);
+            int ec = 0;
+            var result = voteClient.SendVote(this.VotingViewModel.VotingId, voteOptionsSelected, this.UserViewModel.Username, this.UserViewModel.Token, this.VotingViewModel.Password, out ec);
+            if(result == true)
+            {
+                this.VotingViewModel.Status = "Vote accepted.";
+            }
+            else
+            {
+                this.VotingViewModel.Status = VoteClient.errors[ec].Item2;
+            }
         }
     }
 }

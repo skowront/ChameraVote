@@ -35,6 +35,12 @@
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
                     <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                        <TextBlock Text="Maximum options"  Width="150"></TextBlock>
+                    </Border>
+                    <TextBox Text="{Binding Path=MaxOptions}" MinWidth="400" HorizontalAlignment="Stretch"></TextBox>
+                </DockPanel>
+                <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
+                    <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
                         <TextBlock Text="Anonymous"  Width="300"></TextBlock>
                     </Border>
                     <CheckBox IsChecked="{Binding Path=Anonymous}"></CheckBox>

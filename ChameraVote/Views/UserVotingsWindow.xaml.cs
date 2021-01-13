@@ -41,7 +41,8 @@ namespace ChameraVote.Views
         public bool GetUserVotings()
         {
             VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
-            var result = voteClient.GetUserVotingsBrief(this.UserViewModel.Username,this.UserViewModel.Token,string.Empty);
+            int ec = 0;
+            var result = voteClient.GetUserVotingsBrief(this.UserViewModel.Username,this.UserViewModel.Token,string.Empty,out ec);
             if(result==null)
             {
                 this.UserVotingsViewModel.BriefModels = new Collection<VotingBriefViewModel>();
@@ -75,7 +76,8 @@ namespace ChameraVote.Views
             {
                 VotingBriefViewModel viewModel = ((MenuItem)sender).DataContext as VotingBriefViewModel;
                 VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
-                var result = voteClient.GetVotingModel(viewModel.Id,this.UserViewModel.Username, this.UserViewModel.Token, string.Empty);
+                int ec = 0;
+                var result = voteClient.GetVotingModel(viewModel.Id,this.UserViewModel.Username, this.UserViewModel.Token, string.Empty, out ec);
                 if ( result ==null )
                 {
                     return;
@@ -91,7 +93,8 @@ namespace ChameraVote.Views
            {
                 VotingBriefViewModel viewModel = ((MenuItem)sender).DataContext as VotingBriefViewModel;
                 VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
-                voteClient.RemoveVoting(this.UserViewModel.Username, this.UserViewModel.Token, viewModel.Id);
+                int ec = 0;
+                voteClient.RemoveVoting(this.UserViewModel.Username, this.UserViewModel.Token, viewModel.Id, out ec);
                 this.GetUserVotings();
            }
         }

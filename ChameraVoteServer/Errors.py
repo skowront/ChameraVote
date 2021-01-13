@@ -18,6 +18,9 @@ class Errors:
     passwordRequired = "12"
     onlyLoggedInUsers = "13"
     applicationUnauthorized = "14"
+    tooManyOptionsSelected = "15"
+    votingHasNoOwner = "16"
+    votingHasNoTitle = "17"
     def __init__(self):
         Errors.ErrorDatabase:[Error] = []
         Errors.ErrorDatabase.append(Error("1","No return value."))
@@ -33,6 +36,10 @@ class Errors:
         Errors.ErrorDatabase.append(Error("11","Only one option may be chosen."))
         Errors.ErrorDatabase.append(Error("12","Password is required to enter this vote."))
         Errors.ErrorDatabase.append(Error("13","You must be logged in to enter this vote."))
+        Errors.ErrorDatabase.append(Error("14","Application is not authorized."))
+        Errors.ErrorDatabase.append(Error("15","Too many options selected."))
+        Errors.ErrorDatabase.append(Error("16","Voting has no owner."))
+        Errors.ErrorDatabase.append(Error("16","Voting has no title."))
 
     def GetErrorByCode(self,code)->Error:
         for err in Errors.ErrorDatabase:

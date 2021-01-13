@@ -60,7 +60,8 @@ namespace ChameraVote.Views
             }
             
             VoteClient voteClient = new VoteClient(configurationViewModel);
-            var result = voteClient.Register(this.userRegistrationViewModel.Username, this.passwordBox.Password, this.userRegistrationViewModel.RegistrationToken);
+            int ec = 0;
+            var result = voteClient.Register(this.userRegistrationViewModel.Username, this.passwordBox.Password, this.userRegistrationViewModel.RegistrationToken, out ec);
             if(result==null)
             {
                 return;

@@ -52,7 +52,8 @@ namespace ChameraVote.Views
                 this.statusTextBox.Text = "':' not allowed in passsowrd";
                 return;
             }
-            var token = voteClient.Login(this.LoginViewModel.Username, this.userPasswordTextBox.Password);
+            int ec = 0;
+            var token = voteClient.Login(this.LoginViewModel.Username, this.userPasswordTextBox.Password, out ec);
             if(token == null)
             {
                 this.LoginViewModel.Status = "Login failed.";

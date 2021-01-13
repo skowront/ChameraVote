@@ -23,6 +23,8 @@ namespace ChameraVote.Models
 
         public bool allowUnregisteredUsers = false;
 
+        public int maxOptions = 1;
+
         public string password = "";
 
         public Collection<string> votingOptionsRaw = new Collection<string>();

@@ -61,6 +61,12 @@ namespace ChameraVote.ViewModels
             set { this.votingModel.allowUnregisteredUsers = value; this.OnPropertyChanged(); }
         }
 
+        public int MaxOptions
+        {
+            get { return this.votingModel.maxOptions; }
+            set { this.votingModel.maxOptions = value; this.OnPropertyChanged(); }
+        }
+
         public string Password
         {
             get { return this.votingModel.password; }

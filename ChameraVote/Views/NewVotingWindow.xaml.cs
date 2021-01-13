@@ -54,7 +54,8 @@ namespace ChameraVote.Views
                 return;
             }
             VoteClient voteClient = new VoteClient(this.configurationViewModel);
-            voteClient.AddNewVoting(userViewModel.Username,userViewModel.Token,votingViewModel.VotingModel);
+            int ec = 0;
+            voteClient.AddNewVoting(userViewModel.Username, userViewModel.Token, votingViewModel.VotingModel, out ec);
         }
     }
 }

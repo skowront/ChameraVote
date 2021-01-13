@@ -84,6 +84,11 @@ namespace ChameraVote.Utility
             i = 0;
 
             while (str[i] != ':') { i++; }
+            model.maxOptions = int.Parse(str.Substring(0, i));
+            str = str.Remove(0, i + 1);
+            i = 0;
+
+            while (str[i] != ':') { i++; }
             var optionsCount = int.Parse(str.Substring(0, i));
             str = str.Remove(0, i + 1);
             i = 0;
@@ -130,7 +135,7 @@ namespace ChameraVote.Utility
             return model;
         }
 
-        public VotingModel GetVotingModel(string votingId,string username,string token, string password)
+        public VotingModel GetVotingModel(string votingId,string username,string token, string password, out int errorCode )
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -158,9 +163,11 @@ namespace ChameraVote.Utility
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2,"Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
                 return null;
             }
+            errorCode = 0;
 
             var noCode = string.Empty;
             for(int i=3;i<responseData.Length;i++)
@@ -171,7 +178,7 @@ namespace ChameraVote.Utility
             return this.VotingModelFromString(noCode);
         }
 
-        public Collection<VotingBriefModel> GetUserVotingsBrief(string username, string token, string password)
+        public Collection<VotingBriefModel> GetUserVotingsBrief(string username, string token, string password, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -191,9 +198,11 @@ namespace ChameraVote.Utility
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
                 return null;
             }
+            errorCode = 0;
 
             Collection<VotingBriefModel> collection = new Collection<VotingBriefModel>();
 
@@ -207,7 +216,7 @@ namespace ChameraVote.Utility
             return collection;
         }
 
-        public string GetTitle(string votingId, string username, string token, string password)
+        public string GetTitle(string votingId, string username, string token, string password,out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -227,14 +236,16 @@ namespace ChameraVote.Utility
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
                 return null;
             }
+            errorCode = 0;
 
             return responseData.Split(':')[1];
         }
 
-        public bool? GetAnonymous(string votingId, string username, string token, string password)
+        public bool? GetAnonymous(string votingId, string username, string token, string password, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -254,18 +265,20 @@ namespace ChameraVote.Utility
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
                 return null;
             }
+            errorCode = 0;
 
-            if(responseData.Split(':')[1].ToLower()=="true")
+            if (responseData.Split(':')[1].ToLower()=="true")
             {
                 return true;
             }
             return false;
         }
 
-        public IEnumerable<string> GetOptions(string votingId, string username, string token, string password)
+        public IEnumerable<string> GetOptions(string votingId, string username, string token, string password, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -283,11 +296,13 @@ namespace ChameraVote.Utility
             Int32 bytes = stream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
-            if(responseData.Split(':')[0] == incorrectResponseCode)
+            if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
                 return null;
             }
+            errorCode = 0;
 
             var values = responseData.Split(':');
             var collection = new Collection<string>();
@@ -299,7 +314,7 @@ namespace ChameraVote.Utility
             return collection;
         }
 
-        public void SendVote(string votingId, Collection<string> selectedOptions, string username,string token, string password)
+        public bool SendVote(string votingId, Collection<string> selectedOptions, string username,string token, string password, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -325,12 +340,16 @@ namespace ChameraVote.Utility
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
-                return;
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
+                return false;
             }
+            errorCode = 0;
+
+            return true;
         }
 
-        public string Login(string username,string password)
+        public string Login(string username,string password, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -350,14 +369,16 @@ namespace ChameraVote.Utility
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
                 return null;
             }
+            errorCode = 0;
 
             return responseData.Split(':')[1];
         }
 
-        public string Register(string username, string password,string token)
+        public string Register(string username, string password,string token, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -377,14 +398,16 @@ namespace ChameraVote.Utility
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
                 return null;
             }
+            errorCode = 0;
 
             return responseData.Split(':')[1];
         }
 
-        public string RemoveVoting(string username, string token, string votingId)
+        public string RemoveVoting(string username, string token, string votingId, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -404,14 +427,16 @@ namespace ChameraVote.Utility
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
                 return null;
             }
+            errorCode = 0;
 
             return responseData.Split(':')[1];
         }
 
-        public string AddNewVoting(string username, string token, VotingModel votingModel)
+        public string AddNewVoting(string username, string token, VotingModel votingModel, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -431,9 +456,11 @@ namespace ChameraVote.Utility
 
             if (responseData.Split(':')[0] == incorrectResponseCode)
             {
-                MessageBox.Show(responseData.Split(':')[1]);
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
                 return null;
             }
+            errorCode = 0;
 
             return responseData.Split(':')[1];
         }
@@ -447,6 +474,7 @@ namespace ChameraVote.Utility
             value += votingModel.anonymous + ":";
             value += votingModel.mutuallyExclusive + ":";
             value += votingModel.allowUnregisteredUsers + ":";
+            value += votingModel.maxOptions + ":";
             value += votingModel.votingOptionsRaw.Count.ToString() + ":";
             foreach (var item in votingModel.votingOptionsRaw)
             {
@@ -463,5 +491,28 @@ namespace ChameraVote.Utility
             if (text.Length < 1) return text;
             return text.Remove(text.ToString().LastIndexOf(character), character.Length);
         }
+
+
+        public static readonly Tuple<int, string>[] errors = new Tuple<int, string>[18] 
+        {
+            new Tuple<int,string>(0,"Succes."),
+            new Tuple<int,string>(1,"No return value."),
+            new Tuple<int,string>(2,"Wrong request."),
+            new Tuple<int,string>(3,"Wrong password."),
+            new Tuple<int,string>(4,"Username not found."),
+            new Tuple<int,string>(5,"User already exists."),
+            new Tuple<int,string>(6,"Requested voting not found."),
+            new Tuple<int,string>(7,"Wrong number format."),
+            new Tuple<int,string>(8,"Account is not valid."),
+            new Tuple<int,string>(9,"There are no votings that meet the requirements."),
+            new Tuple<int,string>(10,"Already voted!"),
+            new Tuple<int,string>(11,"Only one option may be chosen."),
+            new Tuple<int,string>(12,"Password is required to enter this vote."),
+            new Tuple<int,string>(13,"You must be logged in to enter this vote."),
+            new Tuple<int,string>(14,"Application is not authorized."),
+            new Tuple<int,string>(15,"Too many options selected."),
+            new Tuple<int,string>(16,"Voting has no owner."),
+            new Tuple<int,string>(17,"Voting has no title."),
+        };
     }
 }

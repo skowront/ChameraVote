@@ -286,7 +286,9 @@ class VotingServer:
                 msg = msg[i:]
                 print(msg)
                 voting = Voting(self.userDatabase)
-                voting.Decode(msg)
+                result = voting.Decode(msg)
+                if result.value==None:
+                    return VotingServer.Response(result.value,result.errorCode)
                 voting.GenerateNewId()
                 result = self.votingContainer.AddVoting(voting,username,token)
                 return VotingServer.Response(voting.id,None)

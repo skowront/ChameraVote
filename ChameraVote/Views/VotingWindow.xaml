@@ -54,19 +54,35 @@
         </StackPanel>
         <ScrollViewer Grid.Row="1" Grid.Column="1">
             <StackPanel x:Name="votingMainStackPanel"  Visibility="Hidden">
-                <TextBlock Text="{Binding Path=VotingTitle, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"></TextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="Anonymous"></TextBlock>
+                <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
+                    <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                        <TextBlock Text="{Binding Path=VotingTitle, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontSize="20"></TextBlock>
+                    </Border>
+                </DockPanel>
+                <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
+                    <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                        <TextBlock Text="Anonymous"></TextBlock>
+                    </Border>
                     <CheckBox IsChecked="{Binding Path=Anonymous,Mode=OneWay}" IsHitTestVisible="False" Style="{DynamicResource ChameraCheckBoxStyle}"></CheckBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="Mutually exclusive"></TextBlock>
+                </DockPanel>
+                <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
+                    <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                        <TextBlock Text="Mutually exclusive"></TextBlock>
+                    </Border>
                     <CheckBox IsChecked="{Binding Path=MutuallyExclusive,Mode=OneWay}" IsHitTestVisible="False" Style="{DynamicResource ChameraCheckBoxStyle}"></CheckBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="Unregistered users allowed"></TextBlock>
+                </DockPanel>
+                <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
+                    <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                        <TextBlock Text="Unregistered users allowed"></TextBlock>
+                    </Border>
                     <CheckBox IsChecked="{Binding Path=AllowUnregisteredUsers,Mode=OneWay}" IsHitTestVisible="False" Style="{DynamicResource ChameraCheckBoxStyle}"></CheckBox>
-                </StackPanel>
+                </DockPanel>
+                <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
+                    <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                        <TextBlock Text="Max options" Width="100"></TextBlock>
+                    </Border>
+                    <TextBlock Text="{Binding Path=MaxOptions,Mode=OneWay}" IsHitTestVisible="False"></TextBlock>
+                </DockPanel>
                 <ListView x:Name="voteOptionsList" HorizontalAlignment="Center" Margin="0 20 0 20" ItemsSource="{Binding Path=VoteOptionViewModels,Mode=TwoWay}" ItemTemplate="{StaticResource VoteOptionDataTemplate}">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
