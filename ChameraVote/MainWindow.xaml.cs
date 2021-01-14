@@ -41,7 +41,7 @@ namespace ChameraVote
 
         public void PopupLogin()
         {
-            LoginWindow window = new LoginWindow();
+            LoginWindow window = new LoginWindow(this.configurationViewModel);
             window.OnLoginSuccess += (o, e) =>
             {
                 this.UserViewModel.Username = window.LoginViewModel.Username;

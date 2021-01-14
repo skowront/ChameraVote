@@ -2,7 +2,7 @@ class VoteClient
 {
     constructor(serverAddress,port,statusCallback)
     {
-        this.link = 'http://'+serverAddress+':'+port+'/vote';
+        this.link = 'http://'+serverAddress+':'+port+'';
         this.serverAddress = serverAddress;
         this.port = port;
         this.socket = null;

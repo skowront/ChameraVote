@@ -19,24 +19,24 @@ async def index(request):
     with open('index.html') as f:
         return web.Response(text=f.read(), content_type='text/html')
 
-@sio.on('connect', namespace='/vote')
+@sio.on('connect', namespace='')
 def connect(sid, environ):
     print("connect", sid)
 
-@sio.on('message', namespace='/vote')
+@sio.on('message', namespace='')
 async def message(sid, data):
     print("server received message!", data)
     lock.acquire()
     res = votingServer.BuildResponse(data)
     lock.release()
     print('Response: '+res)
-    await sio.emit('reply', res,namespace='/vote')
+    await sio.emit('reply', res,namespace='')
 
-@sio.on('disconnect', namespace='/vote')
+@sio.on('disconnect', namespace='')
 def disconnect(sid):
     print('disconnect', sid)
 
-app.router.add_get('/', index)
+#app.router.add_get('/', index)
 
 if __name__ == '__main__':
     web.run_app(app,host="localhost",port="16402")
