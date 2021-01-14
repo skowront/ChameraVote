@@ -2,6 +2,7 @@ import string
 import random
 from User import User
 from Errors import Errors
+from Configuration import Configuration;
 
 class UserDatabase:
     class AuthenticationResult:
