@@ -14,6 +14,7 @@ class VoteClient
         this.token= "";
         this.voting = null;
         this.StatusCallback = statusCallback;
+        this.OnRegisterSuccessfull = null;
         this.OnLoginSuccessfull = null;
         this.OnVotingRecieved = null;
         this.OnVotesAccepted =  null;
@@ -48,6 +49,11 @@ class VoteClient
         voteClient.status = "OK";
         switch(voteClient.state)
         {
+            case VoteClientStates.register:
+                voteClient.token = messageArray[1];
+                voteClient.status = "Register successful";
+                voteClient.OnRegisterSuccessfull();
+                break;
             case VoteClientStates.login:
                 voteClient.token = messageArray[1];
                 voteClient.status = "Login successful";
@@ -93,6 +99,17 @@ class VoteClient
         return;
     };
 
+    Register(username,password,token)
+    {
+        this.BuildSocket();
+        this.state = VoteClientStates.register;
+        console.log("Logging in.")
+        var msg = this.prefix+"command:register:"+username+":"+password+":"+token;
+        this.socket.emit("message",msg);
+        this.username = username;
+        return;
+    };
+
     Login(username,password)
     {
         this.BuildSocket();
@@ -133,6 +150,7 @@ class VoteClient
 
 class VoteClientStates
 {
+    static register = "register";
     static login = "login";
     static gettingVoting = "gettingVoting";
     static sendingVotes = "sendingVotes";

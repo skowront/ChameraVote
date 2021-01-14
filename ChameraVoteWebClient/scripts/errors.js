@@ -18,6 +18,7 @@ class VoteErrors
         "Application is not authorized.",
         "Too many options selected.",
         "Voting has no owner.",
-        "Voting has no title."
+        "Voting has no title.",
+        "Bad registration token."
     ];
 };new VoteErrors();

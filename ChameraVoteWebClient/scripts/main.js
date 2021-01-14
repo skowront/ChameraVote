@@ -8,9 +8,17 @@ var StatusCallback = function()
     document.getElementById('Status').innerHTML = voteClient.status;
 } 
 
+var OnRegisterSuccessfull = function()
+{
+    document.getElementById('UsernameRegister').disabled = true;
+    document.getElementById('PasswordRegister').disabled = true;
+    document.getElementById('TokenRegister').disabled = true;
+    document.getElementById('Register').disabled = true;
+} 
+
+
 var OnLoginSuccessfull = function()
 {
-    document.getElementById('Status').innerHTML = voteClient.status;
     document.getElementById('Username').disabled = true;
     document.getElementById('Password').disabled = true;
     let password = document.getElementById('Login').disabled = true;
@@ -26,6 +34,8 @@ var OnVotingRecieved = function()
     document.getElementById('MutuallyExclusive').checked = voteClient.voting.mutuallyExclusive;
     document.getElementById('AllowUnregisteredUsers').checked = voteClient.voting.allowUnregisteredUsers;
     document.getElementById('MaxOptions').value = voteClient.voting.maxOptions;
+    document.getElementById('VotingTitle').innerHTML = voteClient.voting.title;
+    document.getElementById('SendVote').disabled = false;
     var listContainer = document.getElementById('OptionsList');
     listContainer.innerHTML="";
     for(var i = 0; i<voteClient.voting.voteOptions.length;i++)
@@ -44,15 +54,23 @@ var OnVotingRecieved = function()
 
 var OnVotesAccepted = function()
 {
-    ocument.getElementById('SendVote').disabled = true;
+    document.getElementById('SendVote').disabled = true;
 }
 
 
 var voteClient = new VoteClient(address.placeholder,port.placeholder,StatusCallback);
+voteClient.OnRegisterSuccessfull = OnRegisterSuccessfull;
 voteClient.OnLoginSuccessfull = OnLoginSuccessfull;
 voteClient.OnVotingRecieved = OnVotingRecieved;
 voteClient.OnVotesAccepted = OnVotesAccepted;
 
+document.getElementById('RegisterForm').onsubmit = function(e) {
+    let username = document.getElementById('UsernameRegister').value;
+    let password = document.getElementById('PasswordRegister').value;
+    let token = document.getElementById('TokenRegister').value;
+    voteClient.Register(username,password,token);
+    return false;
+};
 
 document.getElementById('LoginForm').onsubmit = function(e) {
     let username = document.getElementById('Username').value;

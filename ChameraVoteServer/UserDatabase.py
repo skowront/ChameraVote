@@ -35,6 +35,8 @@ class UserDatabase:
         for user in self.users:
             if user.Username == username:
                 return UserDatabase.Response(None,Errors.userAlreadyExists)
+        if registrationToken!=Configuration.RegistrationToken:
+            return UserDatabase.Response(None,Errors.badRegistrationToken)
         user = User()
         user.Username = username
         user.UserPassword = password

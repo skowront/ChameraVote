@@ -1,110 +1,151 @@
 <html>
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.1/socket.io.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-softy-pinko.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <body>
-    <div>
-      <table>
-        <tr>
-          <td>
-            <label>Server address</label>
-            <input type="text" id="ServerAddress" placeholder="localhost" disabled>
-          </td>
-          <td>
-            <label>Port</label>
-            <input type="text" id="Port" placeholder="16402" disabled>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <form id="LoginForm" style="visibility: visible;">
-      <table>
-        <tr>
-          <td>
-            <label>Login form</label>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label>Username</label>
-            <input type="input" name="username" id="Username"></input>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label>Password</label>
-            <input type="password" name="password" id="Password"></input>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="submit" id="Login" value=" Login ➤"></input>
-          </td>
-        </tr>
-      </table>
-    </form>
-    <form id="GetVotingForm" style="visibility: hidden;">
-      <table>
-        <tr>
-          <td>
-            <label>Voting id</label>
-            <input type="text" id="VotingId">
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="submit" id ="GetVoting" value=" Get voting ➤"></input>
-          </td>
-        </tr>
-      </table>
-    </form>
-    <form id="VotingForm" style="visibility: visible;">
-      <table>
-        <tr>
-          <td>
-            <label>Anonymous</label>
-            <input type="checkbox" disabled id="Anonymous"></input>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label>Mutually exclusive</label>
-            <input type="checkbox" disabled id="MutuallyExclusive"></input>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label>Allow unregistered users</label>
-            <input type="checkbox" disabled id="AllowUnregisteredUsers"></input>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <label>Max options</label>
-            <input type="text" disabled id="MaxOptions"></input>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <div id="OptionsList">
-
+  <body style="background-color: #9596d3;">
+    <div class="container">
+      <div class="row">
+        <center>
+          <h1>Chamera Vote Web App</h1>
+        </center>
+      </div>
+      <div class="row">
+        <center>
+          <h1>
+            <label id="Status" style="color: rgb(225, 65, 65);"></label>
+          </h1>
+        </center>
+      </div>
+      <div class="row">
+        <table>
+          <tr>
+            <td>
+              <label style="width: 200px;">Server address</label>
+              <input type="text" id="ServerAddress" placeholder="localhost" disabled>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label style="width: 200px;">Port</label>
+              <input type="text" id="Port" placeholder="16402" disabled>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="row" style="margin-top: 5%;">
+        <div class="col-xs-6 col-md-3">
+          <center>
+            <label>
+              Step 0 (optional)
+            </label>
+          </center>
+          <form class="form" id="RegisterForm" style="visibility: visible;">
+            <div class="form-group">
+              <label>Username</label>
+              <input type="input" class="form-control" name="usernameRegister" id="UsernameRegister"></input>
             </div>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <input type="submit" id="SendVote" value="Send vote ➤"></input>
-          </td>
-        </tr>
-      </table>
-    </form>
-    <form form id="EmptyForm" style="visibility: visible;">
-      <input type="submit" value="Refresh ➤"></input>
-    </form>
-    <label id="Status"></label>
-    <script src="scripts/errors.js"></script>
-    <script src="scripts/voting.js"></script>
-    <script src="scripts/voteclient.js"></script>
-    <script src="scripts/main.js"></script>
+            <div class="form-group">
+              <label >Password</label>
+              <input type="password" class="form-control" name="passwordRegister" id="PasswordRegister"></input>
+            </div>
+            <div class="form-group">
+              <label >Token</label>
+              <input type="password" class="form-control" name="tokenRegister" id="TokenRegister"></input>
+            </div>
+            <input type="submit" class="btn btn-primary" id="Register" value=" Register ➤"></input>
+          </form>
+      </div>
+        <div class="col-xs-6 col-md-3">
+            <center>
+              <label>
+                Step 1
+              </label>
+            </center>
+            <form class="form" id="LoginForm" style="visibility: visible;">
+              <div class="form-group">
+                <label>Username</label>
+                <input type="input" class="form-control" name="username" id="Username"></input>
+              </div>
+              <div class="form-group">
+                <label >Password</label>
+                <input type="password" class="form-control" name="password" id="Password"></input>
+              </div>
+              <input type="submit" class="btn btn-primary" id="Login" value=" Login ➤"></input>
+            </form>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <center>
+            <label>
+              Step 2
+            </label>
+          </center>
+          <div class="form">
+            <form id="GetVotingForm" style="visibility: visible;">
+              <div class="form-group">
+                <label>Voting id</label>
+                <input class="form-control" type="text" id="VotingId">
+              </div>
+              <input class="btn btn-primary" type="submit" id ="GetVoting" value=" Get voting ➤"></input>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <center>
+          <h2>
+            Step 3
+          </h2>
+        </center>
+        <form id="VotingForm" class="form" style="visibility: visible;">
+          <div class="form-group">
+            <center>
+              <label id="VotingTitle">Voting title</label>
+            </center>
+          </div>
+          <div class="form-group">
+            <label style="width: 200px;">Anonymous</label>
+            <input class="checkbox" type="checkbox" disabled id="Anonymous"></input>
+          </div>
+          <div class="form-group">
+            <label style="width: 200px;">Mutually exclusive</label>
+            <input class="checkbox" type="checkbox" disabled id="MutuallyExclusive"></input>
+          </div>
+          <div class="form-group">
+            <label style="width: 200px;">Allow unregistered users</label>
+            <input class="checkbox" type="checkbox" disabled id="AllowUnregisteredUsers"></input>
+          </div>
+          <div class="form-group">
+            <label style="width: 200px;">Max options</label>
+            <input class="checkbox" type="text" disabled id="MaxOptions" style="width: 50px;"></input>
+          </div>
+          <div class="form-group">
+            <div id="OptionsList">
+            
+            </div>
+          </div>
+          <input type="submit" class="btn btn-primary" id="SendVote" value="Send vote ➤"></input>
+        </form>
+      </div>
+      <div class="row">
+        
+      </div>
+      <div class="row">
+        <form form id="EmptyForm" style="visibility: collapse;">
+          <input type="submit" class="btn btn-primary" value="Refresh ➤"><i class="fas fa-sync-alt"></i></input>
+        </form>
+      </div>
+
+      <script src="scripts/errors.js"></script>
+      <script src="scripts/voting.js"></script>
+      <script src="scripts/voteclient.js"></script>
+      <script src="scripts/main.js"></script>
+    </div>  
   </body>
 </html>
