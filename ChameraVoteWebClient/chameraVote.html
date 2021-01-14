@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.1/socket.io.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <table>
+        <tr>
+          <td>
+            <label>Server address</label>
+            <input type="text" id="ServerAddress" placeholder="localhost" disabled>
+          </td>
+          <td>
+            <label>Port</label>
+            <input type="text" id="Port" placeholder="16402" disabled>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <form id="LoginForm" style="visibility: visible;">
+      <table>
+        <tr>
+          <td>
+            <label>Login form</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Username</label>
+            <input type="input" name="username" id="Username"></input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Password</label>
+            <input type="password" name="password" id="Password"></input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" id="Login" value=" Login ➤"></input>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <form id="GetVotingForm" style="visibility: hidden;">
+      <table>
+        <tr>
+          <td>
+            <label>Voting id</label>
+            <input type="text" id="VotingId">
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" id ="GetVoting" value=" Get voting ➤"></input>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <form id="VotingForm" style="visibility: visible;">
+      <table>
+        <tr>
+          <td>
+            <label>Anonymous</label>
+            <input type="checkbox" disabled id="Anonymous"></input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Mutually exclusive</label>
+            <input type="checkbox" disabled id="MutuallyExclusive"></input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Allow unregistered users</label>
+            <input type="checkbox" disabled id="AllowUnregisteredUsers"></input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Max options</label>
+            <input type="text" disabled id="MaxOptions"></input>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="OptionsList">
+
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" id="SendVote" value="Send vote ➤"></input>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <form form id="EmptyForm" style="visibility: visible;">
+      <input type="submit" value="Refresh ➤"></input>
+    </form>
+    <label id="Status"></label>
+    <script src="scripts/errors.js"></script>
+    <script src="scripts/voting.js"></script>
+    <script src="scripts/voteclient.js"></script>
+    <script src="scripts/main.js"></script>
+  </body>
+</html>

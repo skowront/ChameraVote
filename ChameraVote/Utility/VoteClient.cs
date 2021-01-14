@@ -17,7 +17,7 @@ namespace ChameraVote.Utility
         //private string ServerAddress = "46.41.151.157";
         private string applicationToken = "";
 
-        private const int port = 16402;
+        private int port = 16403;
 
         private const int bufferSize = 1024;
 
@@ -45,6 +45,7 @@ namespace ChameraVote.Utility
         {
             this.serverAddress = configurationModel.ServerAddress;
             this.applicationToken = configurationModel.ApplicationToken;
+            this.port = configurationModel.Port;
         }
 
         private VotingModel VotingModelFromString(string stringified)
@@ -146,7 +147,7 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(commandTemplate, "getVotingById",username,token, password, votingId);
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];
@@ -189,7 +190,7 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(getUserVotingsTemplate, username, token, password);
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];
@@ -227,7 +228,7 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(commandTemplate, "getTitle", username, token, password, votingId);
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];
@@ -256,7 +257,7 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(commandTemplate, "getAnonymous", username, token, password, votingId);
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];
@@ -289,7 +290,7 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(commandTemplate, "getOptions", username, token, password, votingId);
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];
@@ -331,7 +332,7 @@ namespace ChameraVote.Utility
                 message += ":" + item;
             }
 
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];
@@ -360,7 +361,7 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(loginCommandTemplate, username,password);
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];
@@ -389,7 +390,7 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(registerCommandTemplate, username, password, token);
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];
@@ -418,7 +419,7 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(removeVotingTemplate, username, token, votingId);
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];
@@ -447,7 +448,7 @@ namespace ChameraVote.Utility
             String responseData = String.Empty;
 
             string message = string.Format(addNewVotingTemplate, username, token, this.EncodeNew(votingModel));
-            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + message);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
             stream.Write(data, 0, data.Length);
 
             data = new Byte[bufferSize];

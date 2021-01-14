@@ -11,5 +11,7 @@ namespace ChameraVote.Models
         public string serverAddress = "localhost";
 
         public string applicationToken = "0123456789";
+
+        public int port = 16403;
     }
 }

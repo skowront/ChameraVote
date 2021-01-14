@@ -164,7 +164,6 @@ class Voting:
             else:
                 stringified += self.voteClients[i]+":"
         stringified = stringified[:-1]
-        print(stringified)
         return Voting.Response(stringified,None)
 
     def GetEncodedVotingBrief(self,username,token,password):
@@ -248,7 +247,7 @@ class Voting:
             return Voting.Response(None,Errors.tooManyOptionsSelected)
         if result.value==None:
             return Voting.Response(None,result.errorCode)
-        if self.DidAlreadyVote(voteClient) and self.allowUnregisteredUsers==False:
+        if self.DidAlreadyVote(voteClient):
             return Voting.Response(None,Errors.alreadyVoted)                
         if self.mutuallyExclusive and len(voteResults)>1:
             return Voting.Response(None,Errors.onlyOneOptionCanBeChosen)  

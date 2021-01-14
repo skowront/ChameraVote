@@ -49,7 +49,7 @@ class VotingServer:
         exampleVoting1.voteResults=["yes","no"]
         self.votingContainer.votings.append(exampleVoting1)
 
-    def Run(self):
+    def Run(self,lock):
         while True:
             clientsocket,address = self.socket.accept()
             Logger.Log("Connection from: "+str(address[0]))
@@ -57,31 +57,39 @@ class VotingServer:
             if ready[0]:
                 data = clientsocket.recv(1024)
                 dataDecoded = data.decode("utf-8")
-                print(dataDecoded)
-                if(dataDecoded[0:len(Configuration.ApplicationToken)]!=Configuration.ApplicationToken):
-                    clientsocket.send(Errors.applicationUnauthorized.encode())
-                dataDecoded = dataDecoded[len(Configuration.ApplicationToken):]
-                prefix = ""
-                suffix = ""
-                if (self.ValidateRequest(dataDecoded)==False):
-                    prefix ="NOK"               
-                    clientsocket.send(Errors.wrongRequest.encode())
-                    continue
-                response = self.HandleClientRequest(dataDecoded)
-                if response.errorCode==None:
-                    prefix="OK"
-                    suffix = str(response.value)
-                else:
-                    prefix ="NOK"
-                    suffix = str(response.errorCode)
-                total = str(prefix+":"+suffix)
-                while len(total)>VotingServer.maxBufferSize:
-                    msg = total[0:VotingServer.maxBufferSize-1]
-                    msg += '&'
-                    clientsocket.send(msg.encode())
-                    total = total[VotingServer.maxBufferSize-1:]
-                clientsocket.send(total.encode())
+                lock.acquire()
+                response = self.BuildResponse(dataDecoded)
+                lock.release()
+                clientsocket.send(response.encode())
             clientsocket.close()
+
+    def BuildResponse(self,dataDecoded):
+        print("VoteServer incoming:\n"+dataDecoded)
+        if(dataDecoded[0:len(Configuration.ApplicationToken)+1]!=Configuration.ApplicationToken+':'):
+            return(Errors.applicationUnauthorized)
+        dataDecoded = dataDecoded[len(Configuration.ApplicationToken)+1:]
+        prefix = ""
+        suffix = ""
+        if (self.ValidateRequest(dataDecoded)==False):
+            prefix ="NOK"               
+            return(Errors.wrongRequest)
+        response = self.HandleClientRequest(dataDecoded)
+        if response.errorCode==None:
+            prefix="OK"
+            if(response.value==None):
+                suffix = "0"
+            else:
+                suffix = str(response.value)
+        else:
+            prefix ="NOK"
+            suffix = str(response.errorCode)
+        total = str(prefix+":"+suffix)
+        # while len(total)>VotingServer.maxBufferSize:
+        #     msg = total[0:VotingServer.maxBufferSize-1]
+        #     msg += '&'
+        #     return(msg)
+        #     total = total[VotingServer.maxBufferSize-1:]
+        return total
 
     def ValidateRequest(self,message)->bool:
         return True
@@ -284,7 +292,6 @@ class VotingServer:
                             break
                     i+=1
                 msg = msg[i:]
-                print(msg)
                 voting = Voting(self.userDatabase)
                 result = voting.Decode(msg)
                 if result.value==None:

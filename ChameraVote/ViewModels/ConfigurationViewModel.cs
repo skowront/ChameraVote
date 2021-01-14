@@ -8,7 +8,7 @@ using ChameraVote.Models;
 
 namespace ChameraVote.ViewModels
 {
-    public class ConfigurationViewModel:BaseViewModel
+    public class ConfigurationViewModel : BaseViewModel
     {
         private ConfigurationModel configurationModel = new ConfigurationModel();
 
@@ -22,6 +22,12 @@ namespace ChameraVote.ViewModels
         {
             get { return this.configurationModel.applicationToken; }
             set { this.configurationModel.applicationToken = value; this.OnPropertyChanged(); }
+        }
+
+        public int Port
+        {
+            get { return this.configurationModel.port; }
+            set { this.configurationModel.port = value; this.OnPropertyChanged(); }
         }
 
         public EventHandler OnConfigurationChanged = null;

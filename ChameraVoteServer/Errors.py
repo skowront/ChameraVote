@@ -39,7 +39,7 @@ class Errors:
         Errors.ErrorDatabase.append(Error("14","Application is not authorized."))
         Errors.ErrorDatabase.append(Error("15","Too many options selected."))
         Errors.ErrorDatabase.append(Error("16","Voting has no owner."))
-        Errors.ErrorDatabase.append(Error("16","Voting has no title."))
+        Errors.ErrorDatabase.append(Error("17","Voting has no title."))
 
     def GetErrorByCode(self,code)->Error:
         for err in Errors.ErrorDatabase:
