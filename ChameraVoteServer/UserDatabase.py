@@ -44,6 +44,7 @@ class UserDatabase:
             if user.Username == username:
                 return UserDatabase.Response(None,Errors.userAlreadyExists)
         if registrationToken!=Configuration.RegistrationToken:
+            print(registrationToken)
             return UserDatabase.Response(None,Errors.badRegistrationToken)
         if self.IsUserAllowedToRegister(username)==False:
             return UserDatabase.Response(None,Errors.thisUsernameIsNotAllowed)

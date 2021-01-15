@@ -29,7 +29,6 @@ class Configuration:
         Configuration.RawJson["ServerWebPort"] = Configuration.ServerWebPort
         Configuration.RawJson["ServerPort"] = Configuration.ServerPort
         Configuration.RawJson["AllowedRegistrationUsernames"] = Configuration.AllowedRegistrationUsernames
-        print(Configuration.AllowedRegistrationUsernames)
         with open('storage/configuration.json', 'w') as json_file:
             json.dump(Configuration.RawJson, json_file,indent=2)
 
