@@ -5,7 +5,6 @@
   "ServerWebPort": 16402,
   "ServerPort": 16403,
   "AllowedRegistrationUsernames": [
-    "ts",
     "ts4",
     "ts6"
   ]

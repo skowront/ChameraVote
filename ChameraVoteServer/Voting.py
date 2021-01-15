@@ -129,6 +129,8 @@ class Voting:
         if (username == None or username == "") and self.allowUnregisteredUsers:
             if self.password!=password:
                 return Voting.Response(None,Errors.wrongPassword)
+            else:
+                return Voting.Response(True,None)
         elif (username == None or username == ""):
             return Voting.Response(None,Errors.onlyLoggedInUsers)
         if self.userDatabase.ValidateUserToken(username,token)==False:
@@ -247,7 +249,7 @@ class Voting:
             return Voting.Response(None,Errors.tooManyOptionsSelected)
         if result.value==None:
             return Voting.Response(None,result.errorCode)
-        if self.DidAlreadyVote(voteClient):
+        if self.DidAlreadyVote(voteClient) and self.allowUnregisteredUsers==False:
             return Voting.Response(None,Errors.alreadyVoted)                
         if self.mutuallyExclusive and len(voteResults)>1:
             return Voting.Response(None,Errors.onlyOneOptionCanBeChosen)  
