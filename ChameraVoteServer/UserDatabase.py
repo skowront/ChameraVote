@@ -32,12 +32,23 @@ class UserDatabase:
             token = ''.join(random.choice(letters) for i in range(15))
         return token
 
+    def IsUserAllowedToRegister(self,username):
+        for i in range(0,len(Configuration.AllowedRegistrationUsernames)):
+            item = Configuration.AllowedRegistrationUsernames[i]
+            if username==item:
+                return True
+        return False
+
     def RegisterUser(self,username,password,registrationToken=""):
         for user in self.users:
             if user.Username == username:
                 return UserDatabase.Response(None,Errors.userAlreadyExists)
         if registrationToken!=Configuration.RegistrationToken:
             return UserDatabase.Response(None,Errors.badRegistrationToken)
+        if self.IsUserAllowedToRegister(username)==False:
+            return UserDatabase.Response(None,Errors.thisUsernameIsNotAllowed)
+        Configuration.AllowedRegistrationUsernames.remove(username)
+        Configuration.Save()
         user = User()
         user.Username = username
         user.UserPassword = password
@@ -65,7 +76,7 @@ class UserDatabase:
         return False
 
     def Load(self):
-        file = open("users.txt","r")
+        file = open("storage/users.txt","r")
         lines = file.readlines()
         self.users.clear()
         for line in lines:
@@ -74,7 +85,7 @@ class UserDatabase:
 
 
     def Store(self):
-        file = open("users.txt","w+")
+        file = open("storage/users.txt","w+")
         lines = []
         for user in self.users:
             lines.append(user.ToString()+'\n')

@@ -104,7 +104,7 @@ class VoteClient
         this.BuildSocket();
         this.state = VoteClientStates.register;
         console.log("Logging in.")
-        var msg = this.prefix+"command:register:"+username+":"+password+":"+token;
+        var msg = this.prefix+"command:register:"+username+":"+token+":"+password;
         this.socket.emit("message",msg);
         this.username = username;
         return;

@@ -1,6 +1,7 @@
 import threading
 from VotingServer import VotingServer
-votingServer = VotingServer(16403,True)
+from Configuration import Configuration
+votingServer = VotingServer(Configuration.ServerPort,True)
 lock = threading.Lock()
 def rawServer(lock):
     print("Raw server running.")
@@ -39,4 +40,4 @@ def disconnect(sid):
 #app.router.add_get('/', index)
 
 if __name__ == '__main__':
-    web.run_app(app,host="localhost",port="16402")
+    web.run_app(app,host=Configuration.ServerAddress,port=Configuration.ServerWebPort)

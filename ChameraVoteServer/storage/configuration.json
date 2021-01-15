@@ -1,0 +1,12 @@
+{
+  "ApplicationToken": "0123456789",
+  "RegistrationToken": "pfxQ3",
+  "ServerAddress": "localhost",
+  "ServerWebPort": 16402,
+  "ServerPort": 16403,
+  "AllowedRegistrationUsernames": [
+    "ts",
+    "ts2",
+    "ts6"
+  ]
+}

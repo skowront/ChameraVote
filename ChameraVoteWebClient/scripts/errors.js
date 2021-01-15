@@ -19,6 +19,7 @@ class VoteErrors
         "Too many options selected.",
         "Voting has no owner.",
         "Voting has no title.",
-        "Bad registration token."
+        "Bad registration token.",
+        "This username is not allowed"
     ];
 };new VoteErrors();

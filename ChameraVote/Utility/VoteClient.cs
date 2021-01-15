@@ -494,7 +494,7 @@ namespace ChameraVote.Utility
         }
 
 
-        public static readonly Tuple<int, string>[] errors = new Tuple<int, string>[19] 
+        public static readonly Tuple<int, string>[] errors = new Tuple<int, string>[20] 
         {
             new Tuple<int,string>(0,"Succes."),
             new Tuple<int,string>(1,"No return value."),
@@ -515,6 +515,7 @@ namespace ChameraVote.Utility
             new Tuple<int,string>(16,"Voting has no owner."),
             new Tuple<int,string>(17,"Voting has no title."),
             new Tuple<int,string>(18,"Bad registration token."),
+            new Tuple<int,string>(19,"This username is not allowed."),
         };
     }
 }
