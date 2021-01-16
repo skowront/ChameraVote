@@ -36,8 +36,8 @@ class VotingServer:
         exampleVoting.voteTitle = "Test voting"
         exampleVoting.owner = "ts"
         exampleVoting.mutuallyExclusive = True
-        exampleVoting.voteClients=["User1","User2"]
-        exampleVoting.voteResults=["yes","no"]
+        exampleVoting.voteClients=["John","Donald","Mike","Mike","Lenny","Lenny","Lenny","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf"]
+        exampleVoting.voteResults=["yes","abstain","abstain","yes","no","yes","no","no","no","no","no","no","no","no"]
         self.votingContainer.votings.append(exampleVoting)
         exampleVoting1 = Voting(self.userDatabase)
         exampleVoting1.GenerateNewId()

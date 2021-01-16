@@ -17,12 +17,17 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="12*"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <local:CustomTitleBar x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Top" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></local:CustomTitleBar>
-        <Button Grid.Row="2" x:Name="newVotingButton" Content="Add new voting" Click="newVotingButton_Click"></Button>
-        <ListView Grid.Row="1" x:Name="votingsList" VerticalAlignment="Stretch" Margin="0 20 0 20" MouseDoubleClick="votingsList_MouseDoubleClick" ItemsSource="{Binding Path=BriefModels,Mode=TwoWay}" ItemTemplate="{StaticResource VotingBriefDataTemplate}">
+        <Button Grid.Row="2" Grid.Column="1" x:Name="newVotingButton" Content="Add new voting" Click="newVotingButton_Click"></Button>
+        <ListView Grid.Row="1" Grid.Column="1" x:Name="votingsList" VerticalAlignment="Stretch" Margin="0 0 0 20" MouseDoubleClick="votingsList_MouseDoubleClick" ItemsSource="{Binding Path=BriefModels,Mode=TwoWay}" ItemTemplate="{StaticResource VotingBriefDataTemplate}">
             <ListView.Resources>
                 <ContextMenu x:Key="ItemContextMenu">
                     <MenuItem Header="Results" Click="ResultsItem_Click"></MenuItem>

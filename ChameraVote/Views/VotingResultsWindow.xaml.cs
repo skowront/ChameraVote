@@ -31,7 +31,8 @@ namespace ChameraVote.Views
 
         private void printButton_Click(object sender, RoutedEventArgs e)
         {
-
+            PrintWindow window = new PrintWindow(new VotingSumResultsViewModel(this.VotingResultsViewModel));
+            window.ShowDialog();
         }
 
         private void sumResults_Click(object sender, RoutedEventArgs e)
