@@ -37,18 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EngineIoClientDotNet, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EngineIoClientDotNet.1.0.2-beta1\lib\net45\EngineIoClientDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="H.Engine.IO, Version=1.1.7.0, Culture=neutral, PublicKeyToken=56a250a977deb371, processorArchitecture=MSIL">
-      <HintPath>..\packages\H.Engine.IO.1.1.7\lib\net45\H.Engine.IO.dll</HintPath>
-    </Reference>
-    <Reference Include="H.Socket.IO, Version=1.1.7.0, Culture=neutral, PublicKeyToken=56a250a977deb371, processorArchitecture=MSIL">
-      <HintPath>..\packages\H.Socket.IO.1.1.7\lib\net45\H.Socket.IO.dll</HintPath>
-    </Reference>
-    <Reference Include="H.WebSockets, Version=1.1.7.0, Culture=neutral, PublicKeyToken=56a250a977deb371, processorArchitecture=MSIL">
-      <HintPath>..\packages\H.WebSockets.1.1.7\lib\net45\H.WebSockets.dll</HintPath>
-    </Reference>
     <Reference Include="MaterialDesignColors, Version=2.0.0.2347, Culture=neutral, PublicKeyToken=df2a72020bd7962a, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.2.0.0-ci2347\lib\net452\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -64,9 +52,6 @@
     <Reference Include="MigraDoc.RtfRendering-gdi, Version=1.51.5186.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.51.5186-beta\lib\net20\MigraDoc.RtfRendering-gdi.dll</HintPath>
     </Reference>
-    <Reference Include="MsgPack, Version=0.4.0.0, Culture=neutral, PublicKeyToken=a2625990d5dc0167, processorArchitecture=MSIL">
-      <HintPath>..\packages\MsgPack.Cli.0.4.4\lib\net40-client\MsgPack.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -75,12 +60,6 @@
     </Reference>
     <Reference Include="PdfSharp.Charting-gdi, Version=1.51.5185.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp-MigraDoc-gdi.1.51.5186-beta\lib\net20\PdfSharp.Charting-gdi.dll</HintPath>
-    </Reference>
-    <Reference Include="StackExchange.Redis, Version=1.0.297.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\StackExchange.Redis.1.0.297\lib\net45\StackExchange.Redis.dll</HintPath>
-    </Reference>
-    <Reference Include="SuperSocket.ClientEngine, Version=0.8.0.12, Culture=neutral, PublicKeyToken=ee9af13f57f00acc, processorArchitecture=MSIL">
-      <HintPath>..\packages\SuperSocket.ClientEngine.Core.0.8.0.12\lib\net45\SuperSocket.ClientEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -170,9 +149,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WebSocket4Net, Version=0.15.0.9, Culture=neutral, PublicKeyToken=eb4e154b696bf72a, processorArchitecture=MSIL">
-      <HintPath>..\packages\WebSocket4Net.0.15.0-beta9\lib\net45\WebSocket4Net.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
