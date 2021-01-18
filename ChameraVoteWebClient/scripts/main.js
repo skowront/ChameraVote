@@ -123,7 +123,6 @@ document.getElementById('VotingForm').onsubmit = function(e) {
             options.push(list.children[i].children[0].childNodes[1].textContent);
         }
     }
-    console.log(options);
     voteClient.SendVote(options);
     return false;
 };

@@ -2,8 +2,11 @@
   <head>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.1/socket.io.min.js"></script>
     <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+    <link href="assets/fontawesome/css/fontawesome.css" rel="stylesheet">
+    <link href="assets/fontawesome/css/solid.css" rel="stylesheet">
+    <link href="assets/fontawesome/css/brands.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/templatemo-softy-pinko.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -11,20 +14,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body style="background-color: #9596d3;">
+
     <div class="container">
-      <div class="row">
-        <center>
-          <h1>Chamera Vote Web App</h1>
-        </center>
-      </div>
-      <div class="row">
-        <center>
-          <h1>
-            <label id="Status" style="color: rgb(225, 65, 65);"></label>
-          </h1>
-        </center>
-      </div>
-      <div class="row">
+      <nav class="navbar navbar-default navbar-fixed-top" style="background-color:lightcoral; height: 100px;">
+        <div style="display: block;">
+          <div style="margin: 0 auto">
+            <center>
+              <label style="color:darkslateblue; font-size: 30;">ChameraVote Web App</label> 
+              <h1>
+                <label id="Status" style="color:firebrick"></label>
+              </h1>
+            </center>
+         </div>
+        </div>
+      </nav>
+      <div class="row" style="margin-top: 150px;">
         <table>
           <tr>
             <td>
@@ -61,7 +65,9 @@
             <label >Token</label>
             <input type="password" class="form-control" name="tokenRegister" id="TokenRegister"></input>
           </div>
-          <input type="submit" class="btn btn-primary" id="Register" value=" Register ➤"></input>
+          <button type="submit" class="btn btn-primary" id="Register">
+            Register <i class="fa fa-paper-plane"></i>
+          </input>
         </form>
       </div>
       <div class="row">
@@ -79,7 +85,9 @@
             <label >Password</label>
             <input type="password" class="form-control" name="password" id="Password"></input>
           </div>
-          <input type="submit" class="btn btn-primary" id="Login" value=" Login ➤"></input>
+          <button type="submit" class="btn btn-primary" id="Login">
+            Login <i class="fa fa-paper-plane"></i>
+          </button>
         </form>
       </div>
       <div class="row">
@@ -94,7 +102,9 @@
               <label>Voting id</label>
               <input class="form-control" type="text" id="VotingId">
             </div>
-            <input class="btn btn-primary" type="submit" id ="GetVoting" value=" Get voting ➤"></input>
+            <button class="btn btn-primary" type="submit" id ="GetVoting">
+              Get voting <i class="fa fa-paper-plane"></i>
+            </button>
           </form>
         </div>
       </div>
@@ -105,7 +115,9 @@
           </label>
           <div class="form">
             <form id="GetBallotForm" style="visibility: visible;">
-              <input class="btn btn-primary" type="submit" id ="GetBallot" value=" Get ballot ➤" disabled></input>
+              <button class="btn btn-primary" type="submit" id ="GetBallot"disabled>
+                Get ballot <i class="fa fa-paper-plane"></i>
+              </button>
             </form>
           </div>
         </center>
@@ -117,7 +129,9 @@
           </label>
           <div class="form">
             <form id="GetSignatureForm" style="visibility: visible;">
-              <input class="btn btn-primary" type="submit" id ="GetSignature" value=" Get signature ➤" disabled></input>
+              <button class="btn btn-primary" type="submit" id ="GetSignature" disabled>
+                Get signature <i class="fa fa-paper-plane"></i>
+              </button>
             </form>
           </div>
         </center>
@@ -155,7 +169,9 @@
             
             </div>
           </div>
-          <input type="submit" class="btn btn-primary" id="SendVote" value="Send vote ➤" disabled></input>
+          <button type="submit" class="btn btn-primary" id="SendVote" disabled>
+            Cast vote <i class="fa fa-paper-plane"></i>
+          </button>
         </form>
       </div>
       <div class="row">
@@ -163,7 +179,7 @@
       </div>
       <div class="row">
         <form form id="EmptyForm" style="visibility: collapse;">
-          <input type="submit" class="btn btn-primary" value="Refresh ➤"><i class="fas fa-sync-alt"></i></input>
+          <input type="submit" class="btn btn-primary" value="Refresh"><i class="fas fa-sync-alt"></i></input>
         </form>
       </div>
 
