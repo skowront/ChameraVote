@@ -27,6 +27,10 @@ namespace ChameraVote.Utility
         private const string correctResponseCode = "OK";
 
         private const string commandTemplate = "command:{0}:{1}:{2}:{3}:{4}";
+
+        private const string getBallotTemplate = "command:getBallot:{0}";
+
+        private const string getSignedBallotTemplate = "command:getSignedBallot:{0}:{1}:{2}:{3}:{4}";
         
         private const string getUserVotingsTemplate = "command:getUserVotings:{0}:{1}:{2}";
         
@@ -34,7 +38,7 @@ namespace ChameraVote.Utility
         
         private const string registerCommandTemplate = "command:register:{0}:{1}:{2}";
 
-        private const string castVoteTemplate = "command:castVote:{0}:{1}:{2}:{3}";
+        private const string castVoteTemplate = "command:castVote:{0}:{1}:{2}:{3}:{4}";
 
         private const string addNewVotingTemplate = "command:addNewVoting:{0}:{1}:{2}";
 
@@ -153,7 +157,7 @@ namespace ChameraVote.Utility
             return model;
         }
 
-        public VotingModel GetVotingModel(string votingId,string username,string token, string password, out int errorCode )
+        public VotingModel GetVotingModel(string votingId,string username,string token, string password, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -192,8 +196,8 @@ namespace ChameraVote.Utility
             {
                 noCode += responseData[i];
             }
-
-            return this.VotingModelFromString(noCode);
+            var votingModel = this.VotingModelFromString(noCode);
+            return votingModel;
         }
 
         public Collection<VotingBriefModel> GetUserVotingsBrief(string username, string token, string password, out int errorCode)
@@ -232,6 +236,64 @@ namespace ChameraVote.Utility
             }
 
             return collection;
+        }
+
+        public string GetBallot(string votingId, out int errorCode)
+        {
+            TcpClient tcpClient = new TcpClient(this.serverAddress, port);
+            tcpClient.ReceiveTimeout = timeout;
+
+            NetworkStream stream = tcpClient.GetStream();
+
+            Byte[] data = new Byte[bufferSize];
+            String responseData = String.Empty;
+
+            string message = string.Format(getBallotTemplate, votingId);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
+            stream.Write(data, 0, data.Length);
+
+            data = new Byte[bufferSize];
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+
+            if (responseData.Split(':')[0] == incorrectResponseCode)
+            {
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
+                return null;
+            }
+            errorCode = 0;
+
+            return responseData.Split(':')[1];
+        }
+
+        public string GetSignedBallot(string votingId, string username, string token, string password, string mPrime, out int errorCode)
+        {
+            TcpClient tcpClient = new TcpClient(this.serverAddress, port);
+            tcpClient.ReceiveTimeout = timeout;
+
+            NetworkStream stream = tcpClient.GetStream();
+
+            Byte[] data = new Byte[bufferSize];
+            String responseData = String.Empty;
+
+            string message = string.Format(getSignedBallotTemplate, username, token, password, votingId, mPrime);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
+            stream.Write(data, 0, data.Length);
+
+            data = new Byte[bufferSize];
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+
+            if (responseData.Split(':')[0] == incorrectResponseCode)
+            {
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
+                return null;
+            }
+            errorCode = 0;
+
+            return responseData.Split(':')[1];
         }
 
         public string GetTitle(string votingId, string username, string token, string password,out int errorCode)
@@ -332,7 +394,7 @@ namespace ChameraVote.Utility
             return collection;
         }
 
-        public bool SendVote(string votingId, Collection<string> selectedOptions, string username,string token, string password, out int errorCode)
+        public bool SendVote(string votingId, Collection<string> selectedOptions, string username,string token, string password, string signature,string ballotId, bool anonymous, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
             tcpClient.ReceiveTimeout = timeout;
@@ -341,8 +403,15 @@ namespace ChameraVote.Utility
 
             Byte[] data = new Byte[bufferSize];
             String responseData = String.Empty;
-
-            string message = string.Format(castVoteTemplate, username, password, votingId, token);
+            string message = string.Empty;
+            if(anonymous)
+            {
+                message = string.Format(castVoteTemplate, ballotId, password, votingId, string.Empty, signature);
+            }
+            else
+            {
+                message = string.Format(castVoteTemplate, username, password, votingId, token, signature);
+            }
             
             foreach(var item in selectedOptions)
             {
@@ -356,7 +425,7 @@ namespace ChameraVote.Utility
             Int32 bytes = stream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
 
-            if (responseData.Split(':')[0] == incorrectResponseCode)
+            if (responseData.Split(':')[0] == incorrectResponseCode || responseData == string.Empty)
             {
                 MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
                 errorCode = int.Parse(responseData.Split(':')[1]);
@@ -513,7 +582,7 @@ namespace ChameraVote.Utility
         }
 
 
-        public static readonly Tuple<int, string>[] errors = new Tuple<int, string>[20] 
+        public static readonly Tuple<int, string>[] errors = new Tuple<int, string>[22] 
         {
             new Tuple<int,string>(0,"Succes."),
             new Tuple<int,string>(1,"No return value."),
@@ -535,6 +604,8 @@ namespace ChameraVote.Utility
             new Tuple<int,string>(17,"Voting has no title."),
             new Tuple<int,string>(18,"Bad registration token."),
             new Tuple<int,string>(19,"This username is not allowed."),
+            new Tuple<int,string>(20,"You may not recieve any more ballots."),
+            new Tuple<int,string>(21,"Wrong signature."),
         };
     }
 }

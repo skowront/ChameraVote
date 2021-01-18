@@ -29,7 +29,7 @@
           <tr>
             <td>
               <label style="width: 200px;">Server address</label>
-              <!-- <input type="text" id="ServerAddress" placeholder="46.41.151.157" disabled> -->
+              <!-- <input type="text" id="ServerAddress" placeholder="vote.chamerats.pl" disabled> -->
               <input type="text" id="ServerAddress" placeholder="localhost" disabled>
             </td>
           </tr>
@@ -104,6 +104,30 @@
           <h2>
             Step 3
           </h2>
+          <div class="form">
+            <form id="GetBallotForm" style="visibility: visible;">
+              <input class="btn btn-primary" type="submit" id ="GetBallot" value=" Get ballot ➤" disabled></input>
+            </form>
+          </div>
+        </center>
+      </div>
+      <div class="row">
+        <center>
+          <h2>
+            Step 4
+          </h2>
+          <div class="form">
+            <form id="GetSignatureForm" style="visibility: visible;">
+              <input class="btn btn-primary" type="submit" id ="GetSignature" value=" Get signature ➤" disabled></input>
+            </form>
+          </div>
+        </center>
+      </div>
+      <div class="row">
+        <center>
+          <h2>
+            Step 5
+          </h2>
         </center>
         <form id="VotingForm" class="form" style="visibility: visible;">
           <div class="form-group">
@@ -132,7 +156,7 @@
             
             </div>
           </div>
-          <input type="submit" class="btn btn-primary" id="SendVote" value="Send vote ➤"></input>
+          <input type="submit" class="btn btn-primary" id="SendVote" value="Send vote ➤" disabled></input>
         </form>
       </div>
       <div class="row">
@@ -146,6 +170,7 @@
 
       <script src="scripts/errors.js"></script>
       <script src="scripts/voting.js"></script>
+      <script src="scripts/RSA.js"></script>
       <script src="scripts/voteclient.js"></script>
       <script src="scripts/main.js"></script>
     </div>  

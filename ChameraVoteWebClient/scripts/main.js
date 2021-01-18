@@ -50,6 +50,19 @@ var OnVotingRecieved = function()
         node.appendChild(container);
         listContainer.appendChild(node);
     }
+    document.getElementById('GetBallot').disabled = false;
+}
+
+var OnBallotRecieved = function()
+{
+    document.getElementById('GetBallot').disabled = true;
+    document.getElementById('GetSignature').disabled = false;
+}
+
+var OnBallotSigned = function()
+{
+    document.getElementById('GetSignature').disabled = true;
+    document.getElementById('SendVote').disabled = false;
 }
 
 var OnVotesAccepted = function()
@@ -57,12 +70,13 @@ var OnVotesAccepted = function()
     document.getElementById('SendVote').disabled = true;
 }
 
-
 var voteClient = new VoteClient(address.placeholder,port.placeholder,StatusCallback);
 voteClient.OnRegisterSuccessfull = OnRegisterSuccessfull;
 voteClient.OnLoginSuccessfull = OnLoginSuccessfull;
 voteClient.OnVotingRecieved = OnVotingRecieved;
 voteClient.OnVotesAccepted = OnVotesAccepted;
+voteClient.OnBallotRecieved = OnBallotRecieved;
+voteClient.OnBallotSigned = OnBallotSigned;
 
 document.getElementById('RegisterForm').onsubmit = function(e) {
     let username = document.getElementById('UsernameRegister').value;
@@ -76,6 +90,20 @@ document.getElementById('LoginForm').onsubmit = function(e) {
     let username = document.getElementById('Username').value;
     let password = document.getElementById('Password').value;
     voteClient.Login(username,password);
+    return false;
+};
+
+document.getElementById('GetBallotForm').onsubmit = function(e) {
+    let votingId = document.getElementById('VotingId');
+    voteClient.GetBallot(votingId.value);
+    return false;
+};
+
+document.getElementById('GetSignatureForm').onsubmit = function(e) {
+    let username = document.getElementById('Username').value;
+    let password = document.getElementById('Password').value;
+    let votingId = document.getElementById('VotingId');
+    voteClient.SignBallot(username,password);
     return false;
 };
 

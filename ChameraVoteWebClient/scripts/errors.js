@@ -20,6 +20,8 @@ class VoteErrors
         "Voting has no owner.",
         "Voting has no title.",
         "Bad registration token.",
-        "This username is not allowed"
+        "This username is not allowed",
+        "You may not sign any more ballots.",
+        "Wrong signature.",
     ];
 };new VoteErrors();

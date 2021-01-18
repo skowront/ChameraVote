@@ -9,6 +9,7 @@ from UserDatabase import UserDatabase
 from Errors import Errors
 from Configuration import Configuration
 
+
 class VotingServer:
     maxBufferSize = 1024
 
@@ -36,8 +37,9 @@ class VotingServer:
         exampleVoting.voteTitle = "Test voting"
         exampleVoting.owner = "ts"
         exampleVoting.mutuallyExclusive = True
-        exampleVoting.voteClients=["John","Donald","Mike","Mike","Lenny","Lenny","Lenny","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf"]
-        exampleVoting.voteResults=["yes","abstain","abstain","yes","no","yes","no","no","no","no","no","no","no","no"]
+        exampleVoting.anonymous = True
+        #exampleVoting.voteClients=["John","Donald","Mike","Mike","Lenny","Lenny","Lenny","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf"]
+        #exampleVoting.voteResults=["yes","abstain","abstain","yes","no","yes","no","no","no","no","no","no","no","no"]
         self.votingContainer.votings.append(exampleVoting)
         exampleVoting1 = Voting(self.userDatabase)
         exampleVoting1.GenerateNewId()
@@ -106,7 +108,7 @@ class VotingServer:
         msgType = messageArray[0]
         print(messageArray)
         returnValue = ""
-        if len(messageArray)<=1:
+        if len(messageArray)<1:
             return VotingServer.Response(None,Errors.wrongRequest)
         elif msgType == "command":
             if len(messageArray)<2:
@@ -123,6 +125,32 @@ class VotingServer:
                 if voting.value==None:
                     return VotingServer.Response(voting.value,voting.errorCode)
                 result = voting.value.GetEncodedVoting(username,token,password)
+                returnValue = VotingServer.Response(result.value,result.errorCode)
+                return returnValue
+
+            if commandName == "getBallot":
+                if len(messageArray)<3:
+                    return VotingServer.Response(None,Errors.wrongRequest)
+                votingId = messageArray[2]
+                voting = self.votingContainer.GetVotingByIdStr(votingId)
+                if voting.value==None:
+                    return VotingServer.Response(voting.value,voting.errorCode)
+                result = voting.value.GetBallot()
+                returnValue = VotingServer.Response(result.value,result.errorCode)
+                return returnValue
+
+            if commandName == "getSignedBallot":
+                if len(messageArray)<4:
+                    return VotingServer.Response(None,Errors.wrongRequest)
+                username = messageArray[2]
+                token = messageArray[3]
+                password = messageArray[4]
+                votingId = messageArray[5]
+                mPrime = messageArray[6]
+                voting = self.votingContainer.GetVotingByIdStr(votingId)
+                if voting.value==None:
+                    return VotingServer.Response(voting.value,voting.errorCode)
+                result = voting.value.SignBallot(username,token,password,mPrime)
                 returnValue = VotingServer.Response(result.value,result.errorCode)
                 return returnValue
 
@@ -232,20 +260,21 @@ class VotingServer:
                 password = messageArray[3]
                 votingId = messageArray[4]
                 token = messageArray[5]
+                signature = messageArray[6]
                 i = 0
                 dots = 0
                 msg = message
                 while i<len(msg):
                     if msg[i]==':':
                         dots+=1
-                        if(dots==6):
+                        if(dots==7):
                             i += 1
                             break
                     i+=1
                 voting = self.votingContainer.GetVotingByIdStr(votingId)
                 if voting.value==None:
                     return VotingServer.Response(voting.value,voting.errorCode)
-                result = voting.value.CastVotes(username,msg[i:].split(':'),password,token)
+                result = voting.value.CastVotes(username,msg[i:].split(':'),password,token,signature)
                 return VotingServer.Response(result.value,result.errorCode)
 
             if commandName == "login":

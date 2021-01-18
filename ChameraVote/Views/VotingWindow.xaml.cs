@@ -69,8 +69,10 @@ namespace ChameraVote.Views
                 this.votingMainStackPanel.Visibility = Visibility.Hidden;
                 return;
             }
-            this.VotingViewModel = new VotingViewModel();
-            this.VotingViewModel.VotingModel = model;
+
+            this.ballotButton.IsEnabled = true;
+            this.refreshButton.IsEnabled = false;   
+            this.VotingViewModel = new VotingViewModel(model);
             this.DataContext = this.VotingViewModel;
             this.votingMainStackPanel.Visibility = Visibility.Visible;
         }
@@ -96,7 +98,9 @@ namespace ChameraVote.Views
                 }
             }
             int ec = 0;
-            var result = voteClient.SendVote(this.VotingViewModel.VotingId, voteOptionsSelected, this.UserViewModel.Username, this.UserViewModel.Token, this.VotingViewModel.Password, out ec);
+
+
+            var result = voteClient.SendVote(this.VotingViewModel.VotingId, voteOptionsSelected, this.UserViewModel.Username, this.UserViewModel.Token, this.VotingViewModel.Password, this.VotingViewModel.Signature,this.VotingViewModel.BallotId,this.VotingViewModel.Anonymous, out ec);
             if(result == true)
             {
                 this.VotingViewModel.Status = "Vote accepted.";
@@ -104,7 +108,53 @@ namespace ChameraVote.Views
             else
             {
                 this.VotingViewModel.Status = VoteClient.errors[ec].Item2;
+                return;
             }
+            this.refreshButton.IsEnabled = true;
+            this.ballotButton.IsEnabled = false;
+            this.signButton.IsEnabled = false;
+        }
+
+        private void ballotButton_Click(object sender, RoutedEventArgs e)
+        {
+            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
+            int ec = 0;
+            var id = voteClient.GetBallot(this.VotingViewModel.VotingId, out ec);
+            if (id != null)
+            {
+                this.VotingViewModel.Status = "Your ballot id is: " + id;
+                this.VotingViewModel.BallotId= id;
+            }
+            else
+            {
+                this.VotingViewModel.Status = VoteClient.errors[ec].Item2;
+                return;
+            }
+            this.refreshButton.IsEnabled = false;
+            this.ballotButton.IsEnabled = false;
+            this.signButton.IsEnabled = true;
+        }
+
+
+
+        private void signButton_Click(object sender, RoutedEventArgs e)
+        {
+            VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
+            int ec = 0;
+            var mPrime = int.Parse(this.VotingViewModel.BallotId) * Math.Pow(this.VotingViewModel.BlindFactor, RSA.publicKey.Item1) % RSA.n;
+            var signature = voteClient.GetSignedBallot(this.VotingViewModel.VotingId, this.UserViewModel.Username, this.UserViewModel.Token, this.VotingViewModel.Password, mPrime.ToString(), out ec);
+            if (signature != null)
+            {
+                var s = int.Parse(signature) * RSA.ModInverse(this.VotingViewModel.BlindFactor,RSA.n);
+                this.VotingViewModel.Status = "Ballot signed";
+                this.VotingViewModel.Signature = s.ToString();
+            }
+            else
+            {
+                this.VotingViewModel.Status = VoteClient.errors[ec].Item2;
+                return;
+            }
+            this.sendVote.IsEnabled = true;
         }
     }
 }

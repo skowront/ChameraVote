@@ -9,6 +9,9 @@ class Voting
         this.allowUnregisteredUsers = false;
         this.maxOptions = false;
         this.voteOptions = [];
+        this.ballotID = "";
+        this.blindFactor = Math.floor(Math.random() * RSA.n);
+        this.signature = "";
     }
 
     FromString(data)

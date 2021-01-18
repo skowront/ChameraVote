@@ -27,6 +27,12 @@ namespace ChameraVote.Models
 
         public string password = "";
 
+        public string ballotId = "";
+
+        public int blindFactor = 0;
+
+        public string signature = "";
+
         public Collection<string> votingOptionsRaw = new Collection<string>();
 
         public Collection<string> votingResults = new Collection<string>();

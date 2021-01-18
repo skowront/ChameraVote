@@ -73,6 +73,24 @@ namespace ChameraVote.ViewModels
             set { this.votingModel.password = value;this.OnPropertyChanged(); }
         }
 
+        public string BallotId
+        {
+            get { return this.votingModel.ballotId; }
+            set { this.votingModel.ballotId = value; this.OnPropertyChanged(); }
+        }
+
+        public int BlindFactor
+        {
+            get { return this.votingModel.blindFactor; }
+            set { this.votingModel.blindFactor = value; this.OnPropertyChanged(); }
+        }
+
+        public string Signature
+        {
+            get { return this.votingModel.signature; }
+            set { this.votingModel.signature = value; this.OnPropertyChanged(); }
+        }
+
         public Collection<string> Voters
         {
             get { return this.votingModel.votingClients; }
@@ -134,12 +152,13 @@ namespace ChameraVote.ViewModels
 
         public VotingViewModel()
         {
-
         }
 
         public VotingViewModel(VotingModel votingModel)
         {
-            this.votingModel = votingModel;
+            this.VotingModel = votingModel;
+            Random rnd = new Random();
+            this.votingModel.blindFactor = rnd.Next(0,100); 
         }
 
         protected override void OnPropertyChanged([CallerMemberName] string property = null)

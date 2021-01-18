@@ -1,5 +1,6 @@
 import random
 from Errors import Errors
+from RSA import RSA
 
 class Voting:
     topId=0
@@ -23,6 +24,11 @@ class Voting:
         self.voteResults:[str] = []
         self.voteClients:[str] = []
         self.userDatabase = userDatabase
+        self.rsa = RSA()
+        self.usedSignatures = []
+        self.ballotIds = [30]
+        self.usersWithSignedBallots:[str] = []
+        self.ballotsCasted = []
 
     def GenerateNewId(self):
         self.id = Voting.topId
@@ -161,12 +167,27 @@ class Voting:
             stringified += item+":"
         stringified += str(len(self.voteClients))+":"
         for i in range(0,len(self.voteClients)):
-            if self.anonymous:
-                stringified += str(i)+":"
-            else:
-                stringified += self.voteClients[i]+":"
+            stringified += self.voteClients[i]+":"
         stringified = stringified[:-1]
         return Voting.Response(stringified,None)
+
+    def GetBallot(self):
+        newId = self.ballotIds[-1]
+        newId = newId + 1
+        self.ballotIds.append(newId)
+        return Voting.Response(newId,None)
+
+    def SignBallot(self,username,token,password,mPrime):
+        result = self.ValidateAccess(username,token,password)
+        if username == "":
+            return Voting.Response(None,Errors.onlyLoggedInUsers)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
+        if username in self.usersWithSignedBallots:
+            return Voting.Response(None,Errors.youMayNotRecieveAnyMoreBallots)
+        sPrime = self.rsa.Sign(int(mPrime))
+        self.usersWithSignedBallots.append(username)
+        return Voting.Response(sPrime,None)
 
     def GetEncodedVotingBrief(self,username,token,password):
         result = self.ValidateAccess(username,token,password)
@@ -242,7 +263,19 @@ class Voting:
                 return True
         return False
 
-    def CastVotes(self,voteClient,voteResults:[],password,token):
+    def CastVotes(self,voteClient,voteResults:[],password,token,signature):
+        if self.anonymous:
+            if(not signature.isdigit() or not voteClient.isdigit()):
+                return Voting.Response(None,Errors.wrongSignature)
+            if not self.rsa.Verify(int(signature),int(voteClient)) and self.anonymous == False:
+                return Voting.Response(None,Errors.wrongSignature)
+            elif self.rsa.Verify(int(signature),int(voteClient)):
+                if self.DidAlreadyVote(voteClient):
+                    return Voting.Response(None,Errors.alreadyVoted)   
+                for result in voteResults:
+                    self.voteClients.append(voteClient)
+                    self.voteResults.append(result)
+                return Voting.Response(None,None)
         username = voteClient
         result = self.ValidateAccess(username,token,password)
         if len(voteResults) > self.maxOptions:
@@ -256,7 +289,4 @@ class Voting:
         for result in voteResults:
             self.voteClients.append(voteClient)
             self.voteResults.append(result)
-        # if self.anonymous==True:
-        #     random.shuffle(self.voteResults)
-        #     random.shuffle(self.voteClients)
         return Voting.Response(None,None)

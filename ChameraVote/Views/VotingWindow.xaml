@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ChameraVote.Views"
         xmlns:views="clr-namespace:ChameraVote.Views"
         mc:Ignorable="d"
-        Title="VotingWindow" Height="450" Width="800"
+        Title="VotingWindow" Height="600" Width="800"
         Style="{DynamicResource ChameraWindowStyle}">
     <Window.Resources>
         <ResourceDictionary>
@@ -51,6 +51,8 @@
                 <TextBox Text="{Binding Path=Password, Mode=TwoWay}" MinWidth="150" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
             </DockPanel>
             <Button x:Name="refreshButton" Content="Refresh" Click="refreshButton_Click" HorizontalAlignment="Center" MinWidth="150" MinHeight="30" Margin="0 30 0 0 "></Button>
+            <Button x:Name="ballotButton" Content="Get your ballot" Click="ballotButton_Click" HorizontalAlignment="Center" MinWidth="150" MinHeight="30" Margin="0 30 0 0 " IsEnabled="False"></Button>
+            <Button x:Name="signButton" Content="Sign" Click="signButton_Click" HorizontalAlignment="Center" MinWidth="150" MinHeight="30" Margin="0 30 0 0 " IsEnabled="False"></Button>
         </StackPanel>
         <ScrollViewer Grid.Row="1" Grid.Column="1">
             <StackPanel x:Name="votingMainStackPanel"  Visibility="Hidden">
@@ -90,7 +92,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-                <Button x:Name="sendVote" Content="Vote!" Click="sendVote_Click" Width="150" Height="50" HorizontalAlignment="Center"></Button>
+                <Button x:Name="sendVote" Content="Vote!" Click="sendVote_Click" Width="150" Height="50" HorizontalAlignment="Center" IsEnabled="False"></Button>
             </StackPanel>
         </ScrollViewer>
         <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=Status}" HorizontalAlignment="Center"></TextBlock>

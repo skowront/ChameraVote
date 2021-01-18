@@ -1,0 +1,551 @@
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.1/socket.io.min.js"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://vote.chamerats.pl/assets/css/font-awesome.css">
+    <link rel="stylesheet" href="https://vote.chamerats.pl/assets/css/templatemo-softy-pinko.css">
+    <link rel="stylesheet" href="https://vote.chamerats.pl/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+	
+	!function(n){"use strict";function d(n,t){var r=(65535&n)+(65535&t);return(n>>16)+(t>>16)+(r>>16)<<16|65535&r}function f(n,t,r,e,o,u){return d((c=d(d(t,n),d(e,u)))<<(f=o)|c>>>32-f,r);var c,f}function l(n,t,r,e,o,u,c){return f(t&r|~t&e,n,t,o,u,c)}function v(n,t,r,e,o,u,c){return f(t&e|r&~e,n,t,o,u,c)}function g(n,t,r,e,o,u,c){return f(t^r^e,n,t,o,u,c)}function m(n,t,r,e,o,u,c){return f(r^(t|~e),n,t,o,u,c)}function i(n,t){var r,e,o,u;n[t>>5]|=128<<t%32,n[14+(t+64>>>9<<4)]=t;for(var c=1732584193,f=-271733879,i=-1732584194,a=271733878,h=0;h<n.length;h+=16)c=l(r=c,e=f,o=i,u=a,n[h],7,-680876936),a=l(a,c,f,i,n[h+1],12,-389564586),i=l(i,a,c,f,n[h+2],17,606105819),f=l(f,i,a,c,n[h+3],22,-1044525330),c=l(c,f,i,a,n[h+4],7,-176418897),a=l(a,c,f,i,n[h+5],12,1200080426),i=l(i,a,c,f,n[h+6],17,-1473231341),f=l(f,i,a,c,n[h+7],22,-45705983),c=l(c,f,i,a,n[h+8],7,1770035416),a=l(a,c,f,i,n[h+9],12,-1958414417),i=l(i,a,c,f,n[h+10],17,-42063),f=l(f,i,a,c,n[h+11],22,-1990404162),c=l(c,f,i,a,n[h+12],7,1804603682),a=l(a,c,f,i,n[h+13],12,-40341101),i=l(i,a,c,f,n[h+14],17,-1502002290),c=v(c,f=l(f,i,a,c,n[h+15],22,1236535329),i,a,n[h+1],5,-165796510),a=v(a,c,f,i,n[h+6],9,-1069501632),i=v(i,a,c,f,n[h+11],14,643717713),f=v(f,i,a,c,n[h],20,-373897302),c=v(c,f,i,a,n[h+5],5,-701558691),a=v(a,c,f,i,n[h+10],9,38016083),i=v(i,a,c,f,n[h+15],14,-660478335),f=v(f,i,a,c,n[h+4],20,-405537848),c=v(c,f,i,a,n[h+9],5,568446438),a=v(a,c,f,i,n[h+14],9,-1019803690),i=v(i,a,c,f,n[h+3],14,-187363961),f=v(f,i,a,c,n[h+8],20,1163531501),c=v(c,f,i,a,n[h+13],5,-1444681467),a=v(a,c,f,i,n[h+2],9,-51403784),i=v(i,a,c,f,n[h+7],14,1735328473),c=g(c,f=v(f,i,a,c,n[h+12],20,-1926607734),i,a,n[h+5],4,-378558),a=g(a,c,f,i,n[h+8],11,-2022574463),i=g(i,a,c,f,n[h+11],16,1839030562),f=g(f,i,a,c,n[h+14],23,-35309556),c=g(c,f,i,a,n[h+1],4,-1530992060),a=g(a,c,f,i,n[h+4],11,1272893353),i=g(i,a,c,f,n[h+7],16,-155497632),f=g(f,i,a,c,n[h+10],23,-1094730640),c=g(c,f,i,a,n[h+13],4,681279174),a=g(a,c,f,i,n[h],11,-358537222),i=g(i,a,c,f,n[h+3],16,-722521979),f=g(f,i,a,c,n[h+6],23,76029189),c=g(c,f,i,a,n[h+9],4,-640364487),a=g(a,c,f,i,n[h+12],11,-421815835),i=g(i,a,c,f,n[h+15],16,530742520),c=m(c,f=g(f,i,a,c,n[h+2],23,-995338651),i,a,n[h],6,-198630844),a=m(a,c,f,i,n[h+7],10,1126891415),i=m(i,a,c,f,n[h+14],15,-1416354905),f=m(f,i,a,c,n[h+5],21,-57434055),c=m(c,f,i,a,n[h+12],6,1700485571),a=m(a,c,f,i,n[h+3],10,-1894986606),i=m(i,a,c,f,n[h+10],15,-1051523),f=m(f,i,a,c,n[h+1],21,-2054922799),c=m(c,f,i,a,n[h+8],6,1873313359),a=m(a,c,f,i,n[h+15],10,-30611744),i=m(i,a,c,f,n[h+6],15,-1560198380),f=m(f,i,a,c,n[h+13],21,1309151649),c=m(c,f,i,a,n[h+4],6,-145523070),a=m(a,c,f,i,n[h+11],10,-1120210379),i=m(i,a,c,f,n[h+2],15,718787259),f=m(f,i,a,c,n[h+9],21,-343485551),c=d(c,r),f=d(f,e),i=d(i,o),a=d(a,u);return[c,f,i,a]}function a(n){for(var t="",r=32*n.length,e=0;e<r;e+=8)t+=String.fromCharCode(n[e>>5]>>>e%32&255);return t}function h(n){var t=[];for(t[(n.length>>2)-1]=void 0,e=0;e<t.length;e+=1)t[e]=0;for(var r=8*n.length,e=0;e<r;e+=8)t[e>>5]|=(255&n.charCodeAt(e/8))<<e%32;return t}function e(n){for(var t,r="0123456789abcdef",e="",o=0;o<n.length;o+=1)t=n.charCodeAt(o),e+=r.charAt(t>>>4&15)+r.charAt(15&t);return e}function r(n){return unescape(encodeURIComponent(n))}function o(n){return a(i(h(t=r(n)),8*t.length));var t}function u(n,t){return function(n,t){var r,e,o=h(n),u=[],c=[];for(u[15]=c[15]=void 0,16<o.length&&(o=i(o,8*n.length)),r=0;r<16;r+=1)u[r]=909522486^o[r],c[r]=1549556828^o[r];return e=i(u.concat(h(t)),512+8*t.length),a(i(c.concat(e),640))}(r(n),r(t))}function t(n,t,r){return t?r?u(t,n):e(u(t,n)):r?o(n):e(o(n))}"function"==typeof define&&define.amd?define(function(){return t}):"object"==typeof module&&module.exports?module.exports=t:n.md5=t}(this);
+
+	
+	
+	</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body style="background-color: #9596d3;">
+    <div class="container">
+      <div class="row">
+        <center>
+          <h1>Chamera Vote Web App</h1>
+        </center>
+      </div>
+      <div class="row">
+        <center>
+          <h1>
+            <label id="Status" style="color: rgb(225, 65, 65);"></label>
+          </h1>
+        </center>
+      </div>
+      <div class="row">
+        <table>
+          <tr>
+            <td>
+              <label style="width: 200px;">Server address</label>
+              <input type="text" id="ServerAddress" placeholder="vote.chamerats.pl" disabled>
+              <!-- <input type="text" id="ServerAddress" placeholder="localhost" disabled> -->
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label style="width: 200px;">Port</label>
+              <input type="text" id="Port" placeholder="16402" disabled>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="row" style="margin-top: 5%;">
+        <div class="col-xs-6 col-md-3">
+          <center>
+            <label>
+              Step 0 (optional)
+            </label>
+          </center>
+          <form class="form" id="RegisterForm" style="visibility: visible;">
+            <div class="form-group">
+              <label>Username</label>
+              <input type="input" class="form-control" name="usernameRegister" id="UsernameRegister"></input>
+            </div>
+            <div class="form-group">
+              <label >Password</label>
+              <input type="password" class="form-control" name="passwordRegister" id="PasswordRegister"></input>
+            </div>
+            <div class="form-group">
+              <label >Token</label>
+              <input type="password" class="form-control" name="tokenRegister" id="TokenRegister"></input>
+            </div>
+            <input type="submit" class="btn btn-primary" id="Register" value=" Register ➤"></input>
+          </form>
+      </div>
+        <div class="col-xs-6 col-md-3">
+            <center>
+              <label>
+                Step 1
+              </label>
+            </center>
+            <form class="form" id="LoginForm" style="visibility: visible;">
+              <div class="form-group">
+                <label>Username</label>
+                <input type="input" class="form-control" name="username" id="Username"></input>
+              </div>
+              <div class="form-group">
+                <label >Password</label>
+                <input type="password" class="form-control" name="password" id="Password"></input>
+              </div>
+              <input type="submit" class="btn btn-primary" id="Login" value=" Login ➤"></input>
+            </form>
+        </div>
+        <div class="col-xs-6 col-md-3">
+          <center>
+            <label>
+              Step 2
+            </label>
+          </center>
+          <div class="form">
+            <form id="GetVotingForm" style="visibility: visible;">
+              <div class="form-group">
+                <label>Voting id</label>
+                <input class="form-control" type="text" id="VotingId">
+              </div>
+              <input class="btn btn-primary" type="submit" id ="GetVoting" value=" Get voting ➤"></input>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <center>
+          <h2>
+            Step 3
+          </h2>
+        </center>
+        <form id="VotingForm" class="form" style="visibility: visible;">
+          <div class="form-group">
+            <center>
+              <label id="VotingTitle">Voting title</label>
+            </center>
+          </div>
+          <div class="form-group">
+            <label style="width: 200px;">Anonymous</label>
+            <input class="checkbox" type="checkbox" disabled id="Anonymous"></input>
+          </div>
+          <div class="form-group">
+            <label style="width: 200px;">Mutually exclusive</label>
+            <input class="checkbox" type="checkbox" disabled id="MutuallyExclusive"></input>
+          </div>
+          <div class="form-group">
+            <label style="width: 200px;">Allow unregistered users</label>
+            <input class="checkbox" type="checkbox" disabled id="AllowUnregisteredUsers"></input>
+          </div>
+          <div class="form-group">
+            <label style="width: 200px;">Max options</label>
+            <input class="checkbox" type="text" disabled id="MaxOptions" style="width: 50px;"></input>
+          </div>
+          <div class="form-group">
+            <div id="OptionsList">
+            
+            </div>
+          </div>
+          <input type="submit" class="btn btn-primary" id="SendVote" value="Send vote ➤"></input>
+        </form>
+      </div>
+      <div class="row">
+        
+      </div>
+      <div class="row">
+        <form form id="EmptyForm" style="visibility: collapse;">
+          <input type="submit" class="btn btn-primary" value="Refresh ➤"><i class="fas fa-sync-alt"></i></input>
+        </form>
+      </div>
+
+      
+    </div>  
+  </body>
+
+    <script>
+  class VoteErrors
+{
+    static Errors = [
+        "Succes.",
+        "No return value.",
+        "Wrong request.",
+        "Wrong password.",
+        "Username not found.",
+        "User already exists.",
+        "Requested voting not found.",
+        "Wrong number format.",
+        "Account is not valid.",
+        "There are no votings that meet the requirements.",
+        "Already voted!",
+        "Only one option may be chosen.",
+        "Password is required to enter this vote.",
+        "You must be logged in to enter this vote.",
+        "Application is not authorized.",
+        "Too many options selected.",
+        "Voting has no owner.",
+        "Voting has no title.",
+        "Bad registration token.",
+        "This username is not allowed"
+    ];
+};new VoteErrors();
+  </script>
+  
+    <script>
+  class Voting
+{
+    constructor()
+    {
+        this.votingId = null;
+        this.title = "";
+        this.anonymous = false;
+        this.mutuallyExclusive = false;
+        this.allowUnregisteredUsers = false;
+        this.maxOptions = false;
+        this.voteOptions = [];
+    }
+
+    FromString(data)
+    {
+        var msg = data;
+        var i = 0;
+        while(msg[i]!=":")
+        {
+            i+=1;
+        }
+        this.votingId = msg.slice(0,i);
+        msg = msg.slice(i+1,msg.length);
+
+        var i = 0;
+        while(msg[i]!=":")
+        {
+            i+=1;
+        }
+        msg = msg.slice(i+1,msg.length);
+
+        i = 0;
+        while(msg[i]!=":")
+        {
+            i+=1;
+        }
+        this.title = msg.slice(0,i);
+        msg = msg.slice(i+1,msg.length);
+        i = 0;
+        while(msg[i]!=":")
+        {
+            i+=1;
+        }
+        this.anonymous = (msg.slice(0,i).toLowerCase()=='true');
+        msg = msg.slice(i+1,msg.length);
+        i = 0;
+        while(msg[i]!=":")
+        {
+            i+=1;
+        }
+        this.mutuallyExclusive = (msg.slice(0,i).toLowerCase()=='true');
+        msg = msg.slice(i+1,msg.length);
+
+        i = 0;
+        while(msg[i]!=":")
+        {
+            i+=1;
+        }
+        
+        this.allowUnregisteredUsers = (msg.slice(0,i).toLowerCase()=='true');
+        msg = msg.slice(i+1,msg.length);
+
+        i = 0;
+        while(msg[i]!=":")
+        {
+            i+=1;
+        }
+        this.maxOptions = (msg.slice(0,i));
+        msg = msg.slice(i+1,msg.length);
+
+        i = 0;
+        while(msg[i]!=":")
+        {
+            i+=1;
+        }
+        var count = parseInt(msg.slice(0,i));
+        msg = msg.slice(i+1,msg.length);
+
+        for(let j = 0; j < count;j++)
+        {
+            i = 0;
+            while(msg[i]!=":")
+            {
+                i+=1;
+            }
+            var option = msg.slice(0,i);
+            console.log(option);
+            msg = msg.slice(i+1,msg.length);
+            this.voteOptions.push(option)
+        }
+    }
+}
+  </script>
+  
+    <script>
+  class VoteClient
+{
+    constructor(serverAddress,port,statusCallback)
+    {
+        this.link = 'https://'+serverAddress+':'+port+'';
+        this.serverAddress = serverAddress;
+        this.port = port;
+        this.socket = null;
+        this.applicationToken = "0123456789";
+        this.prefix = this.applicationToken+':';
+        this.state = VoteClientStates.login;
+        this.status = "";
+        this.username = "";
+        this.token= "";
+        this.voting = null;
+        this.StatusCallback = statusCallback;
+        this.OnRegisterSuccessfull = null;
+        this.OnLoginSuccessfull = null;
+        this.OnVotingRecieved = null;
+        this.OnVotesAccepted =  null;
+    }
+
+    BuildSocket = function()
+    {
+        console.log("Constructing socket.");
+        this.socket = io(this.link); 
+        this.socket.on('connect', function(){console.log('connect!')});
+        this.socket.on('message', function(msg){console.log('message!', msg)});
+        this.socket.on('disconnect', function(){console.log('disconnect!')});
+        this.socket.on('reply',this.HandleResponse);
+    }
+
+    DestroySocket = function()
+    {
+        this.socket.disconnect();
+    }
+    
+    HandleResponse = function (response)
+    {
+        voteClient.DestroySocket();
+        console.log("Response:"+response);
+        var messageArray = response.split(':');
+        if(messageArray[0]!="OK")
+        {
+            voteClient.status = VoteErrors.Errors[messageArray[1]];
+            voteClient.StatusCallback();
+            return; 
+        }
+        voteClient.status = "OK";
+        switch(voteClient.state)
+        {
+            case VoteClientStates.register:
+                voteClient.token = messageArray[1];
+                voteClient.status = "Register successful";
+                voteClient.OnRegisterSuccessfull();
+                break;
+            case VoteClientStates.login:
+                voteClient.token = messageArray[1];
+                voteClient.status = "Login successful";
+                voteClient.OnLoginSuccessfull();
+                break;
+            case VoteClientStates.gettingVoting:
+                var i = 0;
+                var msg = response;
+                var dots = 0;
+                while(i<msg.length)
+                {
+                    if(msg[i]==':')
+                    {
+                        dots = dots +1;
+                        if(dots == 1);
+                        {
+                            i += 1;
+                            break;
+                        }
+                    }
+                    i = i+ 1;
+                }
+                msg = msg.slice(i,msg.length);
+                voteClient.voting = new Voting();
+                voteClient.voting.FromString(msg);
+                voteClient.status = "Voting recieved from server.";
+                voteClient.OnVotingRecieved();
+                voteClient.state = VoteClientStates.sendingVotes;
+                break;
+            case VoteClientStates.sendingVotes:
+                console.log("Votes accepted");
+                voteClient.status = "Votes accepted";
+                voteClient.OnVotesAccepted();
+                voteClient.state = VoteClientStates.done;
+                break;
+            case VoteClientStates.done:
+                console.log("Done");
+                break;
+            default:
+                break;
+        }
+        voteClient.StatusCallback();
+        return;
+    };
+
+    Register(username,password,token)
+    {
+        this.BuildSocket();
+        this.state = VoteClientStates.register;
+        console.log("Logging in.")
+        var passhash = md5(password);
+        var msg = this.prefix+"command:register:"+username+":"+token+":"+passhash;
+        this.socket.emit("message",msg);
+        this.username = username;
+        return;
+    };
+
+    Login(username,password)
+    {
+        this.BuildSocket();
+        this.state = VoteClientStates.login;
+        console.log("Logging in.")
+        var passhash = md5(password);
+        var msg = this.prefix+"command:login:"+username+":"+passhash;
+        this.socket.emit("message",msg);
+        this.username = username;
+        return;
+    };
+
+    GetVoting(votingId)
+    {
+        this.BuildSocket();
+        this.state = VoteClientStates.gettingVoting;
+        console.log("Getting voting with id: "+votingId);
+        var msg = this.prefix+"command:getVotingById:"+this.username+":"+this.token+"::"+votingId;
+        this.socket.emit("message",msg);
+        return;
+    }
+
+    SendVote(options)
+    {
+        this.BuildSocket();
+        this.state = VoteClientStates.sendingVotes;
+        var msg = this.prefix+"command:castVote:"+this.username+"::"+this.voting.votingId+":"+this.token;
+        for(var i=0;i<options.length;i++)
+        {
+            msg+=":"+options[i];
+        }
+        console.log(msg);
+        var s = msg.toString();
+        console.log(s);
+        this.socket.emit("message",msg);
+        return;
+    }
+}
+
+class VoteClientStates
+{
+    static register = "register";
+    static login = "login";
+    static gettingVoting = "gettingVoting";
+    static sendingVotes = "sendingVotes";
+    static done = "done";
+}
+  </script>
+  <script>
+var testCommand = "0123456789:command:login:ts:ts";
+var address = document.getElementById("ServerAddress");
+var port = document.getElementById("Port");
+
+var StatusCallback = function()
+{
+    document.getElementById('Status').innerHTML = voteClient.status;
+} 
+
+var OnRegisterSuccessfull = function()
+{
+    document.getElementById('UsernameRegister').disabled = true;
+    document.getElementById('PasswordRegister').disabled = true;
+    document.getElementById('TokenRegister').disabled = true;
+    document.getElementById('Register').disabled = true;
+} 
+
+
+var OnLoginSuccessfull = function()
+{
+    document.getElementById('Username').disabled = true;
+    document.getElementById('Password').disabled = true;
+    let password = document.getElementById('Login').disabled = true;
+    document.getElementById('GetVotingForm').style.visibility="visible";
+} 
+
+var OnVotingRecieved = function()
+{
+    //document.getElementById('VotingId').disabled = true;
+    //document.getElementById('GetVoting').disabled = true;
+    document.getElementById('VotingForm').style.visibility="visible";
+    document.getElementById('Anonymous').checked = voteClient.voting.anonymous;
+    document.getElementById('MutuallyExclusive').checked = voteClient.voting.mutuallyExclusive;
+    document.getElementById('AllowUnregisteredUsers').checked = voteClient.voting.allowUnregisteredUsers;
+    document.getElementById('MaxOptions').value = voteClient.voting.maxOptions;
+    document.getElementById('VotingTitle').innerHTML = voteClient.voting.title;
+    document.getElementById('SendVote').disabled = false;
+    var listContainer = document.getElementById('OptionsList');
+    listContainer.innerHTML="";
+    for(var i = 0; i<voteClient.voting.voteOptions.length;i++)
+    {
+        var node = document.createElement("LI"); 
+        var textnode = document.createTextNode(voteClient.voting.voteOptions[i]); 
+        var checkbox = document.createElement("input");
+        checkbox.setAttribute("type","checkbox");
+        var container = document.createElement("div");
+        container.appendChild(checkbox); 
+        container.appendChild(textnode); 
+        node.appendChild(container);
+        listContainer.appendChild(node);
+    }
+}
+
+var OnVotesAccepted = function()
+{
+    document.getElementById('SendVote').disabled = true;
+}
+
+
+var voteClient = new VoteClient(address.placeholder,port.placeholder,StatusCallback);
+voteClient.OnRegisterSuccessfull = OnRegisterSuccessfull;
+voteClient.OnLoginSuccessfull = OnLoginSuccessfull;
+voteClient.OnVotingRecieved = OnVotingRecieved;
+voteClient.OnVotesAccepted = OnVotesAccepted;
+
+document.getElementById('RegisterForm').onsubmit = function(e) {
+    let username = document.getElementById('UsernameRegister').value;
+    let password = document.getElementById('PasswordRegister').value;
+    let token = document.getElementById('TokenRegister').value;
+    voteClient.Register(username,password,token);
+    return false;
+};
+
+document.getElementById('LoginForm').onsubmit = function(e) {
+    let username = document.getElementById('Username').value;
+    let password = document.getElementById('Password').value;
+    voteClient.Login(username,password);
+    return false;
+};
+
+document.getElementById('GetVotingForm').onsubmit = function(e) {
+    let votingId = document.getElementById('VotingId');
+    voteClient.GetVoting(votingId.value);
+    return false;
+};
+
+document.getElementById('VotingForm').onsubmit = function(e) {
+    var list = document.getElementById('OptionsList');
+    var options = [];
+    for(var i=0;i<list.children.length;i++)
+    {
+        if(list.children[i].children[0].children[0].checked==true)
+        {
+            options.push(list.children[i].children[0].childNodes[1].textContent);
+        }
+    }
+    console.log(options);
+    voteClient.SendVote(options);
+    return false;
+};
+
+
+
+document.getElementById('EmptyForm').onsubmit = function(e) {
+    return true;
+};
+  </script>
+
+</html>

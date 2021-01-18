@@ -18,6 +18,8 @@ class VoteClient
         this.OnLoginSuccessfull = null;
         this.OnVotingRecieved = null;
         this.OnVotesAccepted =  null;
+        this.OnBallotRecieved = null;
+        this.OnBallotSigned = null;
     }
 
     BuildSocket = function()
@@ -81,7 +83,23 @@ class VoteClient
                 voteClient.voting.FromString(msg);
                 voteClient.status = "Voting recieved from server.";
                 voteClient.OnVotingRecieved();
+                voteClient.state = VoteClientStates.gettingBallot;
+                break;
+            case VoteClientStates.gettingBallot:
+                voteClient.voting.ballotID = messageArray[1];
+                voteClient.status = "Your ballot id: " + voteClient.voting.ballotID;
+                voteClient.state = VoteClientStates.signingBallot;
+                voteClient.OnBallotRecieved();
+                break;
+            case VoteClientStates.signingBallot:
+                console.log(messageArray[1]);
+                console.log(voteClient.voting.blindFactor);
+                console.log(RSA.n);
+                var s = parseInt(messageArray[1])*RSA.ModInverse(voteClient.voting.blindFactor,RSA.n);
+                voteClient.voting.signature = s.toString();
+                voteClient.status = "Your ballot id: " + voteClient.voting.ballotID;
                 voteClient.state = VoteClientStates.sendingVotes;
+                voteClient.OnBallotSigned();
                 break;
             case VoteClientStates.sendingVotes:
                 console.log("Votes accepted");
@@ -123,6 +141,28 @@ class VoteClient
         return;
     };
 
+    GetBallot(votingId)
+    {
+        this.BuildSocket();
+        this.state = VoteClientStates.gettingBallot;
+        console.log("Getting ballot.");
+        var msg = this.prefix+"command:getBallot:"+votingId;
+        this.socket.emit("message",msg);
+        return;
+    }
+
+    SignBallot(username,password)
+    {
+        this.BuildSocket();
+        this.status = VoteClientStates.signingBallot;
+        console.log("Signing ballot.");
+        var passhash = md5(password);
+        var mPrime = parseInt(this.voting.ballotID) * Math.pow(this.voting.blindFactor,RSA.PublicKey[0])%RSA.n;
+        var msg = this.prefix+"command:getSignedBallot:"+this.username+":"+this.token+"::"+this.voting.votingId+":"+mPrime;
+        this.socket.emit("message",msg);
+        return;
+    }
+
     GetVoting(votingId)
     {
         this.BuildSocket();
@@ -137,7 +177,16 @@ class VoteClient
     {
         this.BuildSocket();
         this.state = VoteClientStates.sendingVotes;
-        var msg = this.prefix+"command:castVote:"+this.username+"::"+this.voting.votingId+":"+this.token;
+        var msg = "";
+        if (this.voting.anonymous)
+        {
+            msg = this.prefix+"command:castVote:"+this.voting.ballotID+"::"+this.voting.votingId+"::"+this.voting.signature;
+        }
+        else
+        {
+            msg = this.prefix+"command:castVote:"+this.username+"::"+this.voting.votingId+":"+this.token+":"+this.voting.signature;
+        }
+        
         for(var i=0;i<options.length;i++)
         {
             msg+=":"+options[i];
@@ -156,5 +205,7 @@ class VoteClientStates
     static login = "login";
     static gettingVoting = "gettingVoting";
     static sendingVotes = "sendingVotes";
+    static gettingBallot = "gettingBallot";
+    static signingBallot = "signingBallot";
     static done = "done";
 }

@@ -23,6 +23,8 @@ class Errors:
     votingHasNoTitle = "17"
     badRegistrationToken = "18"
     thisUsernameIsNotAllowed = "19"
+    youMayNotRecieveAnyMoreBallots = "20"
+    wrongSignature = "21"
     def __init__(self):
         Errors.ErrorDatabase:[Error] = []
         Errors.ErrorDatabase.append(Error("1","No return value."))
@@ -44,6 +46,8 @@ class Errors:
         Errors.ErrorDatabase.append(Error("17","Voting has no title."))
         Errors.ErrorDatabase.append(Error("18","Bad registration token."))
         Errors.ErrorDatabase.append(Error("19","This username is not allowed."))
+        Errors.ErrorDatabase.append(Error("20","You may not sign any more ballots."))
+        Errors.ErrorDatabase.append(Error("21","Wrong signature."))
 
     def GetErrorByCode(self,code)->Error:
         for err in Errors.ErrorDatabase:
