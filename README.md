@@ -6,6 +6,7 @@ Intro
 -----------
 This application was developped to allow dealing with online votings (for example NGO votings). 
 Key feature is that it is possible to restrict list of users who can cast their vote, authorize them, but also keep their ballots anonymous to a certain level.
+Ballot anonymization is implemented through RSA blind signatures.
 
 Server
 -----------
