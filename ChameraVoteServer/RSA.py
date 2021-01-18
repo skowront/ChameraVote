@@ -1,11 +1,13 @@
+from Configuration import Configuration
+
 class RSA:
     def __init__(self):
-        self.P = 17
-        self.Q = 23
-        self.n = self.P * self.Q
-        self.fi = (self.P-1) * (self.Q-1)
-        self.e = 5
-        self.d = int((2*self.fi +1 )/self.e)
+        self.P = Configuration.RSA.P 
+        self.Q = Configuration.RSA.Q
+        self.n = Configuration.RSA.n #self.P * self.Q
+        self.fi = Configuration.RSA.fi #(self.P-1) * (self.Q-1)
+        self.e = Configuration.RSA.e
+        self.d = Configuration.RSA.d #int((2*self.fi +1 )/self.e)
         self.PublicKey = [self.e,self.n]
         self.PrivateKey = [self.d,self.n]
 

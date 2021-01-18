@@ -9,6 +9,20 @@ class Configuration:
     ServerPort = 16403
     AllowedRegistrationUsernames = []
     RawJson = None
+    class RSA:
+        P = 17
+        Q = 23
+        n = 391
+        fi = 352
+        e = 5
+        d = 141
+        def Load():
+            Configuration.RSA.P = Configuration.RawJson["RSA"]["P"]
+            Configuration.RSA.Q = Configuration.RawJson["RSA"]["Q"]
+            Configuration.RSA.n = Configuration.RawJson["RSA"]["n"]
+            Configuration.RSA.fi = Configuration.RawJson["RSA"]["fi"]
+            Configuration.RSA.e = Configuration.RawJson["RSA"]["e"]
+            Configuration.RSA.d = Configuration.RawJson["RSA"]["d"]
 
     def Load():
         # f = open(os.getcwd()+'\\storage\\configuration.json')
@@ -33,3 +47,4 @@ class Configuration:
             json.dump(Configuration.RawJson, json_file,indent=2)
 
 Configuration.Load()
+Configuration.RSA.Load()
