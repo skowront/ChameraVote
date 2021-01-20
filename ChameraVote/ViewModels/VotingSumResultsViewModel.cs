@@ -25,6 +25,14 @@ namespace ChameraVote.ViewModels
             set { this.votingOptionSums = value; this.OnPropertyChanged(); }
         }
 
+        private ObservableCollection<string> votingClients;
+
+        public ObservableCollection<string> VotingClients
+        {
+            get { return this.votingClients; }
+            set { this.votingClients = value; this.OnPropertyChanged(); }
+        }
+
         public int CountOptionVotes(Collection<string> votes, string OptionValue)
         {
             int i = 0;
@@ -48,6 +56,12 @@ namespace ChameraVote.ViewModels
                 VotingOptionSum votingOptionSum = new VotingOptionSum() { OptionValue = option, Votes = this.CountOptionVotes(this.VotingResultsViewModel.VotingViewModel.Results, option) };
                 this.votingOptionSums.Add(votingOptionSum);
             }
+            var clients = votingmResultsViewModel.VotingViewModel.Voters.Distinct<string>().ToList();
+            if(votingmResultsViewModel.VotingViewModel.VotingModel.anonymous)
+            {
+                clients = votingmResultsViewModel.VotingViewModel.VoteSignedClients.Distinct<string>().ToList();
+            }
+            this.VotingClients = new ObservableCollection<string>(clients.ToList());
         }
 
         public class VotingOptionSum

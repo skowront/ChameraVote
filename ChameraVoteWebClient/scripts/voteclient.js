@@ -97,7 +97,7 @@ class VoteClient
                 console.log(RSA.n);
                 var s = parseInt(messageArray[1])*RSA.ModInverse(voteClient.voting.blindFactor,RSA.n);
                 voteClient.voting.signature = s.toString();
-                voteClient.status = "Your ballot id: " + voteClient.voting.ballotID;
+                voteClient.status = "Your ballot id: " + voteClient.voting.ballotID + " is signed with signature:" + voteClient.voting.signature;
                 voteClient.state = VoteClientStates.sendingVotes;
                 voteClient.OnBallotSigned();
                 break;
@@ -119,6 +119,12 @@ class VoteClient
 
     Register(username,password,token)
     {
+        if(username.includes(':') || password.includes(':') || token.includes(':'))
+        {
+            this.status = "':' is not allowed";
+            voteClient.StatusCallback();
+            return;
+        }
         this.BuildSocket();
         this.state = VoteClientStates.register;
         console.log("Logging in.")
@@ -131,6 +137,12 @@ class VoteClient
 
     Login(username,password)
     {
+        if(username.includes(':') || password.includes(':'))
+        {
+            this.status = "':' is not allowed";
+            voteClient.StatusCallback();
+            return;
+        }
         this.BuildSocket();
         this.state = VoteClientStates.login;
         console.log("Logging in.")
@@ -143,6 +155,12 @@ class VoteClient
 
     GetBallot(votingId)
     {
+        if(votingId.includes(':'))
+        {
+            this.status = "':' is not allowed";
+            voteClient.StatusCallback();
+            return;
+        }
         this.BuildSocket();
         this.state = VoteClientStates.gettingBallot;
         console.log("Getting ballot.");
@@ -153,6 +171,12 @@ class VoteClient
 
     SignBallot(username,password)
     {
+        if(username.includes(':') || password.includes(':'))
+        {
+            this.status = "':' is not allowed";
+            voteClient.StatusCallback();
+            return;
+        }
         this.BuildSocket();
         this.status = VoteClientStates.signingBallot;
         console.log("Signing ballot.");
@@ -165,6 +189,12 @@ class VoteClient
 
     GetVoting(votingId)
     {
+        if(votingId.includes(':'))
+        {
+            this.status = "':' is not allowed";
+            voteClient.StatusCallback();
+            return;
+        }
         this.BuildSocket();
         this.state = VoteClientStates.gettingVoting;
         console.log("Getting voting with id: "+votingId);

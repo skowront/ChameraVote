@@ -23,5 +23,6 @@ class VoteErrors
         "This username is not allowed",
         "You may not sign any more ballots.",
         "Wrong signature.",
+        "Card not found.",
     ];
 };new VoteErrors();

@@ -150,6 +150,12 @@ namespace ChameraVote.ViewModels
             set { this.voteOptionViewModels = value; this.OnPropertyChanged(); }
         }
 
+        public Collection<string> VoteSignedClients
+        {
+            get { return this.votingModel.votingSignedClients; }
+            set { this.votingModel.votingSignedClients = value; this.OnPropertyChanged(); }
+        }
+
         public VotingViewModel()
         {
         }

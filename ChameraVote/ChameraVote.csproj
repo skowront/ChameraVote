@@ -173,6 +173,7 @@
     <Compile Include="ViewModels\ConfigurationViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PrintViewModel.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\UserRegistrationViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\UserVotingsViewModel.cs" />
@@ -209,6 +210,9 @@
     </Compile>
     <Compile Include="ViewModels\VotingViewModel.cs" />
     <Compile Include="Models\VotingModel.cs" />
+    <Compile Include="Views\VerifyWindow.xaml.cs">
+      <DependentUpon>VerifyWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VotingResultsWindow.xaml.cs">
       <DependentUpon>VotingResultsWindow.xaml</DependentUpon>
     </Compile>
@@ -275,6 +279,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserVotingsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\VerifyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

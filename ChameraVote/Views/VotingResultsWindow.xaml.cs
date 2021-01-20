@@ -22,8 +22,11 @@ namespace ChameraVote.Views
     {
         public VotingResultsViewModel VotingResultsViewModel = null;
 
-        public VotingResultsWindow(VotingViewModel votingViewModel)
+        public ConfigurationViewModel ConfigurationViewModel = null;
+
+        public VotingResultsWindow(VotingViewModel votingViewModel, ConfigurationViewModel configuration)
         {
+            this.ConfigurationViewModel = configuration;
             this.VotingResultsViewModel = new VotingResultsViewModel(votingViewModel);
             InitializeComponent();
             this.DataContext = VotingResultsViewModel;
@@ -38,6 +41,12 @@ namespace ChameraVote.Views
         private void sumResults_Click(object sender, RoutedEventArgs e)
         {
             VotingSumResultsWindow window = new VotingSumResultsWindow(this.VotingResultsViewModel);
+            window.ShowDialog();
+        }
+
+        private void verifySignature_Click(object sender, RoutedEventArgs e)
+        {
+            VerifyWindow window = new VerifyWindow(this.VotingResultsViewModel,this.ConfigurationViewModel);
             window.ShowDialog();
         }
     }

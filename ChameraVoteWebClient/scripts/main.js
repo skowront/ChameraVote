@@ -31,7 +31,7 @@ var OnVotingRecieved = function()
     //document.getElementById('GetVoting').disabled = true;
     document.getElementById('VotingForm').style.visibility="visible";
     document.getElementById('Anonymous').checked = voteClient.voting.anonymous;
-    document.getElementById('MutuallyExclusive').checked = voteClient.voting.mutuallyExclusive;
+    // document.getElementById('MutuallyExclusive').checked = voteClient.voting.mutuallyExclusive;
     document.getElementById('AllowUnregisteredUsers').checked = voteClient.voting.allowUnregisteredUsers;
     document.getElementById('MaxOptions').value = voteClient.voting.maxOptions;
     document.getElementById('VotingTitle').innerHTML = voteClient.voting.title;
@@ -127,11 +127,6 @@ document.getElementById('VotingForm').onsubmit = function(e) {
     return false;
 };
 
-
-
 document.getElementById('EmptyForm').onsubmit = function(e) {
     return true;
 };
-
-
-

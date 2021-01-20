@@ -23,11 +23,13 @@ class Voting:
         self.voteOptions:[str] = []
         self.voteResults:[str] = []
         self.voteClients:[str] = []
+        self.voteSignatures:[str] = []
         self.userDatabase = userDatabase
         self.rsa = RSA()
         self.usedSignatures = []
         self.ballotIds = [30]
         self.usersWithSignedBallots:[str] = []
+        self.usersBlindSignedIds:[str] = []
         self.ballotsCasted = []
 
     def GenerateNewId(self):
@@ -187,6 +189,8 @@ class Voting:
             return Voting.Response(None,Errors.youMayNotRecieveAnyMoreBallots)
         sPrime = self.rsa.Sign(int(mPrime))
         self.usersWithSignedBallots.append(username)
+        self.usersBlindSignedIds.append(mPrime)
+        print("Returned signature:"+str(sPrime))
         return Voting.Response(sPrime,None)
 
     def GetEncodedVotingBrief(self,username,token,password):
@@ -219,7 +223,6 @@ class Voting:
         if result.value==None:
             return Voting.Response(None,result.errorCode)
         return Voting.Response(self.anonymous,None)
-
     
     def GetEncodedVoteMutuallyExclusive(self,username,token,password):
         result = self.ValidateAccess(username,token,password)
@@ -256,6 +259,16 @@ class Voting:
             ret += option + ":"
         ret = ret [:-1]
         return Voting.Response(ret,None)
+        
+    def GetEncodedVoteSignedClients(self,username,token,password):
+        result = self.ValidateAccess(username,token,password)
+        if result.value==None:
+            return Voting.Response(None,result.errorCode)
+        ret = ""
+        for item in self.usersWithSignedBallots:
+            ret += item + ":"
+        ret = ret [:-1]
+        return Voting.Response(ret,None)
 
     def DidAlreadyVote(self,voteClient):
         for client in self.voteClients:
@@ -275,6 +288,7 @@ class Voting:
                 for result in voteResults:
                     self.voteClients.append(voteClient)
                     self.voteResults.append(result)
+                    self.voteSignatures.append(signature)
                 return Voting.Response(None,None)
         username = voteClient
         result = self.ValidateAccess(username,token,password)
@@ -289,4 +303,18 @@ class Voting:
         for result in voteResults:
             self.voteClients.append(voteClient)
             self.voteResults.append(result)
+            self.voteSignatures.append(signature)
         return Voting.Response(None,None)
+
+    def Verify(self,cardId,signature):
+        print(self.voteClients)
+        print(self.voteResults)
+        print(self.voteSignatures)
+        for i in range(0, len(self.voteClients)):
+            if self.voteClients[i]==cardId:
+                print(signature)
+                if self.voteSignatures[i] == signature:
+                    return Voting.Response("True",None)
+                else: 
+                    return Voting.Response(None,Errors.wrongSignature)
+        return Voting.Response(None,Errors.cardNotFound)

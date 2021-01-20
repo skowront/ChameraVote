@@ -82,7 +82,7 @@ namespace ChameraVote.Views
                 {
                     return;
                 }
-                VotingResultsWindow window = new VotingResultsWindow(new VotingViewModel(result));
+                VotingResultsWindow window = new VotingResultsWindow(new VotingViewModel(result),this.ConfigurationViewModel);
                 window.ShowDialog();
             }
         }

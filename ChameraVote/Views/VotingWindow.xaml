@@ -71,7 +71,7 @@
                     <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
                         <TextBlock Text="Mutually exclusive"></TextBlock>
                     </Border>
-                    <CheckBox IsChecked="{Binding Path=MutuallyExclusive,Mode=OneWay}" IsHitTestVisible="False" Style="{DynamicResource ChameraCheckBoxStyle}"></CheckBox>
+                    <CheckBox IsChecked="{Binding Path=MutuallyExclusive,Mode=OneWay}" IsHitTestVisible="False" Visibility="Collapsed" Style="{DynamicResource ChameraCheckBoxStyle}"></CheckBox>
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
                     <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">

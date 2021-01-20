@@ -25,6 +25,7 @@ class Errors:
     thisUsernameIsNotAllowed = "19"
     youMayNotRecieveAnyMoreBallots = "20"
     wrongSignature = "21"
+    cardNotFound = "22"
     def __init__(self):
         Errors.ErrorDatabase:[Error] = []
         Errors.ErrorDatabase.append(Error("1","No return value."))
@@ -48,6 +49,7 @@ class Errors:
         Errors.ErrorDatabase.append(Error("19","This username is not allowed."))
         Errors.ErrorDatabase.append(Error("20","You may not sign any more ballots."))
         Errors.ErrorDatabase.append(Error("21","Wrong signature."))
+        Errors.ErrorDatabase.append(Error("22","Card not found."))
 
     def GetErrorByCode(self,code)->Error:
         for err in Errors.ErrorDatabase:

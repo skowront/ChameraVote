@@ -35,6 +35,8 @@ namespace ChameraVote.Utility
         private const string getUserVotingsTemplate = "command:getUserVotings:{0}:{1}:{2}";
         
         private const string loginCommandTemplate = "command:login:{0}:{1}";
+
+        private const string validateCommandTemplate = "command:verify:{0}:{1}:{2}";
         
         private const string registerCommandTemplate = "command:register:{0}:{1}:{2}";
 
@@ -197,6 +199,17 @@ namespace ChameraVote.Utility
                 noCode += responseData[i];
             }
             var votingModel = this.VotingModelFromString(noCode);
+
+            if(votingModel.anonymous)
+            {
+                var result = this.GetSignedClients(votingId, username, token, password, out errorCode);
+                if (result != null)
+                {
+                    votingModel.votingSignedClients = new Collection<string>(result.ToList());
+                }
+                 
+            }
+
             return votingModel;
         }
 
@@ -394,6 +407,42 @@ namespace ChameraVote.Utility
             return collection;
         }
 
+        public IEnumerable<string> GetSignedClients(string votingId, string username, string token, string password, out int errorCode)
+        {
+            TcpClient tcpClient = new TcpClient(this.serverAddress, port);
+            tcpClient.ReceiveTimeout = timeout;
+
+            NetworkStream stream = tcpClient.GetStream();
+
+            Byte[] data = new Byte[bufferSize];
+            String responseData = String.Empty;
+
+            string message = string.Format(commandTemplate, "getSignedClients", username, token, password, votingId);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
+            stream.Write(data, 0, data.Length);
+
+            data = new Byte[bufferSize];
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+
+            if (responseData.Split(':')[0] == incorrectResponseCode)
+            {
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
+                return null;
+            }
+            errorCode = 0;
+
+            var values = responseData.Split(':');
+            var collection = new Collection<string>();
+            for (int i = 1; i < values.Length; i++)
+            {
+                collection.Add(values[i]);
+            }
+
+            return collection;
+        }
+
         public bool SendVote(string votingId, Collection<string> selectedOptions, string username,string token, string password, string signature,string ballotId, bool anonymous, out int errorCode)
         {
             TcpClient tcpClient = new TcpClient(this.serverAddress, port);
@@ -554,6 +603,34 @@ namespace ChameraVote.Utility
             return responseData.Split(':')[1];
         }
 
+        public bool Verify(string votingId, string cardId, string signature, out int errorCode)
+        {
+            TcpClient tcpClient = new TcpClient(this.serverAddress, port);
+            tcpClient.ReceiveTimeout = timeout;
+
+            NetworkStream stream = tcpClient.GetStream();
+
+            Byte[] data = new Byte[bufferSize];
+            String responseData = String.Empty;
+
+            string message = string.Format(validateCommandTemplate, cardId, signature, votingId);
+            data = System.Text.Encoding.UTF8.GetBytes(this.applicationToken + ':' + message);
+            stream.Write(data, 0, data.Length);
+
+            data = new Byte[bufferSize];
+            Int32 bytes = stream.Read(data, 0, data.Length);
+            responseData = System.Text.Encoding.UTF8.GetString(data, 0, bytes);
+            if (responseData.Split(':')[0] == incorrectResponseCode)
+            {
+                MessageBox.Show(VoteClient.errors[int.Parse(responseData.Split(':')[1])].Item2, "Error");
+                errorCode = int.Parse(responseData.Split(':')[1]);
+                return false;
+            }
+            errorCode = 0;
+            MessageBox.Show("Vote id and signature match.");
+            return true;
+        }
+
         public string EncodeNew(VotingModel votingModel)
         {
             string value = string.Empty;
@@ -582,7 +659,7 @@ namespace ChameraVote.Utility
         }
 
 
-        public static readonly Tuple<int, string>[] errors = new Tuple<int, string>[22] 
+        public static readonly Tuple<int, string>[] errors = new Tuple<int, string>[23] 
         {
             new Tuple<int,string>(0,"Succes."),
             new Tuple<int,string>(1,"No return value."),
@@ -606,6 +683,7 @@ namespace ChameraVote.Utility
             new Tuple<int,string>(19,"This username is not allowed."),
             new Tuple<int,string>(20,"You may not recieve any more ballots."),
             new Tuple<int,string>(21,"Wrong signature."),
+            new Tuple<int,string>(22,"Card not found."),
         };
     }
 }

@@ -19,23 +19,28 @@
             <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <local:CustomTitleBar x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Top" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></local:CustomTitleBar>
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
-            <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
-                <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock Text="{Binding Path=Title, StringFormat='Voting: {0}'}"></TextBlock>
-                </Border>
-            </DockPanel>
-            <ListView Margin="0 20 0 0" ItemsSource="{Binding Path=VotingOptionSums}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical">
-                            <Line Stroke="Green" StrokeThickness="1"  X1="300" Y1="0"></Line>
-                            <TextBlock Text="{Binding Path=OptionValue,StringFormat='Option: {0}'}" FontSize="15"></TextBlock>
-                            <TextBlock Text="{Binding Path=Votes,StringFormat='Votes: {0}'}" FontSize="15"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
+                    <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
+                        <TextBlock Text="{Binding Path=Title, StringFormat='Voting: {0}'}"></TextBlock>
+                    </Border>
+                </DockPanel>
+                <ListView Margin="0 20 0 0" ItemsSource="{Binding Path=VotingOptionSums}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <Line Stroke="Green" StrokeThickness="1"  X1="300" Y1="0"></Line>
+                                <TextBlock Text="{Binding Path=OptionValue,StringFormat='Option: {0}'}" FontSize="15"></TextBlock>
+                                <TextBlock Text="{Binding Path=Votes,StringFormat='Votes: {0}'}" FontSize="15"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <TextBlock Text="Voting users" Margin="0 10 0 0"></TextBlock>
+                <ListView Margin="0 20 0 0" ItemsSource="{Binding Path=VotingClients}">
+                </ListView>
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

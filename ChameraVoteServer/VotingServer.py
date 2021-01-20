@@ -37,18 +37,18 @@ class VotingServer:
         exampleVoting.voteTitle = "Test voting"
         exampleVoting.owner = "ts"
         exampleVoting.mutuallyExclusive = True
-        exampleVoting.anonymous = True
-        #exampleVoting.voteClients=["John","Donald","Mike","Mike","Lenny","Lenny","Lenny","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf","Gandalf"]
-        #exampleVoting.voteResults=["yes","abstain","abstain","yes","no","yes","no","no","no","no","no","no","no","no"]
+        #exampleVoting.anonymous = True
+        exampleVoting.voteClients=["John","Donald","Mike","Michael","Lenny","Bob","Bobby","Sandy","Elizabeth","Jim","Lucy","Aaron","Julia","Betty"]
+        exampleVoting.voteResults=["yes","abstain","abstain","yes","no","yes","abstain","yes","no","abstain","no","no","no","no"]
+        exampleVoting.voteSignatures=["0","0","0","0","0","0","0","0","0","0","0","0","0","0"]
         self.votingContainer.votings.append(exampleVoting)
         exampleVoting1 = Voting(self.userDatabase)
         exampleVoting1.GenerateNewId()
         exampleVoting1.voteOptions = ["yes","no","abstain"]
         exampleVoting1.voteTitle = "Test voting"
         exampleVoting1.owner = "ts"
+        exampleVoting1.anonymous = True
         exampleVoting1.mutuallyExclusive = True
-        exampleVoting1.voteClients=["User1","User2"]
-        exampleVoting1.voteResults=["yes","no"]
         self.votingContainer.votings.append(exampleVoting1)
 
     def Run(self,lock):
@@ -239,6 +239,20 @@ class VotingServer:
                 returnValue = VotingServer.Response(result.value,result.errorCode)
                 return returnValue
 
+            if commandName == "getSignedClients":
+                if len(messageArray)<4:
+                    return VotingServer.Response(None,Errors.wrongRequest)
+                username = messageArray[2]
+                token = messageArray[3]
+                password = messageArray[4]
+                votingId = messageArray[5]
+                voting = self.votingContainer.GetVotingByIdStr(votingId)
+                if voting.value==None:
+                    return VotingServer.Response(voting.value,voting.errorCode)
+                result = voting.value.GetEncodedVoteSignedClients(username,token,password)
+                returnValue = VotingServer.Response(result.value,result.errorCode)
+                return returnValue
+
             if commandName == "getResults":
                 if len(messageArray)<4:
                     return VotingServer.Response(None,Errors.wrongRequest)
@@ -337,4 +351,15 @@ class VotingServer:
                 if result.value==None:
                     return VotingContainer.Response(result.value,result.errorCode)
 
+            if commandName == "verify":
+                if len(messageArray)<4:
+                    return VotingServer.Response(None,Errors.wrongRequest)
+                cardId = messageArray[2]
+                signature = messageArray[3]
+                votingId = messageArray[4]
+                voting = self.votingContainer.GetVotingByIdStr(votingId)
+                if voting.value==None:
+                    return VotingServer.Response(voting.value,voting.errorCode)
+                result = voting.value.Verify(cardId,signature)
+                return VotingServer.Response(result.value,result.errorCode)
         return VotingServer.Response(Errors.nothingToReturn,None)

@@ -56,6 +56,56 @@ namespace ChameraVote.Pdf
             return DateTime.Now.ToString(info);
         }
 
+        public Table BuildVoteTable(VotingSumResultsViewModel votingSumResultsViewModel, Table table)
+        {
+            Column column = table.AddColumn();
+            column.Format.Alignment = ParagraphAlignment.Center;
+
+            foreach (var option in votingSumResultsViewModel.VotingResultsViewModel.VotingViewModel.VotingOptionsRaw)
+            {
+                column = table.AddColumn();
+                column.Format.Alignment = ParagraphAlignment.Center;
+            }
+
+            var row = table.AddRow();
+
+            for (int i = 1; i<table.Columns.Count;i++)
+            {
+                var p = row.Cells[i].AddParagraph();
+                p.AddText(votingSumResultsViewModel.VotingResultsViewModel.VotingViewModel.VotingOptionsRaw[i-1]);
+            }
+
+            foreach(var card in votingSumResultsViewModel.VotingResultsViewModel.Votes)
+            {
+                row = table.AddRow();
+                row.Cells[0].AddParagraph(card.Username);
+                for (int i = 1; i < table.Columns.Count; i++)
+                {
+                    var option = votingSumResultsViewModel.VotingResultsViewModel.VotingViewModel.VotingOptionsRaw[i - 1];
+                    if (card.Options.Contains(option))
+                    {
+                        row.Cells[i].AddParagraph("+");
+                    }
+                    else
+                    {
+                        row.Cells[i].AddParagraph("-");
+                    }
+                }
+            }
+
+            row = table.AddRow();
+            for (int i = 1; i < table.Columns.Count; i++)
+            {
+                var p = row.Cells[i].AddParagraph();
+                p.AddText(votingSumResultsViewModel.VotingOptionSums[i - 1].Votes.ToString());
+            }
+
+            table.Borders.Color = Colors.Black;
+            table.Borders.Width = 0.25;
+
+            return table;
+        }
+
         public Document BuildVotingResultsPdfPL(VotingSumResultsViewModel votingSumResultsViewModel)
         {
             Document document = new Document();
@@ -149,6 +199,46 @@ namespace ChameraVote.Pdf
                     row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                     row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                 }
+            }
+
+            paragraph = section.AddParagraph();
+            paragraph.Format.Font.Size = 15;
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.AddText("\n");
+            paragraph.AddText("\n");
+
+            table = this.BuildVoteTable(votingSumResultsViewModel,section.AddTable());
+
+            paragraph = section.AddParagraph();
+            paragraph.Format.Font.Size = 15;
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.AddText("\n");
+            paragraph.AddText("\n");
+
+            table = section.AddTable();
+            table.Style = "Table";
+            table.Borders.Color = Colors.Black;
+            table.Borders.Width = 0.25;
+            table.Rows.LeftIndent = 0;
+            table.Format.Font.Size = 15;
+
+            column = table.AddColumn("10cm");
+            column.Format.Alignment = ParagraphAlignment.Center;
+
+            row = table.AddRow();
+            row.HeadingFormat = true;
+            row.Format.Alignment = ParagraphAlignment.Center;
+            row.Format.Font.Bold = true;
+            row.Shading.Color = Colors.RoyalBlue;
+            row.Cells[0].AddParagraph("Głosujący");
+
+            foreach(var item in votingSumResultsViewModel.VotingClients)
+            {
+                row = table.AddRow();
+                row.Cells[0].AddParagraph(item);
+                row.Cells[0].Format.Font.Bold = false;
+                row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
             }
 
             paragraph = section.Footers.Primary.AddParagraph();
@@ -251,6 +341,47 @@ namespace ChameraVote.Pdf
                     row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
                     row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
                 }
+            }
+
+            paragraph = section.AddParagraph(this.GetDate());
+            paragraph.Format.Font.Size = 15;
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.AddText("\n");
+            paragraph.AddText("\n");
+
+            table = this.BuildVoteTable(votingSumResultsViewModel, section.AddTable());
+
+            paragraph = section.AddParagraph();
+            paragraph.Format.Font.Size = 15;
+            paragraph.Format.Alignment = ParagraphAlignment.Center;
+            paragraph.AddText("\n");
+            paragraph.AddText("\n");
+
+            table = section.AddTable();
+            table.Style = "Table";
+            table.Borders.Color = Colors.Black;
+            table.Borders.Width = 0.25;
+            table.Rows.LeftIndent = 0;
+            table.Format.Font.Size = 15;
+
+            column = table.AddColumn("10cm");
+            column.Format.Alignment = ParagraphAlignment.Center;
+
+            row = table.AddRow();
+            row.HeadingFormat = true;
+            row.Format.Alignment = ParagraphAlignment.Center;
+            row.Format.Font.Bold = true;
+            row.Shading.Color = Colors.RoyalBlue;
+            row.Cells[0].AddParagraph("Voters");
+
+
+            foreach (var item in votingSumResultsViewModel.VotingClients)
+            {
+                row = table.AddRow();
+                row.Cells[0].AddParagraph(item);
+                row.Cells[0].Format.Font.Bold = false;
+                row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
             }
 
             paragraph = section.Footers.Primary.AddParagraph();
