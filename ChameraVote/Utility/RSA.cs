@@ -8,9 +8,9 @@ namespace ChameraVote.Utility
 {
     public class RSA
     {
-        public static int n = 21;
+        public static int n = 35;
 
-        public static Tuple<int, int> publicKey = new Tuple<int, int>(23,RSA.n);
+        public static Tuple<int, int> publicKey = new Tuple<int, int>(7,RSA.n);
 
         public static int ModInverse(int a, int n)
         {

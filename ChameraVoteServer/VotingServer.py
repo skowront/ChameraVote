@@ -9,7 +9,6 @@ from UserDatabase import UserDatabase
 from Errors import Errors
 from Configuration import Configuration
 
-
 class VotingServer:
     maxBufferSize = 1024
 
@@ -58,15 +57,16 @@ class VotingServer:
             ready = select.select([clientsocket],[],[],5)
             if ready[0]:
                 data = clientsocket.recv(1024)
-                dataDecoded = data.decode("utf-8")
+                dataDecoded = str(data.decode(encoding='utf-8'))#.decode("utf-8")
                 lock.acquire()
                 response = self.BuildResponse(dataDecoded)
                 lock.release()
-                clientsocket.send(response.encode())
+                clientsocket.send(response.encode(encoding='utf-8'))
             clientsocket.close()
 
     def BuildResponse(self,dataDecoded):
-        print("VoteServer incoming:\n"+dataDecoded)
+        print("VoteServer incoming:")
+        print(dataDecoded)
         if(dataDecoded[0:len(Configuration.ApplicationToken)+1]!=Configuration.ApplicationToken+':'):
             return(Errors.applicationUnauthorized)
         dataDecoded = dataDecoded[len(Configuration.ApplicationToken)+1:]

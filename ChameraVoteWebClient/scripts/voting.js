@@ -11,6 +11,10 @@ class Voting
         this.voteOptions = [];
         this.ballotID = "";
         this.blindFactor = Math.floor(Math.random() * RSA.n);
+        while(RSA.ModInverse(this.blindFactor,RSA.n)==NaN)
+        {
+            this.blindFactor = Math.floor(Math.random() * RSA.n);
+        }
         this.signature = "";
     }
 

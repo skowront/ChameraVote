@@ -106,6 +106,8 @@ class Voting:
         i = 0
         while msg[i]!=":":
             i += 1
+        if not msg[0:i].isdigit():
+            return Voting.Response(True,None)
         count = int(msg[0:i])
         msg = msg[i+1:]
         for j in range (0,count):

@@ -5,15 +5,17 @@
   "ServerWebPort": 16402,
   "ServerPort": 16403,
   "AllowedRegistrationUsernames": [
-    "ts2",
-    "ts3"
+    "jarek",
+    "jarek1",
+	"roman",
+	"roman1"
   ],
   "RSA": {
-    "P": 13,
-    "Q": 23,
-    "n": 299,
-    "fi": 264,
-    "e": 23,
-    "d": 23
+    "P": 5,
+    "Q": 7,
+    "n": 35,
+    "fi": 24,
+    "e": 7,
+    "d": 7
   }
 }

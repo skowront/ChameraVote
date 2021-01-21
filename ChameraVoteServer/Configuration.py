@@ -1,5 +1,6 @@
 import json
 import os
+
 #Json generated with https://beta5.objgen.com/json/local/design
 class Configuration:
     ApplicationToken = "0123456789"
