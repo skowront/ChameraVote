@@ -67,7 +67,7 @@
                     </Border>
                     <CheckBox IsChecked="{Binding Path=Anonymous,Mode=OneWay}" IsHitTestVisible="False" Style="{DynamicResource ChameraCheckBoxStyle}"></CheckBox>
                 </DockPanel>
-                <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
+                <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0" Visibility="Collapsed">
                     <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
                         <TextBlock Text="Mutually exclusive"></TextBlock>
                     </Border>
