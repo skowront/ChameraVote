@@ -689,7 +689,7 @@ namespace ChameraVote.Utility
         };
 
         public static Tuple<int, string>[] errorsPl = new Tuple<int, string>[23]
-{
+        {
             new Tuple<int,string>(0,"Sukces."),
             new Tuple<int,string>(1,"Brak wartości zwrotnej."),
             new Tuple<int,string>(2,"Błędne żądanie."),
@@ -713,6 +713,6 @@ namespace ChameraVote.Utility
             new Tuple<int,string>(20,"Nie możesz otrzymać więcej kart."),
             new Tuple<int,string>(21,"Zła sygnatura."),
             new Tuple<int,string>(22,"Nie odnaleziono karty."),
-};
+        };
     }
 }

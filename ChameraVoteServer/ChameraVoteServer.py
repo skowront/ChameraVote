@@ -31,7 +31,7 @@ async def message(sid, data):
     res = votingServer.BuildResponse(data)
     lock.release()
     print('Response: '+res)
-    await sio.emit('reply', res.encode('utf-8') ,namespace='',room=sid)
+    await sio.emit('reply', res ,namespace='',room=sid)
 
 @sio.on('disconnect', namespace='')
 def disconnect(sid):

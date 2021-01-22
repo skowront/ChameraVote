@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="assets/css/templatemo-softy-pinko.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="scripts/md5.js"></script>
+    <script src="scriptsPL/md5.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body style="background-color: #9596d3;">
@@ -32,7 +32,7 @@
         <table>
           <tr>
             <td>
-              <label style="width: 200px;">Server address</label>
+              <label style="width: 200px;">Adres serwera</label>
               <!-- <input type="text" id="ServerAddress" placeholder="vote.chamerats.pl" disabled> -->
               <input type="text" id="ServerAddress" placeholder="localhost" disabled>
             </td>
@@ -49,16 +49,16 @@
       <div class="row">
         <center>
           <label>
-            Step 0 (optional)
+            Krok 0 (opcjonalny) - Rejestracja
           </label>
         </center>
         <form class="form" id="RegisterForm" style="visibility: visible;">
           <div class="form-group">
-            <label>Username</label>
+            <label>Nazwa użytkownika</label>
             <input type="input" class="form-control" name="usernameRegister" id="UsernameRegister"></input>
           </div>
           <div class="form-group">
-            <label >Password</label>
+            <label >Hasło</label>
             <input type="password" class="form-control" name="passwordRegister" id="PasswordRegister"></input>
           </div>
           <div class="form-group" style="visibility: collapse;">
@@ -66,44 +66,44 @@
             <input type="password" class="form-control" name="tokenRegister" id="TokenRegister" value="pfxQ3" disabled></input>
           </div>
           <button type="submit" class="btn btn-primary" id="Register">
-            Register <i class="fa fa-paper-plane"></i>
+            Zarejestruj <i class="fa fa-paper-plane"></i>
           </input>
         </form>
       </div>
       <div class="row">
         <center>
           <label>
-            Step 1
+            Krok 1 - Logowanie
           </label>
         </center>
         <form class="form" id="LoginForm" style="visibility: visible;">
           <div class="form-group">
-            <label>Username</label>
+            <label>Nazwa użytkownika</label>
             <input type="input" class="form-control" name="username" id="Username"></input>
           </div>
           <div class="form-group">
-            <label >Password</label>
+            <label >Hasło</label>
             <input type="password" class="form-control" name="password" id="Password"></input>
           </div>
           <button type="submit" class="btn btn-primary" id="Login">
-            Login <i class="fa fa-paper-plane"></i>
+            Zaloguj <i class="fa fa-paper-plane"></i>
           </button>
         </form>
       </div>
       <div class="row">
         <center>
           <label>
-            Step 2
+            Krok 2 - Pobieranie głosowania
           </label>
         </center>
         <div class="form">
           <form id="GetVotingForm" style="visibility: visible;">
             <div class="form-group">
-              <label>Voting id</label>
+              <label>Identyfikator głosowania</label>
               <input class="form-control" type="text" id="VotingId">
             </div>
             <button class="btn btn-primary" type="submit" id ="GetVoting">
-              Get voting <i class="fa fa-paper-plane"></i>
+              Pobierz głosowanie <i class="fa fa-paper-plane"></i>
             </button>
           </form>
         </div>
@@ -111,12 +111,12 @@
       <div class="row">
         <center>
           <label>
-            Step 3
+            Krok 3 - Pobieranie karty
           </label>
           <div class="form">
             <form id="GetBallotForm" style="visibility: visible;">
               <button class="btn btn-primary" type="submit" id ="GetBallot"disabled>
-                Get ballot <i class="fa fa-paper-plane"></i>
+                Pobierz kartę <i class="fa fa-paper-plane"></i>
               </button>
             </form>
           </div>
@@ -125,12 +125,12 @@
       <div class="row">
         <center>
           <label>
-            Step 4
+            Krok 4 - Podpisywanie karty
           </label>
           <div class="form">
             <form id="GetSignatureForm" style="visibility: visible;">
               <button class="btn btn-primary" type="submit" id ="GetSignature" disabled>
-                Get signature <i class="fa fa-paper-plane"></i>
+                Podpisz kartę <i class="fa fa-paper-plane"></i>
               </button>
             </form>
           </div>
@@ -139,17 +139,17 @@
       <div class="row">
         <center>
           <label>
-            Step 5
+            Krok 5 - Wysyłanie
           </label>
         </center>
         <form id="VotingForm" class="form" style="visibility: visible;">
           <div class="form-group">
             <center>
-              <label id="VotingTitle">Voting title</label>
+              <label id="VotingTitle">Tytuł</label>
             </center>
           </div>
           <div class="form-group">
-            <label style="width: 200px;">Anonymous</label>
+            <label style="width: 200px;">Anonimowe</label>
             <input class="checkbox" type="checkbox" disabled id="Anonymous"></input>
           </div>
           <!-- <div class="form-group">
@@ -157,11 +157,11 @@
             <input class="checkbox" type="checkbox" disabled id="MutuallyExclusive"></input>
           </div> -->
           <div class="form-group">
-            <label style="width: 200px;">Allow unregistered users</label>
+            <label style="width: 200px;">Dopuszcza się osoby niezarejestrowane</label>
             <input class="checkbox" type="checkbox" disabled id="AllowUnregisteredUsers"></input>
           </div>
           <div class="form-group">
-            <label style="width: 200px;">Max options</label>
+            <label style="width: 200px;">Maksymalna liczba zaznaczonych opcji</label>
             <input class="checkbox" type="text" disabled id="MaxOptions" style="width: 50px;"></input>
           </div>
           <div class="form-group">
@@ -170,7 +170,7 @@
             </div>
           </div>
           <button type="submit" class="btn btn-primary" id="SendVote" disabled>
-            Cast vote <i class="fa fa-paper-plane"></i>
+            Wyślij głos <i class="fa fa-paper-plane"></i>
           </button>
         </form>
       </div>
@@ -183,11 +183,11 @@
         </form>
       </div>
 
-      <script src="scripts/errors.js"></script>
-      <script src="scripts/voting.js"></script>
-      <script src="scripts/RSA.js"></script>
-      <script src="scripts/voteclient.js"></script>
-      <script src="scripts/main.js"></script>
+      <script src="scriptsPL/errors.js"></script>
+      <script src="scriptsPL/voting.js"></script>
+      <script src="scriptsPL/RSA.js"></script>
+      <script src="scriptsPL/voteclient.js"></script>
+      <script src="scriptsPL/main.js"></script>
     </div>  
   </body>
 </html>
