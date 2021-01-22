@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -28,6 +29,12 @@ namespace ChameraVote.ViewModels
         {
             get { return this.configurationModel.port; }
             set { this.configurationModel.port = value; this.OnPropertyChanged(); }
+        }
+
+        public CultureInfo CultureInfo
+        {
+            get { return this.CultureInfo; }
+            set { this.CultureInfo = value;this.OnPropertyChanged(); }
         }
 
         public EventHandler OnConfigurationChanged = null;

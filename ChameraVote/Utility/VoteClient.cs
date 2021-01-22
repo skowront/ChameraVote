@@ -9,6 +9,7 @@ using System.Windows;
 using ChameraVote.Models;
 using ChameraVote.ViewModels;
 using System.Security.Cryptography;
+using System.Globalization;
 
 namespace ChameraVote.Utility
 {
@@ -53,6 +54,7 @@ namespace ChameraVote.Utility
             this.serverAddress = configurationModel.ServerAddress;
             this.applicationToken = configurationModel.ApplicationToken;
             this.port = configurationModel.Port;
+            VoteClient.errors = VoteClient.errorsPl;
         }
 
         public string CreateMD5Hash(string input)
@@ -659,7 +661,7 @@ namespace ChameraVote.Utility
         }
 
 
-        public static readonly Tuple<int, string>[] errors = new Tuple<int, string>[23] 
+        public static Tuple<int, string>[] errors = new Tuple<int, string>[23] 
         {
             new Tuple<int,string>(0,"Succes."),
             new Tuple<int,string>(1,"No return value."),
@@ -685,5 +687,32 @@ namespace ChameraVote.Utility
             new Tuple<int,string>(21,"Wrong signature."),
             new Tuple<int,string>(22,"Card not found."),
         };
+
+        public static Tuple<int, string>[] errorsPl = new Tuple<int, string>[23]
+{
+            new Tuple<int,string>(0,"Sukces."),
+            new Tuple<int,string>(1,"Brak wartości zwrotnej."),
+            new Tuple<int,string>(2,"Błędne żądanie."),
+            new Tuple<int,string>(3,"Złe hasło."),
+            new Tuple<int,string>(4,"Użytkownik nie odnaleziony."),
+            new Tuple<int,string>(5,"Użytkownik już istnieje."),
+            new Tuple<int,string>(6,"Żądane głosowanie nie zostało odnalezione."),
+            new Tuple<int,string>(7,"Zły format numeru."),
+            new Tuple<int,string>(8,"Konto nie jest poprawne."),
+            new Tuple<int,string>(9,"Nie ma głosowań spełniających wymagania."),
+            new Tuple<int,string>(10,"Już głosowano"),
+            new Tuple<int,string>(11,"Tylko jedna opcja może być wybrana."),
+            new Tuple<int,string>(12,"Potrzebujesz hasła by dostać się do tego głosowania."),
+            new Tuple<int,string>(13,"Musisz być zalogowany by dostać się do tego głosowania"),
+            new Tuple<int,string>(14,"Aplikacja nie jest autoryzowana."),
+            new Tuple<int,string>(15,"Za dużo wybranych opcji."),
+            new Tuple<int,string>(16,"Brak właściciela głosowania."),
+            new Tuple<int,string>(17,"Głosowanie nie ma tytułu."),
+            new Tuple<int,string>(18,"Zły token rejestracji."),
+            new Tuple<int,string>(19,"Ta nazwa jest niedozwolona."),
+            new Tuple<int,string>(20,"Nie możesz otrzymać więcej kart."),
+            new Tuple<int,string>(21,"Zła sygnatura."),
+            new Tuple<int,string>(22,"Nie odnaleziono karty."),
+};
     }
 }
