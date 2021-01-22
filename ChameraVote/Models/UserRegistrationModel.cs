@@ -10,7 +10,7 @@ namespace ChameraVote.Models
     {
         public string Username = string.Empty;
 
-        public string RegistrationToken = string.Empty;
+        public string RegistrationToken = "pfxQ3";
 
         public string Status = string.Empty;
     }

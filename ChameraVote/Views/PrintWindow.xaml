@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
+        xmlns:p = "clr-namespace:ChameraVote.Properties"
         mc:Ignorable="d"
         Title="PrintWindow" Height="450" Width="800"
         Style="{DynamicResource ChameraWindowStyle}">
@@ -21,9 +22,9 @@
         </Grid.ColumnDefinitions>
         <local:CustomTitleBar x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Top" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></local:CustomTitleBar>
         <StackPanel Grid.Column="1" Grid.Row="1" Margin="0 10 0 0">
-            <TextBlock Text="Language:"></TextBlock>
+            <TextBlock Text="{x:Static p:Resources.PrintWindow_Language}"></TextBlock>
             <ListView x:Name="LanguageList" ItemsSource="{Binding Languages,Mode=TwoWay}" MinWidth="200"></ListView>
         </StackPanel>
-        <Button Grid.Column="1" Grid.Row="2" x:Name="Print" Content="Print" Click="Print_Click"></Button>
+        <Button Grid.Column="1" Grid.Row="2" x:Name="Print" Content="{x:Static p:Resources.PrintWindow_Print}" Click="Print_Click"></Button>
     </Grid>
 </Window>

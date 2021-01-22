@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
+        xmlns:p = "clr-namespace:ChameraVote.Properties"
         mc:Ignorable="d"
         Title="VerifyWindow" Height="450" Width="800"
         Style="{DynamicResource ChameraWindowStyle}">
@@ -20,11 +21,11 @@
         </Grid.ColumnDefinitions>
         <local:CustomTitleBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Top" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}"></local:CustomTitleBar>
         <StackPanel Grid.Row="1" Grid.Column="1">
-            <TextBlock Text="VoteId"></TextBlock>
+            <TextBlock Text="{x:Static p:Resources.VerifyWindow_VoteID}"></TextBlock>
             <TextBox x:Name="voteId"></TextBox>
-            <TextBlock Text="Signature"></TextBlock>
+            <TextBlock Text="{x:Static p:Resources.VerifyWindow_Signature}"></TextBlock>
             <TextBox x:Name="signature"></TextBox>
-            <Button x:Name="Verify" Click="Verify_Click" Content="Verify"></Button>
+            <Button x:Name="Verify" Click="Verify_Click" Content="{x:Static p:Resources.VerifyWindow_Verify}"></Button>
         </StackPanel>
         <TextBlock Grid.Row="2" Grid.Column="1" x:Name="status" Text="-"></TextBlock>
     </Grid>

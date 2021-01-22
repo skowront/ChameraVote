@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
+        xmlns:p = "clr-namespace:ChameraVote.Properties"
         xmlns:views="clr-namespace:ChameraVote.Views"
         mc:Ignorable="d"
-        Title="VotingWindow" Height="600" Width="800"
+        Title="VotingWindow" Height="600" Width="1000"
         Style="{DynamicResource ChameraWindowStyle}">
     <Window.Resources>
         <ResourceDictionary>
@@ -29,30 +30,31 @@
         <StackPanel Grid.Row="1">
             <DockPanel HorizontalAlignment="Stretch" Margin="10 20 0 0">
                 <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock x:Name="serverAddressTextBox" HorizontalAlignment="Center" Text="{Binding Path=ServerAddress,StringFormat='Server address: {0}'}"></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" Text="{x:Static p:Resources.VotingWindow_ServerAddress}"></TextBlock>
                 </Border>
+                <TextBlock x:Name="serverAddressTextBox" Text="{Binding Path=ServerAddress}"></TextBlock>
             </DockPanel>
             <DockPanel HorizontalAlignment="Stretch" Margin="10 20 0 0">
                 <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock Text="Username" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
+                    <TextBlock Text="{x:Static p:Resources.VotingWindow_Username}" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
                 </Border>
                 <TextBox x:Name="usernameTextBox" Text="{Binding Path=Username}" MinWidth="150" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
             </DockPanel>
             <DockPanel HorizontalAlignment="Stretch" Margin="10 30 0 0">
                 <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock Text="Voting ID" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
+                    <TextBlock Text="{x:Static p:Resources.VotingWindow_VotingID}" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
                 </Border>
                 <TextBox Text="{Binding Path=VotingId, Mode=TwoWay}" MinWidth="150" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
             </DockPanel>
             <DockPanel HorizontalAlignment="Stretch" Margin="10 30 0 0">
                 <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock Text="Password" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
+                    <TextBlock Text="{x:Static p:Resources.VotingWindow_Password}" MinWidth="50" HorizontalAlignment="Left" Margin="0 5 10 0 "></TextBlock>
                 </Border>
                 <TextBox Text="{Binding Path=Password, Mode=TwoWay}" MinWidth="150" HorizontalAlignment="Right" Margin="0 5 0 0 "></TextBox>
             </DockPanel>
-            <Button x:Name="refreshButton" Content="Refresh" Click="refreshButton_Click" HorizontalAlignment="Center" MinWidth="150" MinHeight="30" Margin="0 30 0 0 "></Button>
-            <Button x:Name="ballotButton" Content="Get your ballot" Click="ballotButton_Click" HorizontalAlignment="Center" MinWidth="150" MinHeight="30" Margin="0 30 0 0 " IsEnabled="False"></Button>
-            <Button x:Name="signButton" Content="Sign" Click="signButton_Click" HorizontalAlignment="Center" MinWidth="150" MinHeight="30" Margin="0 30 0 0 " IsEnabled="False"></Button>
+            <Button x:Name="refreshButton" Content="{x:Static p:Resources.VotingWindow_DownloadVoting}" Click="refreshButton_Click" HorizontalAlignment="Center" MinWidth="150" MinHeight="30" Margin="0 30 0 0 "></Button>
+            <Button x:Name="ballotButton" Content="{x:Static p:Resources.VotingWindow_GetBallot}" Click="ballotButton_Click" HorizontalAlignment="Center" MinWidth="150" MinHeight="30" Margin="0 30 0 0 " IsEnabled="False"></Button>
+            <Button x:Name="signButton" Content="{x:Static p:Resources.VotingWindow_GetSignature}" Click="signButton_Click" HorizontalAlignment="Center" MinWidth="150" MinHeight="30" Margin="0 30 0 0 " IsEnabled="False"></Button>
         </StackPanel>
         <ScrollViewer Grid.Row="1" Grid.Column="1">
             <StackPanel x:Name="votingMainStackPanel"  Visibility="Hidden">
@@ -63,7 +65,7 @@
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
                     <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                        <TextBlock Text="Anonymous"></TextBlock>
+                        <TextBlock Text="{x:Static p:Resources.VotingWindow_Anonymous}"></TextBlock>
                     </Border>
                     <CheckBox IsChecked="{Binding Path=Anonymous,Mode=OneWay}" IsHitTestVisible="False" Style="{DynamicResource ChameraCheckBoxStyle}"></CheckBox>
                 </DockPanel>
@@ -75,13 +77,13 @@
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
                     <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                        <TextBlock Text="Unregistered users allowed"></TextBlock>
+                        <TextBlock Text="{x:Static p:Resources.VotingWindow_AllowUnregisteredUsers}"></TextBlock>
                     </Border>
                     <CheckBox IsChecked="{Binding Path=AllowUnregisteredUsers,Mode=OneWay}" IsHitTestVisible="False" Style="{DynamicResource ChameraCheckBoxStyle}"></CheckBox>
                 </DockPanel>
                 <DockPanel HorizontalAlignment="Center" Margin="10 30 0 0">
                     <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                        <TextBlock Text="Max options" Width="100"></TextBlock>
+                        <TextBlock Text="{x:Static p:Resources.VotingWindow_MaximumOptions}" Width="100"></TextBlock>
                     </Border>
                     <TextBlock Text="{Binding Path=MaxOptions,Mode=OneWay}" IsHitTestVisible="False"></TextBlock>
                 </DockPanel>
@@ -92,7 +94,7 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
-                <Button x:Name="sendVote" Content="Vote!" Click="sendVote_Click" Width="150" Height="50" HorizontalAlignment="Center" IsEnabled="False"></Button>
+                <Button x:Name="sendVote" Content="{x:Static p:Resources.VotingWindow_Vote}" Click="sendVote_Click" Width="150" Height="50" HorizontalAlignment="Center" IsEnabled="False"></Button>
             </StackPanel>
         </ScrollViewer>
         <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding Path=Status}" HorizontalAlignment="Center"></TextBlock>

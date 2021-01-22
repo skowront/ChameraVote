@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
         xmlns:utility="clr-namespace:ChameraVote.Utility"
+        xmlns:p = "clr-namespace:ChameraVote.Properties"
         mc:Ignorable="d"
         Title="LoginWindow" Height="450" Width="800"
         Style="{DynamicResource ChameraWindowStyle}">
@@ -23,17 +24,17 @@
         <StackPanel Grid.Row="1" Grid.Column="1">
             <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
                 <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock  Text="Login" Width="100" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock  Text="{x:Static p:Resources.LoginWindow_Username}" Width="200" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <TextBox Text="{Binding Path=Username}" Width="auto"></TextBox>
             </DockPanel>
             <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
                 <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock  Text="Password" Width="100" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock  Text="{x:Static p:Resources.LoginWindow_Password}" Width="200" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <PasswordBox x:Name="userPasswordTextBox"></PasswordBox>
             </DockPanel>
-            <Button x:Name="Login" Height="50" Width="100" Content="Login" Margin="0 30 0 0" Click="Login_Click"></Button>
+            <Button x:Name="Login" Height="50" Width="100" Content="{x:Static p:Resources.LoginWindow_Login}" Margin="0 30 0 0" Click="Login_Click"></Button>
         </StackPanel>
         <TextBlock Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" x:Name="statusTextBox" Text="{Binding Path=Status}"></TextBlock>
     </Grid>

@@ -49,19 +49,19 @@ namespace ChameraVote.Views
             VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
             if(this.userPasswordTextBox.Password.Contains(':'))
             {
-                this.statusTextBox.Text = "':' not allowed in passsowrd";
+                this.statusTextBox.Text = Resourceman("Backend_ColonNotAllowed") as string;
                 return;
             }
             int ec = 0;
             var token = voteClient.Login(this.LoginViewModel.Username, this.userPasswordTextBox.Password, out ec);
             if(token == null)
             {
-                this.LoginViewModel.Status = "Login failed.";
+                this.LoginViewModel.Status = Application.Current.FindResource("Backend_LoginFailed") as string;
                 return;
             }
             else
             {
-                this.LoginViewModel.Status = "Login successful.";
+                this.LoginViewModel.Status = Application.Current.FindResource("Backend_LoginSuccessfull") as string;
                 this.LoginViewModel.Token = token;  
                 this.OnLoginSuccess?.Invoke(sender,e);
             }

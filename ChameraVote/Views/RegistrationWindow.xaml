@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
+        xmlns:p = "clr-namespace:ChameraVote.Properties"
         mc:Ignorable="d"
         Title="RegistrationWindow" Height="450" Width="800"
         Style="{DynamicResource ChameraWindowStyle}">
@@ -22,23 +23,23 @@
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical">
             <DockPanel HorizontalAlignment="Stretch" Margin="0 20 0 0">
                 <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock  Text="Username" Width="100" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock  Text="{x:Static p:Resources.RegisterWindow_Username}" Width="100" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <TextBox DockPanel.Dock="Right" Text="{Binding Path=Username}" Width="auto"></TextBox>
             </DockPanel>
             <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
                 <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock  Text="Password" Width="100" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock  Text="{x:Static p:Resources.RegisterWindow_Password}" Width="100" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <PasswordBox x:Name="passwordBox" Width="auto"></PasswordBox>
             </DockPanel>
-            <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0">
+            <DockPanel HorizontalAlignment="Stretch" Margin="0 50 0 0" Visibility="Hidden">
                 <Border DockPanel.Dock="Left" BorderBrush="{x:Null}">
-                    <TextBlock  Text="Token" Width="100" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock  Text="{x:Static p:Resources.RegisterWindow_Token}" Width="100" VerticalAlignment="Center"></TextBlock>
                 </Border>
                 <TextBox Text="{Binding Path=RegistrationToken}" Width="auto"></TextBox>
             </DockPanel>
-            <Button x:Name="sendButton" Content="Register" Click="sendButton_Click" Height="50" Margin="0 30 0 0" MinWidth="150" Width="auto" HorizontalAlignment="Center"></Button>
+            <Button x:Name="sendButton" Content="{x:Static p:Resources.RegisterWindow_Register}" Click="sendButton_Click" Height="50" Margin="0 30 0 0" MinWidth="150" Width="auto" HorizontalAlignment="Center"></Button>
         </StackPanel>
         <TextBlock Grid.Row="2" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="{Binding Path=Status,Mode=TwoWay}"></TextBlock>
     </Grid>

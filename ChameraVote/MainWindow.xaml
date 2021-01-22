@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ChameraVote"
         xmlns:views="clr-namespace:ChameraVote.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:p = "clr-namespace:ChameraVote.Properties"
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="450" 
@@ -28,10 +29,10 @@
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
         <views:CustomTitleBar x:Name="TitleBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Window="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}}"></views:CustomTitleBar>
-        <Button Grid.Row="1" Grid.Column="2" x:Name="registerButton" Content="Register" Click="registerButton_Click"></Button>
-        <Button Grid.Row="2" Grid.Column="2" x:Name="loginButton" Content="Login" Click="loginButton_Click"></Button>
-        <Button Grid.Row="3" Grid.Column="2" x:Name="voteButton" Content="Vote" Click="voteButton_Click"></Button>
-        <Button Grid.Row="4" Grid.Column="2" x:Name="myVotingsButton" Content="My votings" Click="myVotingsButton_Click"></Button>
-        <Button Grid.Row="5" Grid.Column="2" x:Name="settingsButton" Content="Configuration" Click="settingsButton_Click"></Button>
+        <Button Grid.Row="1" Grid.Column="2" x:Name="registerButton" Content="{x:Static p:Resources.MainWindow_Register}" Click="registerButton_Click"></Button>
+        <Button Grid.Row="2" Grid.Column="2" x:Name="loginButton" Content="{x:Static p:Resources.MainWindow_Login}" Click="loginButton_Click"></Button>
+        <Button Grid.Row="3" Grid.Column="2" x:Name="voteButton" Content="{x:Static p:Resources.MainWindow_Vote}" Click="voteButton_Click"></Button>
+        <Button Grid.Row="4" Grid.Column="2" x:Name="myVotingsButton" Content="{x:Static p:Resources.MainWindow_MyVotings}" Click="myVotingsButton_Click"></Button>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="settingsButton" Content="{x:Static p:Resources.MainWindow_Configuration}" Click="settingsButton_Click"></Button>
     </Grid>
 </Window>

@@ -118,153 +118,117 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddVoteOptionWindow_Add" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="Backend_BallotSigned" xml:space="preserve">
-    <value>Ballot signed.</value>
-  </data>
-  <data name="Backend_ColonNotAllowed" xml:space="preserve">
-    <value>Sign ':' is not allowed.</value>
-  </data>
-  <data name="Backend_EnterUsername" xml:space="preserve">
-    <value>Enter username.</value>
-  </data>
-  <data name="Backend_LoginFailed" xml:space="preserve">
-    <value>Login failed.</value>
-  </data>
-  <data name="Backend_LoginSuccessfull" xml:space="preserve">
-    <value>Login successfull.</value>
-  </data>
-  <data name="Backend_PasswordIsWeak" xml:space="preserve">
-    <value>Password is weak.</value>
-  </data>
-  <data name="Backend_VotesAccepted" xml:space="preserve">
-    <value>Votes accepted.</value>
-  </data>
-  <data name="Backend_YourBallotIdIs" xml:space="preserve">
-    <value>Your ballot it is:</value>
+    <value>Dodaj</value>
   </data>
   <data name="LoginWindow_Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Zaloguj</value>
   </data>
   <data name="LoginWindow_Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Hasło</value>
   </data>
   <data name="LoginWindow_Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Nazwa użytkownika</value>
   </data>
   <data name="MainWindow_Configuration" xml:space="preserve">
-    <value>Configuration</value>
+    <value>Konfiguracja</value>
   </data>
   <data name="MainWindow_Login" xml:space="preserve">
-    <value>Login</value>
+    <value>Logowanie</value>
   </data>
   <data name="MainWindow_MyVotings" xml:space="preserve">
-    <value>MyVotings</value>
+    <value>Moje głosowania</value>
   </data>
   <data name="MainWindow_Register" xml:space="preserve">
-    <value>Register</value>
+    <value>Rejestracja</value>
   </data>
   <data name="MainWindow_Vote" xml:space="preserve">
-    <value>Vote</value>
+    <value>Głosowanie</value>
   </data>
   <data name="NewVotingWindow_AddOption" xml:space="preserve">
-    <value>Add option</value>
+    <value>Dodaj opcję</value>
   </data>
   <data name="NewVotingWindow_AllowUnregisteredUsers" xml:space="preserve">
-    <value>Allow unregistered users</value>
+    <value>Dopuść niezarejestrowanych</value>
   </data>
   <data name="NewVotingWindow_Anonymous" xml:space="preserve">
-    <value>Anonymous</value>
+    <value>Anonimowe</value>
   </data>
   <data name="NewVotingWindow_MaximumOptions" xml:space="preserve">
-    <value>Maximum options</value>
+    <value>Maksymalna liczba zaznaczonych opcji</value>
   </data>
   <data name="NewVotingWindow_Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Hasło</value>
   </data>
   <data name="NewVotingWindow_Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Tytuł</value>
   </data>
   <data name="NewVotingWindow_Upload" xml:space="preserve">
-    <value>Upload</value>
+    <value>Wyślij</value>
   </data>
   <data name="PrintWindow_Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Język</value>
   </data>
   <data name="PrintWindow_Print" xml:space="preserve">
-    <value>Print</value>
-  </data>
-  <data name="RegisterWindow_Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="RegisterWindow_Register" xml:space="preserve">
-    <value>Register</value>
-  </data>
-  <data name="RegisterWindow_Token" xml:space="preserve">
-    <value>Token</value>
-  </data>
-  <data name="RegisterWindow_Username" xml:space="preserve">
-    <value>Username</value>
+    <value>Drukuj</value>
   </data>
   <data name="UserVotingsWindow_AddNewVoting" xml:space="preserve">
-    <value>Add new Voting</value>
+    <value>Dodaj nowe głosowanie</value>
   </data>
   <data name="UserVotingsWindow_MenuItem_Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Usuń</value>
   </data>
   <data name="VerifyWindow_Signature" xml:space="preserve">
-    <value>Signature</value>
+    <value>Sygnatura</value>
   </data>
   <data name="VerifyWindow_Verify" xml:space="preserve">
-    <value>Verify</value>
+    <value>Weryfikuj</value>
   </data>
   <data name="VerifyWindow_VoteID" xml:space="preserve">
-    <value>Vote ID</value>
+    <value>Numer karty</value>
   </data>
   <data name="VotingResultsWindow_Print" xml:space="preserve">
-    <value>Print</value>
+    <value>Drukuj</value>
   </data>
   <data name="VotingResultsWindow_Sum" xml:space="preserve">
-    <value>Sum results</value>
+    <value>Sumuj</value>
   </data>
   <data name="VotingResultsWindow_Verify" xml:space="preserve">
-    <value>Verify</value>
+    <value>Weryfikuj</value>
   </data>
   <data name="VotingSumResultsWindow_Clients" xml:space="preserve">
-    <value>Voting users</value>
+    <value>Głosujący użytkownicy</value>
   </data>
   <data name="VotingWindow_AllowUnregisteredUsers" xml:space="preserve">
-    <value>Allow unregistered users</value>
+    <value>Dopuść niezarejestrowanych</value>
   </data>
   <data name="VotingWindow_Anonymous" xml:space="preserve">
-    <value>Anonymous</value>
+    <value>Anonimowe</value>
   </data>
   <data name="VotingWindow_DownloadVoting" xml:space="preserve">
-    <value>Download voting</value>
+    <value>Pobierz głosowanie</value>
   </data>
   <data name="VotingWindow_GetBallot" xml:space="preserve">
-    <value>Get ballot</value>
+    <value>Pobierz kartę</value>
   </data>
   <data name="VotingWindow_GetSignature" xml:space="preserve">
-    <value>Sign</value>
+    <value>Podpisz</value>
   </data>
   <data name="VotingWindow_MaximumOptions" xml:space="preserve">
-    <value>Maximum options</value>
+    <value>Limit opcji</value>
   </data>
   <data name="VotingWindow_Password" xml:space="preserve">
-    <value>Password</value>
+    <value>Hasło</value>
   </data>
   <data name="VotingWindow_ServerAddress" xml:space="preserve">
-    <value>Server address: </value>
+    <value>Adres serwera:</value>
   </data>
   <data name="VotingWindow_Username" xml:space="preserve">
     <value>Login</value>
   </data>
   <data name="VotingWindow_Vote" xml:space="preserve">
-    <value>Vote</value>
+    <value>Głosuj</value>
   </data>
   <data name="VotingWindow_VotingID" xml:space="preserve">
-    <value>Voting ID</value>
+    <value>Numer głosowania</value>
   </data>
 </root>

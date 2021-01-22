@@ -98,5 +98,22 @@ namespace ChameraVote.Views
                 this.GetUserVotings();
            }
         }
+
+        private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is System.Windows.Controls.ListViewItem)
+            {
+                VotingBriefViewModel viewModel = ((ListViewItem)sender).Content as VotingBriefViewModel;
+                VoteClient voteClient = new VoteClient(this.ConfigurationViewModel);
+                int ec = 0;
+                var result = voteClient.GetVotingModel(viewModel.Id, this.UserViewModel.Username, this.UserViewModel.Token, string.Empty, out ec);
+                if (result == null)
+                {
+                    return;
+                }
+                VotingResultsWindow window = new VotingResultsWindow(new VotingViewModel(result), this.ConfigurationViewModel);
+                window.ShowDialog();
+            }
+        }
     }
 }

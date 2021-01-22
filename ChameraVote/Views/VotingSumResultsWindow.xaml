@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChameraVote.Views"
+        xmlns:p = "clr-namespace:ChameraVote.Properties"
         mc:Ignorable="d"
         Title="VotingSumResultsWindow" Height="450" Width="800"
         Style="{DynamicResource ChameraWindowStyle}">
@@ -37,7 +38,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <TextBlock Text="Voting users" Margin="0 10 0 0"></TextBlock>
+                <TextBlock Text="{x:Static p:Resources.VotingSumResultsWindow_Clients}" Margin="0 10 0 0"></TextBlock>
                 <ListView Margin="0 20 0 0" ItemsSource="{Binding Path=VotingClients}">
                 </ListView>
             </StackPanel>
