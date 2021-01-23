@@ -35,7 +35,6 @@ var OnVotingRecieved = function()
     document.getElementById('AllowUnregisteredUsers').checked = voteClient.voting.allowUnregisteredUsers;
     document.getElementById('MaxOptions').value = voteClient.voting.maxOptions;
     document.getElementById('VotingTitle').innerHTML = voteClient.voting.title;
-    document.getElementById('SendVote').disabled = false;
     var listContainer = document.getElementById('OptionsList');
     listContainer.innerHTML="";
     for(var i = 0; i<voteClient.voting.voteOptions.length;i++)
@@ -68,6 +67,8 @@ var OnBallotSigned = function()
 var OnVotesAccepted = function()
 {
     document.getElementById('SendVote').disabled = true;
+    document.getElementById('GetSignature').disabled = true;
+    document.getElementById('GetBallot').disabled = true;
 }
 
 var voteClient = new VoteClient(address.placeholder,port.placeholder,StatusCallback);

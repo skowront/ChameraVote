@@ -49,6 +49,23 @@ class VotingServer:
         exampleVoting1.anonymous = True
         exampleVoting1.mutuallyExclusive = True
         self.votingContainer.votings.append(exampleVoting1)
+        exampleVoting2 = Voting(self.userDatabase)
+        exampleVoting2.GenerateNewId()
+        exampleVoting2.allowUnregisteredUsers=False
+        exampleVoting2.anonymous=True
+        exampleVoting2.voteTitle = "Obiad"
+        exampleVoting2.voteOptions=["Żółtko","Kiełbasa","Kluski śląskie","Kompot","Wudeczka","Pierko"]
+        exampleVoting2.owner = "ts"
+        self.votingContainer.votings.append(exampleVoting2)
+        exampleVoting3 = Voting(self.userDatabase)
+        exampleVoting3.GenerateNewId()
+        exampleVoting3.allowUnregisteredUsers=False
+        exampleVoting3.anonymous=True
+        exampleVoting3.voteTitle = "Obiad"
+        exampleVoting3.voteOptions=["Żółtko","Kiełbasa","Kluski śląskie","Kompot","Wudeczka","Pierko"]
+        exampleVoting3.owner = "ts"
+        exampleVoting3.maxOptions = 3
+        self.votingContainer.votings.append(exampleVoting3)
 
     def Run(self,lock):
         while True:

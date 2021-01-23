@@ -83,12 +83,10 @@ class VoteClient
                 voteClient.voting.FromString(msg);
                 voteClient.status = "Otrzymano głosowanie z serwera.";
                 voteClient.OnVotingRecieved();
-                voteClient.state = VoteClientStates.gettingBallot;
                 break;
             case VoteClientStates.gettingBallot:
                 voteClient.voting.ballotID = messageArray[1];
                 voteClient.status = "Twój numer karty:" + voteClient.voting.ballotID;
-                voteClient.state = VoteClientStates.signingBallot;
                 voteClient.OnBallotRecieved();
                 break;
             case VoteClientStates.signingBallot:
@@ -98,14 +96,12 @@ class VoteClient
                 var s = parseInt(messageArray[1])*RSA.ModInverse(voteClient.voting.blindFactor,RSA.n);
                 voteClient.voting.signature = s.toString();
                 voteClient.status = "Twój numer karty: " + voteClient.voting.ballotID + " jest podpisany sygnaturą:" + voteClient.voting.signature;
-                voteClient.state = VoteClientStates.sendingVotes;
                 voteClient.OnBallotSigned();
                 break;
             case VoteClientStates.sendingVotes:
                 console.log("Votes accepted");
                 voteClient.status = "Głosy przyjęte.";
                 voteClient.OnVotesAccepted();
-                voteClient.state = VoteClientStates.done;
                 break;
             case VoteClientStates.done:
                 console.log("Done");
@@ -178,7 +174,7 @@ class VoteClient
             return;
         }
         this.BuildSocket();
-        this.status = VoteClientStates.signingBallot;
+        this.state = VoteClientStates.signingBallot;
         console.log("Signing ballot.");
         var passhash = md5(password);
         var mPrime = parseInt(this.voting.ballotID) * Math.pow(this.voting.blindFactor,RSA.PublicKey[0])%RSA.n;

@@ -23,6 +23,7 @@ var OnLoginSuccessfull = function()
     document.getElementById('Password').disabled = true;
     let password = document.getElementById('Login').disabled = true;
     document.getElementById('GetVotingForm').style.visibility="visible";
+    document.getElementById('Register').disabled = true;
 } 
 
 var OnVotingRecieved = function()
@@ -35,7 +36,6 @@ var OnVotingRecieved = function()
     document.getElementById('AllowUnregisteredUsers').checked = voteClient.voting.allowUnregisteredUsers;
     document.getElementById('MaxOptions').value = voteClient.voting.maxOptions;
     document.getElementById('VotingTitle').innerHTML = voteClient.voting.title;
-    document.getElementById('SendVote').disabled = false;
     var listContainer = document.getElementById('OptionsList');
     listContainer.innerHTML="";
     for(var i = 0; i<voteClient.voting.voteOptions.length;i++)
@@ -51,6 +51,7 @@ var OnVotingRecieved = function()
         listContainer.appendChild(node);
     }
     document.getElementById('GetBallot').disabled = false;
+    document.getElementById('GetSignature').disabled = true;
 }
 
 var OnBallotRecieved = function()
@@ -68,6 +69,8 @@ var OnBallotSigned = function()
 var OnVotesAccepted = function()
 {
     document.getElementById('SendVote').disabled = true;
+    document.getElementById('GetSignature').disabled = true;
+    document.getElementById('GetBallot').disabled = true;
 }
 
 var voteClient = new VoteClient(address.placeholder,port.placeholder,StatusCallback);

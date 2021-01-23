@@ -8,8 +8,8 @@
         <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:po="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"/>
         <ResourceDictionary>
             <!--<SolidColorBrush x:Key="TitleBarBackground" Color="#ffcd00"></SolidColorBrush>-->
-            <SolidColorBrush x:Key="TitleBarBackground" Color="MidnightBlue"></SolidColorBrush>
-            <SolidColorBrush x:Key="WindowBackground" Color="SlateGray"></SolidColorBrush>
+            <SolidColorBrush x:Key="TitleBarBackground" Color="#004C97"></SolidColorBrush>
+            <SolidColorBrush x:Key="WindowBackground" Color=" #333F48"></SolidColorBrush>
         </ResourceDictionary>
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Indigo.xaml" />
         <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Yellow.xaml" />

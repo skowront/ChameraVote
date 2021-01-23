@@ -48,7 +48,7 @@ namespace ChameraVote.Views
                 this.MouseDoubleClickEventHandler?.Invoke(sender, e);
                 this.Window.WindowState = this.Window.WindowState == WindowState.Maximized ? WindowState.Normal : WindowState.Maximized;
             }
-            else
+            else if(e.LeftButton == MouseButtonState.Pressed)
             {
                 this.MouseDownEventHandler?.Invoke(sender, e);
                 this.Window.DragMove();
